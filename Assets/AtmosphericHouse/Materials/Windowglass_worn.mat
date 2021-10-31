@@ -22,11 +22,11 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Windowglass_worn
   m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
-  m_ShaderKeywords: _METALLICSPECGLOSSMAP _NORMALMAP _OCCLUSIONMAP
+  m_ShaderKeywords: _NORMALMAP _OCCLUSIONMAP _SPECULAR_SETUP
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 1
-  m_CustomRenderQueue: 3000
+  m_CustomRenderQueue: 2973
   stringTagMap:
     RenderType: Transparent
   disabledShaderPasses:
@@ -311,7 +311,7 @@ Material:
     - _PPDPrimitiveWidth: 1
     - _Parallax: 0
     - _PreRefractionPass: 0
-    - _QueueOffset: 0
+    - _QueueOffset: -27
     - _ReceiveShadows: 1
     - _ReceivesSSR: 1
     - _RefractionModel: 0
@@ -373,7 +373,7 @@ Material:
     - _UseMetallicMap: 1
     - _UseShadowThreshold: 1
     - _VisualizeMask: 0
-    - _WorkflowMode: 1
+    - _WorkflowMode: 0
     - _ZTest: 4
     - _ZTestDepthEqualForOpaque: 4
     - _ZTestGBuffer: 3
