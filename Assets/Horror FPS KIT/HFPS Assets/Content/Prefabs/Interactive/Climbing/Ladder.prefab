@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5417146632246738834}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: FinishPosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5417146632246738835}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.611, z: -2.362}
+  m_LocalPosition: {x: 0, y: -0.229, z: -5.095}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5421587700784301967}
@@ -39,7 +39,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5417146632662806806}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: CenterDown
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -54,7 +54,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5417146632662806807}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.3, z: 1}
+  m_LocalPosition: {x: -0, y: 0.44, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5421587700784301967}
@@ -70,7 +70,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5417146632668724446}
   - component: {fileID: 5417146632668724443}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: ClimbDownFinish
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -85,7 +85,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5417146632668724447}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.3, z: 1.7}
+  m_LocalPosition: {x: 0, y: 0.44, z: 1.7}
   m_LocalScale: {x: 1.2, y: 1.2, z: 0.5}
   m_Children: []
   m_Father: {fileID: 5421587700784301967}
@@ -115,7 +115,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5417146633215145022}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: CenterUp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -130,7 +130,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5417146633215145023}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.3, z: -1.321}
+  m_LocalPosition: {x: -0, y: 0.44, z: -1.32}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5421587700784301967}
@@ -146,7 +146,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5417146633408694357}
   - component: {fileID: 5417146633408694358}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: ClimbUpFinish
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -161,7 +161,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5417146633408694362}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0, y: 0.3, z: -2.481}
+  m_LocalPosition: {x: -0, y: 0.44, z: -5.07}
   m_LocalScale: {x: 1.2, y: 1.2, z: 1}
   m_Children: []
   m_Father: {fileID: 5421587700784301967}
@@ -210,7 +210,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5417311920744815453}
-  m_LocalRotation: {x: -0.49999985, y: 0.50000024, z: -0.50000024, w: -0.49999976}
+  m_LocalRotation: {x: -0.5, y: 0.5, z: -0.5, w: -0.5}
   m_LocalPosition: {x: 6.9489965, y: 3.4679737, z: 26.474638}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
@@ -237,7 +237,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5417311920744815453}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -282,8 +282,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.33200046, y: 0.09531377, z: 4.7722435}
-  m_Center: {x: 0.00017981231, y: 0.031664282, z: -0.378566}
+  m_Size: {x: 0.33200046, y: 0.095313765, z: 6.3154483}
+  m_Center: {x: 0.00017982716, y: 0.031664576, z: -1.1501685}
 --- !u!114 &5417311920744815452
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -324,7 +324,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a571da60af35a91438b80198c6e3f276, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LadderLook: {x: 90, y: 0}
+  LadderLook: {x: 180, y: 50}
   CenterDown: {fileID: 5417146632662806806}
   CenterUp: {fileID: 5417146633215145022}
   UpFinishPosition: {fileID: 5417146632246738834}
