@@ -492,11 +492,11 @@ MonoBehaviour:
     ConcaveDistance: 10
     ConcaveMode: 0
   TerrainTextureList:
-  - Texture: {fileID: 2800000, guid: de5cc7c4241bb9c46a87ed39b7d10005, type: 3}
-    TextureNormals: {fileID: 2800000, guid: 0ea4eb0de0c23b54abde5b15775d0d33, type: 3}
+  - Texture: {fileID: 2800000, guid: 636416b355c8f8a47aebff04ed01eb17, type: 3}
+    TextureNormals: {fileID: 2800000, guid: d44ac012fc8092b428afa5281189efca, type: 3}
     TextureOcclusion: {fileID: 0}
     TextureHeightMap: {fileID: 0}
-    TileSize: {x: 15, y: 15}
+    TileSize: {x: 2, y: 2}
     Offset: {x: 0, y: 0}
     TerrainLayer: {fileID: 0}
   - Texture: {fileID: 2800000, guid: c0afc3db06067e74d927639bbc04ae4e, type: 3}
