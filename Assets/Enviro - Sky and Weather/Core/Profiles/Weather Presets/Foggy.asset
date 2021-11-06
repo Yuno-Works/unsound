@@ -53,8 +53,8 @@ MonoBehaviour:
     particleLayer2ColorPow: 2
     particleCloudsOverwrite: 0
   fogStartDistance: 120
-  fogDistance: 180
-  fogDensity: 0.003
+  fogDistance: 300
+  fogDensity: 0.005
   weatherSkyMod:
     serializedVersion: 2
     key0: {r: 0, g: 0, b: 0, a: 0.43137255}
@@ -115,7 +115,7 @@ MonoBehaviour:
     m_NumAlphaKeys: 2
   weatherFogMod:
     serializedVersion: 2
-    key0: {r: 0, g: 0, b: 0, a: 0.8980392}
+    key0: {r: 0, g: 0, b: 0, a: 0.83137256}
     key1: {r: 0, g: 0, b: 0, a: 0.8980392}
     key2: {r: 0.6509434, g: 0.6509434, b: 0.6509434, a: 0.5686275}
     key3: {r: 0.3372549, g: 0.5294118, b: 0.72156864, a: 1}
@@ -144,8 +144,8 @@ MonoBehaviour:
     m_NumAlphaKeys: 2
   volumeLightIntensity: 1
   shadowIntensityMod: 0
-  heightFogDensity: 1
-  SkyFogHeight: 2
+  heightFogDensity: 1.6
+  SkyFogHeight: 1
   skyFogStart: 0
   SkyFogIntensity: 1
   FogScatteringIntensity: 6

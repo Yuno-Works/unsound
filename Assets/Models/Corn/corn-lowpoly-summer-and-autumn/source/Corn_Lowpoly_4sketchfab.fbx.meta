@@ -3,7 +3,37 @@ guid: 25bc050a5a3ba6e4f8b0f1ba21da7692
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: corn
+    second: {fileID: 2100000, guid: ccba019ac3c172e46a590fbec32a1e37, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: corn autumn
+    second: {fileID: 2100000, guid: d8b046517134aac4fa88bc0e99081619, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: corn_ears
+    second: {fileID: 2100000, guid: 7b86807946ff2e442a1868edf2d1bfc0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: corn_hair
+    second: {fileID: 2100000, guid: 11e54a8b7f837744282e0256673cfa26, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: top_of_corn1
+    second: {fileID: 2100000, guid: c7011cf9d31f8ca4a9cee8aa3fe99ea9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: top_of_corn2
+    second: {fileID: 2100000, guid: 2c877a4f4dbc0fc4ea6261fb817b4cc2, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

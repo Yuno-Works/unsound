@@ -3790,6 +3790,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4096
   m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
   m_RenderPostProcessing: 1
   m_Antialiasing: 1
   m_AntialiasingQuality: 2
@@ -4994,6 +4995,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 65
   m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
   m_RenderPostProcessing: 1
   m_Antialiasing: 2
   m_AntialiasingQuality: 2
@@ -17739,7 +17741,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7585782160029299602}
   - component: {fileID: 7585782160029299613}
-  m_Layer: 11
+  - component: {fileID: 938148554921302253}
+  m_Layer: 2
   m_Name: HeroBody
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17834,6 +17837,20 @@ MonoBehaviour:
   turnOffset: {x: 0, y: -0.94, z: -0.15}
   bodyAngle: {x: -5, y: 0, z: 0}
   spineMaxRotation: {x: -75, y: 75}
+--- !u!136 &938148554921302253
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7585782160029299603}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.2
+  m_Height: 1.88
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.94, z: 0}
 --- !u!1 &7607685975870991135
 GameObject:
   m_ObjectHideFlags: 0

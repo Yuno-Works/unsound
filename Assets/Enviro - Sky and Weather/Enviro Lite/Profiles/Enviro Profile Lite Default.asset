@@ -17,7 +17,7 @@ MonoBehaviour:
     directionalLightMode: 0
     LightColor:
       serializedVersion: 2
-      key0: {r: 0.2586505, g: 0.2895761, b: 0.38235295, a: 1}
+      key0: {r: 0.13469389, g: 0.15102042, b: 0.2, a: 1}
       key1: {r: 0.32828718, g: 0.3675389, b: 0.4852941, a: 1}
       key2: {r: 0.7882353, g: 0.53333336, b: 0.25882354, a: 0}
       key3: {r: 0.91764706, g: 0.78431374, b: 0.6431373, a: 0}
@@ -181,7 +181,7 @@ MonoBehaviour:
       m_RotationOrder: 0
     ambientSkyColor:
       serializedVersion: 2
-      key0: {r: 0.12716262, g: 0.1394896, b: 0.17647058, a: 1}
+      key0: {r: 0.17066666, g: 0.19199999, b: 0.24, a: 1}
       key1: {r: 0.19296063, g: 0.2237646, b: 0.31617647, a: 1}
       key2: {r: 0.7882353, g: 0.53333336, b: 0.25882354, a: 0}
       key3: {r: 0.6, g: 0.69803923, b: 0.7647059, a: 0}
@@ -496,8 +496,8 @@ MonoBehaviour:
       m_RotationOrder: 4
     scatteringColor:
       serializedVersion: 2
-      key0: {r: 0.5176471, g: 0.57254905, b: 0.78431374, a: 1}
-      key1: {r: 0.5176471, g: 0.57254905, b: 0.78431374, a: 1}
+      key0: {r: 0.14484692, g: 0.19118236, b: 0.3301887, a: 1}
+      key1: {r: 0.46209148, g: 0.51241827, b: 0.7, a: 1}
       key2: {r: 1, g: 0.7137255, b: 0.6117647, a: 0}
       key3: {r: 0.8235294, g: 0.8235294, b: 0.8235294, a: 0}
       key4: {r: 0.8235294, g: 0.8235294, b: 0.8235294, a: 0}
@@ -1293,13 +1293,13 @@ MonoBehaviour:
     useUnityFog: 0
     distanceFog: 1
     useRadialDistance: 1
-    startDistance: 50
-    distanceFogIntensity: 7
-    maximumFogDensity: 0.8
+    startDistance: 123.3
+    distanceFogIntensity: 1.13
+    maximumFogDensity: 0.804
     heightFog: 1
-    height: 50
-    heightFogIntensity: 1
-    heightDensity: 1
+    height: 14.4
+    heightFogIntensity: 0.861
+    heightDensity: 1.6
     noiseIntensity: 1
     noiseIntensityOffset: 0.3
     noiseScale: 0.001
@@ -1337,7 +1337,7 @@ MonoBehaviour:
       m_NumColorKeys: 5
       m_NumAlphaKeys: 2
     skyFogIntensity: 1.9999999
-    fogExposure: 0.6
+    fogExposure: 0.5
     useEnviroGroundFog: 1
     useHDRPFog: 1
     fogColorTint:
@@ -1652,9 +1652,9 @@ MonoBehaviour:
   viewModeLW: 6
   showPlayerSetup: 0
   showRenderingSetup: 0
-  showComponentsSetup: 0
+  showComponentsSetup: 1
   showTimeUI: 0
   showWeatherUI: 1
-  showAudioUI: 0
+  showAudioUI: 1
   showEffectsUI: 0
-  modified: 0
+  modified: 1
