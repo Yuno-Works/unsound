@@ -20,7 +20,7 @@ MonoBehaviour:
     PrefabType: 0
     VegetationRenderMode: 2
     EnableRuntimeSpawn: 1
-    DisableShadows: 1
+    DisableShadows: 0
     VegetationPrefab: {fileID: 2870424391866597160, guid: f7c845afc1c02644eaf9264f4412896f, type: 3}
     VegetationTexture: {fileID: 0}
     VegetationGuid: 60d5bff1fa5f3b048bb2d95d88a9f5f6
@@ -239,7 +239,7 @@ MonoBehaviour:
     PrefabType: 0
     VegetationRenderMode: 2
     EnableRuntimeSpawn: 1
-    DisableShadows: 1
+    DisableShadows: 0
     VegetationPrefab: {fileID: 6317242799148272631, guid: 60d5bff1fa5f3b048bb2d95d88a9f5f6, type: 3}
     VegetationTexture: {fileID: 0}
     VegetationGuid: 60d5bff1fa5f3b048bb2d95d88a9f5f6
@@ -458,7 +458,7 @@ MonoBehaviour:
     PrefabType: 0
     VegetationRenderMode: 2
     EnableRuntimeSpawn: 1
-    DisableShadows: 1
+    DisableShadows: 0
     VegetationPrefab: {fileID: 8238014206294000413, guid: ed57f2250f770424f8bfe06a4c043f2f, type: 3}
     VegetationTexture: {fileID: 0}
     VegetationGuid: 60d5bff1fa5f3b048bb2d95d88a9f5f6
@@ -677,7 +677,7 @@ MonoBehaviour:
     PrefabType: 0
     VegetationRenderMode: 2
     EnableRuntimeSpawn: 1
-    DisableShadows: 1
+    DisableShadows: 0
     VegetationPrefab: {fileID: 6742827088283102384, guid: f6f6a774a266df44f9d2ea3d7e716f05, type: 3}
     VegetationTexture: {fileID: 0}
     VegetationGuid: 60d5bff1fa5f3b048bb2d95d88a9f5f6
