@@ -173,6 +173,7 @@ GameObject:
   - component: {fileID: 3130914991596331436}
   - component: {fileID: 1649980216748073934}
   - component: {fileID: 8141750558692236547}
+  - component: {fileID: 5229931952344943934}
   m_Layer: 0
   m_Name: detailed_grass_03_3_LOD0
   m_TagString: Untagged
@@ -243,6 +244,21 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &5229931952344943934
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4398618559947829321}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3437a7709d4d2746a58edce5372fbc2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MeshFilterList:
+  - {fileID: 1649980216748073934}
+  - {fileID: 1649980216748073934}
 --- !u!1 &8238014206294000413
 GameObject:
   m_ObjectHideFlags: 0

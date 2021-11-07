@@ -339,6 +339,7 @@ GameObject:
   - component: {fileID: 5778426974429032500}
   - component: {fileID: 4946199357755149509}
   - component: {fileID: 7245176159470744693}
+  - component: {fileID: 6643605391338608282}
   m_Layer: 0
   m_Name: detailed_grass_blooming_01_1_LOD0
   m_TagString: Untagged
@@ -409,3 +410,18 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &6643605391338608282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8748653892520696393}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3437a7709d4d2746a58edce5372fbc2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MeshFilterList:
+  - {fileID: 4946199357755149509}
+  - {fileID: 4946199357755149509}

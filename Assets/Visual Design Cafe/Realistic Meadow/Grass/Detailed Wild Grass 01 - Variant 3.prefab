@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7052901161084693160}
   - component: {fileID: 1683500618525530072}
   - component: {fileID: 3841321709266619542}
+  - component: {fileID: 1277806047348591035}
   m_Layer: 0
   m_Name: detailed_wild_grass_01_3_LOD0
   m_TagString: Untagged
@@ -81,6 +82,21 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &1277806047348591035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 916282480474329986}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3437a7709d4d2746a58edce5372fbc2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MeshFilterList:
+  - {fileID: 1683500618525530072}
+  - {fileID: 1683500618525530072}
 --- !u!1 &1551365398594800209
 GameObject:
   m_ObjectHideFlags: 0
