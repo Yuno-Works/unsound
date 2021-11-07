@@ -201,6 +201,10 @@ MonoBehaviour:
       SurfaceTextures:
       - {fileID: 2800000, guid: 0e7d7f7e16b2d5340965298a7cbb9b4c, type: 3}
       - {fileID: 2800000, guid: 6ec7bd1b524fa9c4eb104c4583532a67, type: 3}
+      - {fileID: 2800000, guid: 048025e39845d244f9b8b1283335de38, type: 3}
+      - {fileID: 2800000, guid: 89426a1159c445e4e8e8c30355ab7da0, type: 3}
+      - {fileID: 2800000, guid: 343aa6ff846cf5845823ffdc78f27fed, type: 3}
+      - {fileID: 2800000, guid: 636416b355c8f8a47aebff04ed01eb17, type: 3}
       SurfaceTag: 
       AllowFootsteps: 1
       AllowImpactMark: 0
@@ -209,10 +213,6 @@ MonoBehaviour:
       - {fileID: 8300000, guid: 1cc44863823cb204ead4640e17e0f6ce, type: 3}
       - {fileID: 8300000, guid: faa4c04355949e642a28580d02d1f679, type: 3}
       - {fileID: 8300000, guid: 66b4d3533c4c8694892ab5784459e5b3, type: 3}
-      - {fileID: 8300000, guid: c11d85a9d2a01004a9a67f86ef2376b8, type: 3}
-      - {fileID: 8300000, guid: e55f5ea53b98f9f49981610ef1c358da, type: 3}
-      - {fileID: 8300000, guid: 856fd62bddb61954fb7f7b9070673b8a, type: 3}
-      - {fileID: 8300000, guid: 93f2df94bfa7b18468d28cd5f29b2b1e, type: 3}
       FootstepsModifier: 1
     ImpactProperties:
       SurfaceBulletmarks: []
