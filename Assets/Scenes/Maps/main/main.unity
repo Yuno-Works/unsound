@@ -409,7 +409,7 @@ MonoBehaviour:
   autoStartServerBuild: 1
   serverTickRate: 30
   offlineScene: Assets/Scenes/Maps/main/main.unity
-  onlineScene: Assets/Scenes/TestMaps/test-map-2/mirror-test.unity
+  onlineScene: Assets/Scenes/Maps/map-1/map-1.unity
   transport: {fileID: 2047548403}
   networkAddress: 192.168.1.67
   maxConnections: 4
