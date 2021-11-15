@@ -558,7 +558,7 @@ namespace HFPS.Systems
                 Player.GetComponentInChildren<MouseLook>().SetRotation(rotToken.ToObject<Vector2>());
 
                 var stateToken = json["playerData"]["characterState"];
-                Player.GetComponent<PlayerController>().SetPlayerState(stateToken.ToObject<PlayerController.CharacterState>());
+                Player.GetComponent<PlayerController>().CmdSetPlayerState( ( int ) stateToken.ToObject<PlayerController.CharacterState>());
             }
 
             var healthToken = json["playerData"]["playerHealth"];

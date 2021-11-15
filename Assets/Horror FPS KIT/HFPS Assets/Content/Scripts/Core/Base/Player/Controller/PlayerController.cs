@@ -716,7 +716,7 @@ namespace HFPS.Player
                             {
                                 if (CheckDistance() > 1.6f)
                                 {
-                                    characterState = CharacterState.Stand;
+                                    CmdSetPlayerState ( ( int ) CharacterState.Stand );
                                     StartCoroutine(AntiSpam());
                                 }
                             }
@@ -805,14 +805,14 @@ namespace HFPS.Player
                         {
                             if (CheckDistance() > 1.6f)
                             {
-                                characterState = CharacterState.Crouch;
+                                CmdSetPlayerState ( ( int ) CharacterState.Crouch );
                             }
                         }
                         else if (characterState != CharacterState.Stand)
                         {
                             if (CheckDistance() > 1.6f)
                             {
-                                characterState = CharacterState.Stand;
+                                CmdSetPlayerState ( ( int ) CharacterState.Stand );
                             }
                         }
 
@@ -824,13 +824,13 @@ namespace HFPS.Player
                     {
                         if (characterState != CharacterState.Prone)
                         {
-                            characterState = CharacterState.Prone;
+                            CmdSetPlayerState ( ( int ) CharacterState.Prone );
                         }
                         else if (characterState == CharacterState.Prone)
                         {
                             if (CheckDistance() > 1.6f)
                             {
-                                characterState = CharacterState.Stand;
+                                CmdSetPlayerState ( ( int ) CharacterState.Stand );
                             }
                         }
 
@@ -1029,9 +1029,10 @@ namespace HFPS.Player
             StartCoroutine(ApplyKickback(new Vector3(12, UnityEngine.Random.Range(-2.0f, 2.0f), 0), 0.1f));
         }
 
-        public void SetPlayerState(CharacterState state)
+        [Command]
+        public void CmdSetPlayerState(int state)
         {
-            if (state == CharacterState.Crouch)
+            if ( ( CharacterState ) state == CharacterState.Crouch)
             {
                 //Crouch Position
                 CharacterControl.height = controllerAdjustments.crouchHeight;
@@ -1039,7 +1040,7 @@ namespace HFPS.Player
                 fallDamageThreshold = controllerSettings.crouchFallTreshold;
                 mouseLook.localPosition = new Vector3(mouseLook.localPosition.x, controllerAdjustments.camCrouchHeight, mouseLook.localPosition.z);
             }
-            else if (state == CharacterState.Prone)
+            else if ( ( CharacterState ) state == CharacterState.Prone)
             {
                 //Prone Position
                 CharacterControl.height = controllerAdjustments.proneHeight;
@@ -1048,7 +1049,7 @@ namespace HFPS.Player
                 mouseLook.localPosition = new Vector3(mouseLook.localPosition.x, controllerAdjustments.camProneHeight, mouseLook.localPosition.z);
             }
 
-            characterState = state;
+            characterState = ( CharacterState ) state;
         }
 
         /// <summary>
@@ -1119,7 +1120,7 @@ namespace HFPS.Player
         public void CmdUseLadder(Transform center, Vector2 look, bool climbUp)
         {
             ladderReady = false;
-            characterState = CharacterState.Stand;
+            CmdSetPlayerState ( ( int ) CharacterState.Stand );
 
             moveDirection = Vector3.zero;
             inputX = 0f;
@@ -1181,7 +1182,7 @@ namespace HFPS.Player
         /// </summary>
         public void LerpPlayer(Vector3 destination, Vector2 look, bool lerpLook = true)
         {
-            characterState = CharacterState.Stand;
+            CmdSetPlayerState ( ( int ) CharacterState.Stand );
             moveDirection = Vector3.zero;
             ladderReady = false;
             isControllable = false;
