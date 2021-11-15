@@ -150,7 +150,11 @@ namespace HFPS.Systems
         {
             foreach (BodyPart bodyPart in bodyParts)
             {
-                Physics.IgnoreCollision(bodyPart.collider, PlayerController.Instance.gameObject.GetComponent<Collider>());
+                PlayerController [] playerControllers = FindObjectsOfType<PlayerController> ();
+                foreach ( PlayerController controller in playerControllers )
+                {
+                    Physics.IgnoreCollision(bodyPart.collider, controller.gameObject.GetComponent<Collider>());
+                }
 
                 if (enabled)
                 {

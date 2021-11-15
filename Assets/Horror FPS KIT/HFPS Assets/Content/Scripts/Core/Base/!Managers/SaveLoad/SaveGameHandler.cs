@@ -92,7 +92,7 @@ namespace HFPS.Systems
         private ItemSwitcher switcher;
         private Inventory inventory;
         private ObjectiveManager objectives;
-        private GameObject player;
+        public GameObject Player;
 
         [HideInInspector]
         public string lastSave;
@@ -112,8 +112,8 @@ namespace HFPS.Systems
             jsonManager = new JsonManager(SerializationHelper.Settings, SerializationPath, true);
             inventory = GetComponent<Inventory>();
             objectives = GetComponent<ObjectiveManager>();
-            player = PlayerController.Instance.gameObject;
-            switcher = ScriptManager.Instance.Get<ItemSwitcher>();
+            //player = PlayerController.HasReference ? PlayerController.Instance.gameObject : null;
+            switcher = ScriptManager.HasReference ? ScriptManager.Instance.Get<ItemSwitcher>() : null;
 
             if (constantSaveables.Any(pair => pair.Instance == null))
             {
@@ -280,12 +280,12 @@ namespace HFPS.Systems
                 jsonManager.Add("levelNameKey", lvlNameKey);
                 jsonManager.Add("dateTime", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
 
-                playerData.Add("playerPosition", player.transform.position);
-                playerData.Add("cameraRotation", player.GetComponentInChildren<MouseLook>().GetRotation());
-                playerData.Add("characterState", player.GetComponent<PlayerController>().characterState);
+                playerData.Add("playerPosition", Player.transform.position);
+                playerData.Add("cameraRotation", Player.GetComponentInChildren<MouseLook>().GetRotation());
+                playerData.Add("characterState", Player.GetComponent<PlayerController>().characterState);
             }
 
-            playerData.Add("playerHealth", player.GetComponent<HealthManager>().Health);
+            playerData.Add("playerHealth", Player.GetComponent<HealthManager>().Health);
             /* END PLAYER PAIRS */
 
             /* ITEMSWITCHER PAIRS */
@@ -552,17 +552,17 @@ namespace HFPS.Systems
             {
                 var posToken = json["playerData"]["playerPosition"];
                 Vector3 newPosition = posToken.ToObject<Vector3>();
-                player.transform.SetPositionAndRotation(newPosition, Quaternion.identity);
+                Player.transform.SetPositionAndRotation(newPosition, Quaternion.identity);
 
                 var rotToken = json["playerData"]["cameraRotation"];
-                player.GetComponentInChildren<MouseLook>().SetRotation(rotToken.ToObject<Vector2>());
+                Player.GetComponentInChildren<MouseLook>().SetRotation(rotToken.ToObject<Vector2>());
 
                 var stateToken = json["playerData"]["characterState"];
-                player.GetComponent<PlayerController>().SetPlayerState(stateToken.ToObject<PlayerController.CharacterState>());
+                Player.GetComponent<PlayerController>().SetPlayerState(stateToken.ToObject<PlayerController.CharacterState>());
             }
 
             var healthToken = json["playerData"]["playerHealth"];
-            player.GetComponent<HealthManager>().Health = (float)healthToken;
+            Player.GetComponent<HealthManager>().Health = (float)healthToken;
 
             switcher.weaponItem = (int)json["itemSwitcherData"]["switcherWeaponItem"];
 

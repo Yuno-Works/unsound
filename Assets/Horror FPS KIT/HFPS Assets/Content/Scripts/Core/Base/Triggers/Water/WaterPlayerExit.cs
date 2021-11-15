@@ -13,26 +13,31 @@ namespace HFPS.Systems
 
         void Awake()
         {
-            player = PlayerController.Instance;
+            
         }
 
         void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag("Player") && player && player.isInWater)
+            if (other.CompareTag("Player"))
             {
-                Vector3 newPosition = transform.position + LerpOffset;
+                player = other.GetComponent<PlayerController> ();
 
-                if (lerpWith == LerpWith.PlayerX)
+                if ( player && player.isInWater )
                 {
-                    newPosition.x = player.transform.position.x;
-                }
-                else if (lerpWith == LerpWith.PlayerZ)
-                {
-                    newPosition.z = player.transform.position.z;
-                }
+                    Vector3 newPosition = transform.position + LerpOffset;
 
-                player.LerpPlayer(newPosition, Vector2.zero, false);
-                player.isInWater = false;
+                    if (lerpWith == LerpWith.PlayerX)
+                    {
+                        newPosition.x = player.transform.position.x;
+                    }
+                    else if (lerpWith == LerpWith.PlayerZ)
+                    {
+                        newPosition.z = player.transform.position.z;
+                    }
+
+                    player.LerpPlayer(newPosition, Vector2.zero, false);
+                    player.isInWater = false;
+                }
             }
         }
 

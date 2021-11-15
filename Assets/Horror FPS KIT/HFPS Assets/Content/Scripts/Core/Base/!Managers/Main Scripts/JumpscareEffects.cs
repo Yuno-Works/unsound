@@ -21,7 +21,10 @@ namespace HFPS.Player
         private ItemSwitcher itemSwitcher;
         private AudioSource PlayerBreath;
 
-        [Header("Speed Settings")]
+        [Header ( "References" )]
+        public PlayerController PlayerController;
+
+        [ Header("Speed Settings")]
         public float scareEffectSpeed;
         public float chromaticOutSpeed;
         public float vignetteOutSpeed;
@@ -66,7 +69,7 @@ namespace HFPS.Player
 
             itemSwitcher = GetComponentInChildren<ItemSwitcher>();
 
-            PlayerBreath = PlayerController.Instance.transform.GetChild(1).transform.GetChild(0).GetComponent<AudioSource>();
+            PlayerBreath = PlayerController.transform.GetChild(1).transform.GetChild(0).GetComponent<AudioSource>();
             defaultVolume = PlayerBreath.volume;
         }
 

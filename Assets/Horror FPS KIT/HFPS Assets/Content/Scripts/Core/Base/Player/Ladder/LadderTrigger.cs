@@ -1,12 +1,43 @@
 ﻿using UnityEngine;
 using HFPS.Player;
+using System.Linq;
 
 namespace HFPS.Systems
 {
     public class LadderTrigger : MonoBehaviour
     {
         private Collider colliderSelf;
+        private PlayerController Player
+        {
+            get
+            {
+                if ( player == null )
+                {
+                    return player = FindObjectsOfType<PlayerController> ().FirstOrDefault ( p => p.isLocalPlayer );
+                }
+                return player;
+            }
+            set
+            {
+                player = value;
+            }
+        }
         private PlayerController player;
+        private MouseLook MouseLook
+        {
+            get
+            {
+                if ( mouseLook == null )
+                {
+                    return mouseLook = ScriptManager.HasReference ? ScriptManager.Instance.GetComponent<MouseLook> () : null;
+                }
+                return mouseLook;
+            }
+            set
+            {
+                mouseLook = value;
+            }
+        }
         private MouseLook mouseLook;
 
         [Header("Mouse Lerp")]
@@ -27,16 +58,14 @@ namespace HFPS.Systems
 
         void Awake()
         {
-            player = PlayerController.Instance;
-            mouseLook = ScriptManager.Instance.GetComponent<MouseLook>();
             colliderSelf = GetComponentInChildren<Collider>();
         }
 
         void Update()
         {
-            if (!player) return;
+            if (!Player) return;
 
-            if (Vector3.Distance(player.transform.position, UpFinishTrigger.transform.position) > UpDistance)
+            if (Vector3.Distance(Player.transform.position, UpFinishTrigger.transform.position) > UpDistance)
             {
                 IsPlayerUp = false;
             }
@@ -45,43 +74,43 @@ namespace HFPS.Systems
                 IsPlayerUp = true;
             }
 
-            onLadder = player.ladderReady;
-            colliderSelf.enabled = player.movementState != PlayerController.MovementState.Ladder;
+            onLadder = Player.ladderReady;
+            colliderSelf.enabled = Player.movementState != PlayerController.MovementState.Ladder;
 
-            UpFinishTrigger.blockTrigger = !player.ladderReady;
-            DownFinishTrigger.blockTrigger = !player.ladderReady;
+            UpFinishTrigger.blockTrigger = !Player.ladderReady;
+            DownFinishTrigger.blockTrigger = !Player.ladderReady;
         }
 
         public void UseObject()
         {
-            if (!player) return;
+            if (!Player) return;
 
             Vector2 rotation = LadderLook;
-            rotation.x -= mouseLook.playerOriginalRotation.eulerAngles.y;
+            rotation.x -= MouseLook.playerOriginalRotation.eulerAngles.y;
 
             if (!IsPlayerUp)
             {
-                player.UseLadder(CenterDown, rotation, true);
+                Player?.CmdUseLadder(CenterDown, rotation, true);
             }
             else
             {
-                player.UseLadder(CenterUp, rotation, false);
+                Player?.CmdUseLadder(CenterUp, rotation, false);
             }
         }
 
         public void OnClimbFinish(bool finishUp)
         {
-            if (!player) return;
+            if (!Player) return;
 
             if (onLadder)
             {
                 if (finishUp)
                 {
-                    player.LerpPlayerLadder(UpFinishPosition.position);
+                    Player.LerpPlayerLadder(UpFinishPosition.position);
                 }
                 else
                 {
-                    player.LadderExit();
+                    Player.CmdLadderExit();
                 }
             }
         }
@@ -92,15 +121,15 @@ namespace HFPS.Systems
             if (CenterUp) { Gizmos.color = Color.red; Gizmos.DrawSphere(CenterUp.position, 0.05f); }
             if (UpFinishPosition) { Gizmos.color = Color.white; Gizmos.DrawSphere(UpFinishPosition.position, 0.1f); }
 
-            if (PlayerController.HasReference && PlayerController.Instance is var playerController)
+            if (Player)
             {
                 Gizmos.color = Color.cyan;
                 Gizmos.DrawWireSphere(transform.position, 0.2f);
 
                 Vector2 rotation = LadderLook;
-                rotation.x -= playerController.transform.eulerAngles.y;
+                rotation.x -= Player.transform.eulerAngles.y;
 
-                Vector3 gizmoRotation = Quaternion.Euler(new Vector3(0, rotation.x, rotation.y)) * playerController.transform.forward * 1f;
+                Vector3 gizmoRotation = Quaternion.Euler(new Vector3(0, rotation.x, rotation.y)) * Player.transform.forward * 1f;
 
                 Gizmos.color = Color.red;
                 Gizmos.DrawRay(transform.position, gizmoRotation);

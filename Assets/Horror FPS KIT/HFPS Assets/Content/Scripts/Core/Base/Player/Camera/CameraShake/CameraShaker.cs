@@ -12,6 +12,8 @@ namespace HFPS.Player
         public static CameraShaker Instance;
         static Dictionary<string, CameraShaker> instanceList = new Dictionary<string, CameraShaker>();
 
+        public PlayerController PlayerController;
+
         private Animation CamAnimations;
         private bool pressed;
 
@@ -100,7 +102,7 @@ namespace HFPS.Player
             {
                 if (IsShaking())
                 {
-                    PlayerController.Instance.shakeCamera = true;
+                    PlayerController.shakeCamera = true;
                     CamAnimations.Stop();
                     CamAnimations.enabled = false;
                 }
@@ -108,7 +110,7 @@ namespace HFPS.Player
                 {
                     transform.localPosition = ResetPositionOffset;
                     transform.localEulerAngles = ResetRotationOffset;
-                    PlayerController.Instance.shakeCamera = false;
+                    PlayerController.shakeCamera = false;
                     CamAnimations.enabled = true;
                 }
             }

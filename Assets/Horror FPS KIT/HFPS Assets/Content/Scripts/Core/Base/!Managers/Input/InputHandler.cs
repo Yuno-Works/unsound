@@ -544,14 +544,17 @@ namespace ThunderWire.Input
                 if (string.IsNullOrEmpty(ActionMap)) return default;
             }
 
-            InputAction inputAction;
-            if (!string.IsNullOrEmpty(ActionMap))
+            InputAction inputAction = null;
+            if ( Instance )
             {
-                inputAction = Instance.inputActionAsset.FindActionMap(ActionMap, true).FindAction(ActionName, true);
-            }
-            else
-            {
-                inputAction = Instance.inputActionAsset.FindAction(ActionName, true);
+                if (!string.IsNullOrEmpty(ActionMap))
+                {
+                    inputAction = Instance.inputActionAsset.FindActionMap(ActionMap, true).FindAction(ActionName, true);
+                }
+                else
+                {
+                    inputAction = Instance.inputActionAsset.FindAction(ActionName, true);
+                }
             }
 
             return inputAction;

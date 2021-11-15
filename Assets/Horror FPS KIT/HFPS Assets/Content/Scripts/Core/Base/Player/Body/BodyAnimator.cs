@@ -12,7 +12,9 @@ namespace HFPS.Player
 {
     public class BodyAnimator : MonoBehaviour
     {
+        [SerializeField]
         private ScriptManager scriptManager;
+        [SerializeField]
         private PlayerController controller;
         private HealthManager health;
         private MouseLook mouseLook;
@@ -112,15 +114,8 @@ namespace HFPS.Player
 
         void Awake()
         {
-            if(PlayerController.HasReference)
-                controller = PlayerController.Instance;
-            else
-                throw new System.NullReferenceException("Could not find Player Controller reference!");
-
-            if (ScriptManager.HasReference)
-                scriptManager = ScriptManager.Instance;
-            else
-                throw new System.NullReferenceException("Could not find Script Manager reference!");
+            Debug.Assert ( controller != null, "Could not find Player Controller reference!" );
+            Debug.Assert ( scriptManager != null, "Could not find Script Manager reference!" );
 
             if (!controller.gameObject.HasComponent(out health))
                 throw new System.NullReferenceException("Could not find Health Manager component in Player object!");
@@ -222,38 +217,38 @@ namespace HFPS.Player
 
             int state = (int)controller.characterState;
 
-            if (controller.isControllable && !ladderReady)
+            if ( controller.isControllable && !ladderReady )
             {
                 /* POSITIONING */
-                if (controller.isRunning && state == 0 && movement.y > 0.1f)
+                if ( controller.isRunning && state == 0 && movement.y > 0.1f )
                 {
-                    if (controller.velMagnitude >= animStartVelocity)
+                    if ( controller.velMagnitude >= animStartVelocity )
                     {
-                        transform.localPosition = Vector3.Lerp(transform.localPosition, runningOffset, Time.deltaTime * AdjustSmooth);
+                        transform.localPosition = Vector3.Lerp ( transform.localPosition, runningOffset, Time.deltaTime * AdjustSmooth );
                     }
                 }
-                else if (!controller.IsGrounded())
+                else if ( !controller.IsGrounded () )
                 {
-                    transform.localPosition = Vector3.Lerp(transform.localPosition, jumpOffset, Time.deltaTime * AdjustSmooth);
+                    transform.localPosition = Vector3.Lerp ( transform.localPosition, jumpOffset, Time.deltaTime * AdjustSmooth );
                 }
-                else if (state == 1)
+                else if ( state == 1 )
                 {
-                    transform.localPosition = Vector3.Lerp(transform.localPosition, crouchOffset, Time.deltaTime * AdjustSmooth);
+                    transform.localPosition = Vector3.Lerp ( transform.localPosition, crouchOffset, Time.deltaTime * AdjustSmooth );
                 }
-                else if (state == 2)
+                else if ( state == 2 )
                 {
-                    transform.localPosition = Vector3.Lerp(transform.localPosition, proneOffset, Time.deltaTime * AdjustSmooth);
+                    transform.localPosition = Vector3.Lerp ( transform.localPosition, proneOffset, Time.deltaTime * AdjustSmooth );
                 }
-                else if (movement.x > 0.1f || movement.x < -0.1f)
+                else if ( movement.x > 0.1f || movement.x < -0.1f )
                 {
-                    if (controller.velMagnitude >= animStartVelocity)
+                    if ( controller.velMagnitude >= animStartVelocity )
                     {
-                        transform.localPosition = Vector3.Lerp(transform.localPosition, turnOffset, Time.deltaTime * AdjustSmooth);
+                        transform.localPosition = Vector3.Lerp ( transform.localPosition, turnOffset, Time.deltaTime * AdjustSmooth );
                     }
                 }
                 else
                 {
-                    transform.localPosition = Vector3.Lerp(transform.localPosition, originalOffset, Time.deltaTime * AdjustSmooth);
+                    transform.localPosition = Vector3.Lerp ( transform.localPosition, originalOffset, Time.deltaTime * AdjustSmooth );
                 }
 
                 if (controller.velMagnitude >= animStartVelocity)

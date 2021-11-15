@@ -42,9 +42,12 @@ namespace HFPS.Systems
         private (string, string) ts_bagCapacity = ("GameUI.BagCapacity", "Capacity {0}/{1}");
         private (string, string) ts_bagItemCount = ("GameUI.BagItemCount", "Items Count: {0}");
 
-        private HFPS_GameManager gameManager;
+        [SerializeField]
         private ScriptManager scriptManager;
+        private HFPS_GameManager gameManager;
+        private PlayerController playerController;
         private HealthManager healthManager;
+
         private ItemsContainer currentContainer;
         private ObjectiveManager objectives;
         private MenuController menuController;
@@ -154,7 +157,22 @@ namespace HFPS.Systems
         [HideInInspector] public int selectedSwitcherID = -1;
 
         [HideInInspector]
-        public ItemSwitcher itemSwitcher;
+        public ItemSwitcher ItemSwitcher
+        {
+            get
+            {
+                if (itemSwitcher == null)
+                {
+                    return scriptManager ? scriptManager.Get<ItemSwitcher> () : null;
+                }
+                return itemSwitcher;
+            }
+            set
+            {
+                itemSwitcher = value;
+            }
+        }
+        private ItemSwitcher itemSwitcher;
 
         [HideInInspector]
         public InventoryItemData itemToMove;
@@ -237,7 +255,7 @@ namespace HFPS.Systems
             CannotReload = TextsSource.GetText("Inventory.CannotReload", "Cannot reload item yet!");
         }
 
-        public static void Subscribe(Action action)
+        public void Subscribe(Action action)
         {
             if (IsInitialized)
             {
@@ -266,15 +284,11 @@ namespace HFPS.Systems
             if(!gameObject.HasComponent(out menuController))
                 throw new NullReferenceException("MenuController script not found on object " + gameManager.name);
 
-            if (ScriptManager.HasReference)
-                scriptManager = ScriptManager.Instance;
-            else
-                throw new NullReferenceException("ScriptManager script not found on scene!");
+            gameManager = scriptManager.GameManager;
+            playerController = scriptManager.PlayerController;
+            healthManager = scriptManager.HealthManager;
 
-            if (!PlayerController.HasReference || !PlayerController.Instance.gameObject.HasComponent(out healthManager))
-                throw new NullReferenceException("PlayerController or HealthManager script not found on Player object!");
-
-            itemSwitcher = scriptManager.Get<ItemSwitcher>();
+            itemSwitcher = scriptManager?.Get<ItemSwitcher>();
             fader = Fader.Instance(gameObject);
 
             int row = 0;
@@ -376,7 +390,7 @@ namespace HFPS.Systems
 
         void Update()
         {
-            if (itemSwitcher) selectedSwitcherID = itemSwitcher.currentItem;
+            if (ItemSwitcher) selectedSwitcherID = ItemSwitcher.currentItem;
             if(gameManager) preventUse = gameManager.isInventoryShown || gameManager.isPaused;
 
             if (!preventUse)
@@ -1094,9 +1108,9 @@ namespace HFPS.Systems
                         {
                             currentContainer.Store(itemData.item, itemData.itemAmount, itemData.data);
 
-                            if (itemSwitcher.currentItem == itemData.item.Settings.useSwitcherID)
+                            if (ItemSwitcher.currentItem == itemData.item.Settings.useSwitcherID)
                             {
-                                itemSwitcher.DeselectItems();
+                                ItemSwitcher.DeselectItems();
                             }
 
                             RemoveSelectedItem(true);
@@ -1128,9 +1142,9 @@ namespace HFPS.Systems
                     {
                         StoreFixedContainerItem(itemData.item, itemData.itemAmount, itemData.data);
 
-                        if (itemSwitcher.currentItem == itemData.item.Settings.useSwitcherID)
+                        if (ItemSwitcher.currentItem == itemData.item.Settings.useSwitcherID)
                         {
-                            itemSwitcher.DeselectItems();
+                            ItemSwitcher.DeselectItems();
                         }
                     }
 
@@ -1869,8 +1883,8 @@ namespace HFPS.Systems
 
             if (usableItem.ItemType == ItemType.Weapon || usableItem.Toggles.showItemOnUse)
             {
-                itemSwitcher.SelectSwitcherItem(usableItem.Settings.useSwitcherID);
-                itemSwitcher.weaponItem = usableItem.Settings.useSwitcherID;
+                ItemSwitcher.SelectSwitcherItem(usableItem.Settings.useSwitcherID);
+                ItemSwitcher.weaponItem = usableItem.Settings.useSwitcherID;
             }
 
             ShowContexMenu(false);
@@ -1884,13 +1898,13 @@ namespace HFPS.Systems
         {
             InventoryItemData itemData = ItemDataOfSlot(selectedSlotID);
 
-            if (!PlayerController.HasReference)
+            if (!playerController )
                 return;
 
             Item item = itemData.item;
             int itemAmount = itemData.itemAmount;
 
-            Transform dropPos = PlayerController.Instance.GetComponentInChildren<PlayerFunctions>().inventoryDropPos;
+            Transform dropPos = playerController.GetComponentInChildren<PlayerFunctions>().inventoryDropPos;
             InteractiveItem interactiveItem = null;
             GameObject worldItem = null;
 
@@ -1898,9 +1912,9 @@ namespace HFPS.Systems
 
             if (item.ItemType == ItemType.Weapon || item.Toggles.showItemOnUse)
             {
-                if (itemSwitcher.currentItem == item.Settings.useSwitcherID)
+                if (ItemSwitcher.currentItem == item.Settings.useSwitcherID)
                 {
-                    itemSwitcher.DisableItems();
+                    ItemSwitcher.DisableItems();
                 }
             }
 
@@ -2196,7 +2210,7 @@ namespace HFPS.Systems
                     if (SelectedItem.ItemType == ItemType.ItemPart && SelectedItem.Toggles.isCombinable)
                     {
                         int switcherID = GetItem(SelectedItem.CombineSettings[0].combineWithID).Settings.useSwitcherID;
-                        GameObject MainObject = itemSwitcher.ItemList[switcherID];
+                        GameObject MainObject = ItemSwitcher.ItemList[switcherID];
 
                         MonoBehaviour script = MainObject.GetComponents<MonoBehaviour>().SingleOrDefault(sc => sc.GetType().GetField("CanReload") != null);
                         FieldInfo info = script.GetType().GetField("CanReload");
@@ -2229,7 +2243,7 @@ namespace HFPS.Systems
                         {
                             if (CombineSwitcherID != -1)
                             {
-                                itemSwitcher.SelectSwitcherItem(CombineSwitcherID);
+                                ItemSwitcher.SelectSwitcherItem(CombineSwitcherID);
                             }
                         }
 
@@ -2350,7 +2364,7 @@ namespace HFPS.Systems
                 }
                 else if (SelectedItem.UseActionType == ItemAction.ItemValue)
                 {
-                    IItemValueProvider itemValue = itemSwitcher.ItemList[switcherID].GetComponent<IItemValueProvider>();
+                    IItemValueProvider itemValue = ItemSwitcher.ItemList[switcherID].GetComponent<IItemValueProvider>();
                     if (itemValue != null)
                     {
                         InventoryItemData itemData = ItemDataOfSlot(itemSlot);

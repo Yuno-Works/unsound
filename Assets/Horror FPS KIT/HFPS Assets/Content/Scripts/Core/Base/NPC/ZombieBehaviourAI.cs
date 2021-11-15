@@ -162,6 +162,21 @@ namespace HFPS.Systems
         private HungerPoint[] hungerPositions;
         private HungerPoint closestHungerPoint;
 
+        public PlayerController PlayerController
+        {
+            get
+            {
+                if ( playerController == null )
+                {
+                    return playerController = FindObjectsOfType<PlayerController> ().FirstOrDefault ( p => p.isLocalPlayer );
+                }
+                return playerController;
+            }
+            private set
+            {
+                playerController = value;
+            }
+        }
         private PlayerController playerController;
         private HealthManager playerHealth;
         private Transform playerObject;
@@ -271,7 +286,6 @@ namespace HFPS.Systems
             agent = GetComponent<NavMeshAgent>();
             health = GetComponent<NPCHealth>();
 
-            playerController = PlayerController.Instance;
             playerObject = playerController.transform;
             playerHealth = playerController.gameObject.GetComponent<HealthManager>();
 

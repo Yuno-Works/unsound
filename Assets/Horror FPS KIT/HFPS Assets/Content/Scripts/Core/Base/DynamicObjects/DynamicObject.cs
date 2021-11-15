@@ -213,7 +213,7 @@ namespace HFPS.Systems
             }
             else if (dynamicType == Type_Dynamic.Drawer)
             {
-                IgnoreColliders.Add(PlayerController.Instance.gameObject.GetComponent<Collider>());
+                //IgnoreColliders.Add( PlayerController.gameObject.GetComponent<Collider>());
                 isLocked = useType != Type_Use.Normal;
 
                 if (interactType == Type_Interact.Mouse && drawerDragSounds)
@@ -251,7 +251,7 @@ namespace HFPS.Systems
             }
 
             defaultAngle = transform.eulerAngles.y;
-            inventory = Inventory.Instance;
+            inventory = Inventory.HasReference ? Inventory.Instance : null;
 
             Invoke("LateStart", 0.1f);
         }

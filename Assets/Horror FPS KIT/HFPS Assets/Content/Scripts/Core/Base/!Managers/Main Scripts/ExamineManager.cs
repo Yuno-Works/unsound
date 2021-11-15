@@ -37,6 +37,21 @@ namespace HFPS.Player
         }
         #endregion
 
+        private HFPS_GameManager GameManager
+        {
+            get
+            {
+                if ( gameManager == null )
+                {
+                    gameManager = HFPS_GameManager.Instance;
+                }
+                return gameManager;
+            }
+            set
+            {
+                gameManager = value;
+            }
+        }
         private HFPS_GameManager gameManager;
         private Inventory inventory;
         private InteractManager interact;
@@ -182,8 +197,8 @@ namespace HFPS.Player
                 floatingItem = FloatingIconManager.Instance;
                 interact = GetComponent<InteractManager>();
                 pfunc = GetComponent<PlayerFunctions>();
-                paperUI = gameManager.gamePanels.PaperReadPanel;
-                paperText = gameManager.userInterface.PaperReadText;
+                paperUI = GameManager.gamePanels.PaperReadPanel;
+                paperText = GameManager.userInterface.PaperReadText;
             }
             else
             {
@@ -248,9 +263,9 @@ namespace HFPS.Player
             // If the player is holding another object, avoid interacting with the object
             otherHeld = GetComponent<DragRigidbody>().CheckHold();
 
-            if (gameManager.isPaused) return;
+            if (GameManager.isPaused) return;
 
-            if (objectRaycast && !antiSpam && firstExamine && firstExamine.examineType != InteractiveItem.ExamineType.None && !gameManager.isWeaponZooming)
+            if (objectRaycast && !antiSpam && firstExamine && firstExamine.examineType != InteractiveItem.ExamineType.None && !GameManager.isWeaponZooming)
             {
                 if (examineKey && !otherHeld)
                 {
@@ -387,11 +402,11 @@ namespace HFPS.Player
 
                         if (device == InputHandler.Device.MouseKeyboard)
                         {
-                            gameManager.ShowCursor(cursorShown);
+                            GameManager.ShowCursor(cursorShown);
                         }
                         else if (device != InputHandler.Device.None)
                         {
-                            gameManager.ShowConsoleCursor(cursorShown);
+                            GameManager.ShowConsoleCursor(cursorShown);
                         }
                     }
                 }
@@ -401,21 +416,21 @@ namespace HFPS.Player
 
                     if (device == InputHandler.Device.MouseKeyboard)
                     {
-                        gameManager.ShowCursor(false);
+                        GameManager.ShowCursor(false);
                     }
                     else if (device != InputHandler.Device.None)
                     {
-                        gameManager.ShowConsoleCursor(false);
+                        GameManager.ShowConsoleCursor(false);
                     }
                 }
 
                 if (cursorShown)
                 {
-                    Vector3 consoleCursorPos = gameManager.userInterface.ConsoleCursor.transform.position;
+                    Vector3 consoleCursorPos = GameManager.userInterface.ConsoleCursor.transform.position;
 
                     if (device != InputHandler.Device.MouseKeyboard && device != InputHandler.Device.None)
                     {
-                        gameManager.MoveConsoleCursor(movementVector);
+                        GameManager.MoveConsoleCursor(movementVector);
                     }
 
                     if (selectKey)
@@ -573,27 +588,27 @@ namespace HFPS.Player
                     {
                         if (priorityObject.itemType == InteractiveItem.ItemType.GenericItem)
                         {
-                            gameManager.ShowExamineSprites(btn2: priorityObject.allowExamineTake, btn3: priorityObject.examineRotate != InteractiveItem.ExamineRotate.None, btn4: priorityObject.enableCursor);
+                            GameManager.ShowExamineSprites(btn2: priorityObject.allowExamineTake, btn3: priorityObject.examineRotate != InteractiveItem.ExamineRotate.None, btn4: priorityObject.enableCursor);
                         }
                         else
                         {
-                            gameManager.ShowExamineSprites(btn2: inventory.CheckInventorySpace(), btn3: priorityObject.examineRotate != InteractiveItem.ExamineRotate.None, btn4: priorityObject.enableCursor);
+                            GameManager.ShowExamineSprites(btn2: inventory.CheckInventorySpace(), btn3: priorityObject.examineRotate != InteractiveItem.ExamineRotate.None, btn4: priorityObject.enableCursor);
                         }
                     }
                     else
                     {
-                        gameManager.ShowExamineSprites(btn2: false, btn3: priorityObject.examineRotate != InteractiveItem.ExamineRotate.None, btn4: priorityObject.enableCursor);
+                        GameManager.ShowExamineSprites(btn2: false, btn3: priorityObject.examineRotate != InteractiveItem.ExamineRotate.None, btn4: priorityObject.enableCursor);
                     }
                 }
                 else
                 {
-                    gameManager.ShowExamineSprites(btn2: false, btn3: priorityObject.examineRotate != InteractiveItem.ExamineRotate.None, btn4: priorityObject.enableCursor);
+                    GameManager.ShowExamineSprites(btn2: false, btn3: priorityObject.examineRotate != InteractiveItem.ExamineRotate.None, btn4: priorityObject.enableCursor);
                 }
             }
             else
             {
                 InteractiveItem secondItem = secondExamine.GetComponent<InteractiveItem>();
-                gameManager.ShowExamineSprites(btn2: secondItem.itemType != InteractiveItem.ItemType.OnlyExamine, btn3: priorityObject.examineRotate != InteractiveItem.ExamineRotate.None, btn4: priorityObject.enableCursor);
+                GameManager.ShowExamineSprites(btn2: secondItem.itemType != InteractiveItem.ItemType.OnlyExamine, btn3: priorityObject.examineRotate != InteractiveItem.ExamineRotate.None, btn4: priorityObject.enableCursor);
             }
         }
 
@@ -629,7 +644,7 @@ namespace HFPS.Player
                 bool canRotate = firstExamine.examineRotate != InteractiveItem.ExamineRotate.None;
                 bool canRead = !string.IsNullOrEmpty(firstExamine.paperText);
 
-                gameManager.ShowPaperExamineSprites(bp_Use, canRotate, canRead, ReadText);
+                GameManager.ShowPaperExamineSprites(bp_Use, canRotate, canRead, ReadText);
             }
 
             if (firstExamine.examineSound)
@@ -698,8 +713,8 @@ namespace HFPS.Player
             SetFloatingIconsVisible(false);
 
             delay.isEnabled = false;
-            gameManager.HideSprites(0);
-            gameManager.LockPlayerControls(false, false, false, 1, true, true, 1);
+            GameManager.HideSprites(0);
+            GameManager.LockPlayerControls(false, false, false, 1, true, true, 1);
             GetComponent<ScriptManager>().ScriptEnabledGlobal = false;
             distance = firstExamine.examineDist;
             itemSwitcher.FreeHands(true);
@@ -892,9 +907,9 @@ namespace HFPS.Player
 
             StopAllCoroutines();
             GetComponent<ScriptManager>().ScriptEnabledGlobal = true;
-            gameManager.ShowExamineName(false, "");
-            gameManager.HideSprites(1);
-            gameManager.ShowConsoleCursor(false);
+            GameManager.ShowExamineName(false, "");
+            GameManager.HideSprites(1);
+            GameManager.ShowConsoleCursor(false);
             scriptManager.IsExamineRaycast = false;
             firstExamine.floatingIcon = floatingIconEn;
             floatingItem.SetAllIconsVisible(true);
@@ -946,9 +961,9 @@ namespace HFPS.Player
             {
                 StopAllCoroutines();
                 GetComponent<ScriptManager>().ScriptEnabledGlobal = true;
-                gameManager.ShowExamineName(false, "");
-                gameManager.HideSprites(1);
-                gameManager.ShowConsoleCursor(false);
+                GameManager.ShowExamineName(false, "");
+                GameManager.HideSprites(1);
+                GameManager.ShowConsoleCursor(false);
                 floatingItem.SetAllIconsVisible(true);
                 delay.isEnabled = true;
                 PlayerCam.cullingMask = DefaultMainCamMask;
@@ -988,7 +1003,7 @@ namespace HFPS.Player
         {
             if (!string.IsNullOrEmpty(IntItem.examineTitle))
             {
-                gameManager.isExamining = true;
+                GameManager.isExamining = true;
 
                 if (c_ExamineObject != null)
                     StopCoroutine(c_ExamineObject);
@@ -996,11 +1011,11 @@ namespace HFPS.Player
                 if (!IntItem.isExamined)
                     c_ExamineObject = StartCoroutine(StartExamining(IntItem, PlaySound, ExamineOthers));
                 else
-                    gameManager.ShowExamineName(true, IntItem.examineTitle);
+                    GameManager.ShowExamineName(true, IntItem.examineTitle);
             }
             else
             {
-                gameManager.ShowExamineName(false, "");
+                GameManager.ShowExamineName(false, "");
             }
         }
 
@@ -1015,7 +1030,7 @@ namespace HFPS.Player
 
             yield return new WaitForSeconds(timeToExamine);
 
-            gameManager.ShowExamineName(true, IntItem.examineTitle);
+            GameManager.ShowExamineName(true, IntItem.examineTitle);
 
             if (examinedSound && PlaySound && !IntItem.isExamined)
             {
@@ -1034,7 +1049,7 @@ namespace HFPS.Player
         IEnumerator UnlockPlayer()
         {
             yield return new WaitForFixedUpdate();
-            gameManager.LockPlayerControls(true, true, false, 1, false, false, 2);
+            GameManager.LockPlayerControls(true, true, false, 1, false, false, 2);
             interact.CrosshairVisible(true);
         }
 

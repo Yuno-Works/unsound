@@ -32,7 +32,6 @@ namespace HFPS.Systems
         void Awake()
         {
             main = Utilities.MainPlayerCamera();
-            playerController = PlayerController.Instance;
         }
 
         void Start()
@@ -70,24 +69,29 @@ namespace HFPS.Systems
         {
             if (other.CompareTag("Player"))
             {
-                if (playerController.movementState == PlayerController.MovementState.Ladder)
-                {
-                    playerController.isInWater = false;
-                }
-                else
-                {
-                    playerController.isInWater = true;
+                playerController = other.GetComponent<PlayerController> ();
 
-                    if (isParent)
+                if ( playerController )
+                {
+                    if (playerController.movementState == PlayerController.MovementState.Ladder)
                     {
-                        playerController.PlayerInWater(transform.parent.position.y + foamHeight);
+                        playerController.isInWater = false;
                     }
                     else
                     {
-                        playerController.PlayerInWater(transform.position.y + foamHeight);
-                    }
+                        playerController.isInWater = true;
 
-                    playerController.characterState = PlayerController.CharacterState.Stand;
+                        if (isParent)
+                        {
+                            playerController.PlayerInWater(transform.parent.position.y + foamHeight);
+                        }
+                        else
+                        {
+                            playerController.PlayerInWater(transform.position.y + foamHeight);
+                        }
+
+                        playerController.characterState = PlayerController.CharacterState.Stand;
+                    }
                 }
             }
         }

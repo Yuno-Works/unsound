@@ -50,6 +50,21 @@ namespace HFPS.Systems
         private string preCompleteText;
         private string updateText;
 
+        private AudioSource SoundEffects
+        {
+            get
+            {
+                if (soundEffects == null)
+                {
+                    return soundEffects = ScriptManager.HasReference ? ScriptManager.Instance.SoundEffects : null;
+                }
+                return soundEffects;
+            }
+            set
+            {
+                soundEffects = value;
+            }
+        }
         private AudioSource soundEffects;
         private bool objShown;
 
@@ -91,7 +106,9 @@ namespace HFPS.Systems
                 throw new System.NullReferenceException("Please assign the objectives asset first!");
             }
 
-            soundEffects = ScriptManager.Instance.SoundEffects;
+            if ( ScriptManager.HasReference )
+                SoundEffects = ScriptManager.Instance.SoundEffects;
+
             objShown = true;
         }
 
@@ -198,11 +215,11 @@ namespace HFPS.Systems
 
         void PlaySound(AudioClip audio)
         {
-            if (audio != null)
+            if (audio != null && SoundEffects != null)
             {
-                soundEffects.clip = audio;
-                soundEffects.volume = volume;
-                soundEffects.Play();
+                SoundEffects.clip = audio;
+                SoundEffects.volume = volume;
+                SoundEffects.Play();
             }
         }
 

@@ -9,6 +9,7 @@ namespace HFPS.Editors
     public class InventoryEditor : Editor
     {
         private SerializedProperty pDatabase;
+        private SerializedProperty scriptManager;
         private SerializedProperty pPanels;
         private SerializedProperty pPrefabs;
         private SerializedProperty pContent;
@@ -21,6 +22,7 @@ namespace HFPS.Editors
         private void OnEnable()
         {
             pDatabase = serializedObject.FindProperty("inventoryDatabase");
+            scriptManager = serializedObject.FindProperty( "scriptManager" );
             pPanels = serializedObject.FindProperty("panels");
             pPrefabs = serializedObject.FindProperty("prefabs");
             pContent = serializedObject.FindProperty("content");
@@ -47,6 +49,8 @@ namespace HFPS.Editors
 
             EditorGUILayout.Space(15f);
             EditorGUILayout.LabelField("Inventory Properties", EditorStyles.boldLabel);
+
+            EditorGUILayout.PropertyField ( scriptManager );
 
             // icons: https://github.com/halak/unity-editor-icons
             EditorUtils.DrawHeaderProperty("Panels", "Transform Icon", pPanels);

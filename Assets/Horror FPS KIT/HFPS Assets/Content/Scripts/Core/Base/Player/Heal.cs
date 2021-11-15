@@ -5,15 +5,16 @@ namespace HFPS.Player
 {
     public class Heal : MonoBehaviour
     {
+        public PlayerController PlayerController;
         public float HealAmout;
         public AudioClip HealSound;
         public float HealVolume = 1f;
 
         public void UseObject()
         {
-            if (PlayerController.HasReference)
+            if ( PlayerController )
             {
-                if (PlayerController.Instance.gameObject.HasComponent(out HealthManager health))
+                if ( PlayerController.gameObject.HasComponent(out HealthManager health))
                 {
                     health.ApplyHeal(HealAmout);
 

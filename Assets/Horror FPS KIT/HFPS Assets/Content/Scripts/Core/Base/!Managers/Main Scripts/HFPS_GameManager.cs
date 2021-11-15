@@ -101,10 +101,10 @@ namespace HFPS.Systems
             public GameObject HelpButton3;
             public GameObject HelpButton4;
         }
-#endregion
+        #endregion
 
-#region Public Variables
-        public GameObject m_PlayerObj;
+        #region Public Variables
+        public GameObject PlayerObj;
         public string sceneLoaderName = "SceneLoader";
         public bool isCursorShown = false;
         public bool pauseTime = false;
@@ -161,14 +161,45 @@ namespace HFPS.Systems
         [HideInInspector] public bool isWeaponZooming;
         #endregion
 
-#region Private Variables
+        #region Private Variables
         //private PostProcessVolume postProcessing;
         //private ColorGrading colorGrading;
+        private GameObject playerObj;
         private SaveGameHandler saveHandler;
         private MenuController menuUI;
         private CutsceneManager cutscene;
+        private ScriptManager ScriptManager
+        {
+            get
+            {
+                if ( scriptManager == null )
+                {
+                    return scriptManager = ScriptManager.HasReference ? ScriptManager.Instance : null;
+                }
+                return scriptManager;
+            }
+            set
+            {
+                scriptManager = value;
+            }
+        }
         private ScriptManager scriptManager;
-        private HealthManager healthManager;
+        private HealthManager HealthManager
+        {
+            get
+            {
+                if ( _healthManager == null )
+                {
+                    _healthManager = PlayerObj?.GetComponent<HealthManager> ();
+                }
+                return _healthManager;
+            }
+            set
+            {
+                _healthManager = value;
+            }
+        }
+        private HealthManager _healthManager;
 
         protected List<IPauseEvent> PauseEvents = new List<IPauseEvent>();
         protected List<GameObject> Notifications = new List<GameObject>();
@@ -196,98 +227,25 @@ namespace HFPS.Systems
         private string ShowCursorText;
 #endregion
 
-        void Awake()
+        private void Awake()
         {
             InputHandler.OnInputsUpdated += OnInputsUpdated;
             TextsSource.Subscribe(OnInitTexts);
 
-            scriptManager = ScriptManager.Instance;
+            ScriptManager = ScriptManager.HasReference ? ScriptManager.Instance : null;
             menuUI = GetComponent<MenuController>();
             saveHandler = GetComponent<SaveGameHandler>();
             cutscene = GetComponent<CutsceneManager>();
-            healthManager = m_PlayerObj.GetComponent<HealthManager>();
-
-            // Arms camera post processing
-            /*if (scriptManager.ArmsCamera.GetComponent<PostProcessVolume>())
-            {
-                postProcessing = scriptManager.ArmsCamera.GetComponent<PostProcessVolume>();
-
-                if (postProcessing.profile.HasSettings<ColorGrading>())
-                {
-                    colorGrading = postProcessing.profile.GetSetting<ColorGrading>();
-                }
-                else if (useGreyscale)
-                {
-                    Debug.LogError($"[PostProcessing] Please add ColorGrading Effect to a {postProcessing.profile.name} profile in order to use Greyscale.");
-                }
-            }
-            else
-            {
-                Debug.LogError($"[PostProcessing] There is no PostProcessVolume script added to a {ScriptManager.Instance.ArmsCamera.gameObject.name}!");
-            }*/
+            HealthManager = PlayerObj?.GetComponent<HealthManager>();
 
             currentScene = SceneManager.GetActiveScene();
             SetupUIControls();
         }
 
-        void SetupUIControls()
+        private void Start ()
         {
-            InputHandler.GetInputAction("Pause").performed += OnPause;
-            InputHandler.GetInputAction("Inventory").performed += OnInventory;
-        }
-
-        void OnDestroy()
-        {
-            InputHandler.GetInputAction("Pause").performed -= OnPause;
-            InputHandler.GetInputAction("Inventory").performed -= OnInventory;
-            InputHandler.OnInputsUpdated -= OnInputsUpdated;
-            //colorGrading.saturation.Override(0);
-        }
-
-        private void OnInputsUpdated(InputHandler.Device device, ActionBinding[] bindings)
-        {
-            isGamepad = device != InputHandler.Device.MouseKeyboard;
-
-            if (isGamepad)
-            {
-                Cursor.visible = false;
-                Cursor.lockState = CursorLockMode.Locked;
-            }
-            else
-            {
-                if (menuUI.optionsShown)
-                {
-                    Cursor.visible = true;
-                    Cursor.lockState = CursorLockMode.None;
-                }
-                else
-                {
-                    Cursor.visible = false;
-                    Cursor.lockState = CursorLockMode.Locked;
-                }
-            }
-
-            bindPath_Use = InputHandler.CompositeOf("Use").bindingPath;
-            bindPath_Grab = InputHandler.CompositeOf("Examine").bindingPath;
-            bindPath_Throw = InputHandler.CompositeOf("Zoom").bindingPath;
-            bindPath_Rotate = InputHandler.CompositeOf("Fire").bindingPath;
-            bindPath_Cursor = InputHandler.CompositeOf("Zoom").bindingPath;
-        }
-
-        private void OnInitTexts()
-        {
-            ExamineText = TextsSource.GetText("Interact.Examine", "Examine");
-            TakeText = TextsSource.GetText("Interact.Take", "Take");
-            PutAwayText = TextsSource.GetText("Examine.PutAway", "Put Away");
-            RotateText = TextsSource.GetText("Examine.Rotate", "Rotate");
-            ThrowText = TextsSource.GetText("Examine.Throw", "Throw");
-            ShowCursorText = TextsSource.GetText("Examine.ShowCursor", "Show Cursor");
-        }
-
-        void Start()
-        {
-            SetupUI();
-            Unpause();
+            SetupUI ();
+            Unpause ();
 
             /*if (useGreyscale && colorGrading)
             {
@@ -295,13 +253,37 @@ namespace HFPS.Systems
                 colorGrading.saturation.Override(0);
             }*/
 
-            if (pauseTime)
+            if ( pauseTime )
             {
-                foreach (var Instance in FindObjectsOfType<MonoBehaviour>().Where(x => typeof(IPauseEvent).IsAssignableFrom(x.GetType())).Cast<IPauseEvent>())
+                foreach ( var Instance in FindObjectsOfType<MonoBehaviour> ().Where ( x => typeof ( IPauseEvent ).IsAssignableFrom ( x.GetType () ) ).Cast<IPauseEvent> () )
                 {
-                    PauseEvents.Add(Instance);
+                    PauseEvents.Add ( Instance );
                 }
             }
+        }
+
+        void OnDestroy()
+        {
+            if ( InputHandler.GetInputAction ( "Pause" ) != null ) InputHandler.GetInputAction("Pause").performed -= OnPause;
+            InputHandler.GetInputAction("Inventory").performed -= OnInventory;
+            InputHandler.OnInputsUpdated -= OnInputsUpdated;
+            //colorGrading.saturation.Override(0);
+        }
+
+        private void OnInitTexts ()
+        {
+            ExamineText = TextsSource.GetText ( "Interact.Examine", "Examine" );
+            TakeText = TextsSource.GetText ( "Interact.Take", "Take" );
+            PutAwayText = TextsSource.GetText ( "Examine.PutAway", "Put Away" );
+            RotateText = TextsSource.GetText ( "Examine.Rotate", "Rotate" );
+            ThrowText = TextsSource.GetText ( "Examine.Throw", "Throw" );
+            ShowCursorText = TextsSource.GetText ( "Examine.ShowCursor", "Show Cursor" );
+        }
+
+        void SetupUIControls ()
+        {
+            InputHandler.GetInputAction ( "Pause" ).performed += OnPause;
+            InputHandler.GetInputAction ( "Inventory" ).performed += OnInventory;
         }
 
         void SetupUI()
@@ -320,9 +302,39 @@ namespace HFPS.Systems
             gamePanels.ExaminePanel.SetActive(false);
         }
 
+        private void OnInputsUpdated ( InputHandler.Device device, ActionBinding [] bindings )
+        {
+            isGamepad = device != InputHandler.Device.MouseKeyboard;
+
+            if ( isGamepad )
+            {
+                Cursor.visible = false;
+                Cursor.lockState = CursorLockMode.Locked;
+            }
+            else
+            {
+                if ( menuUI.optionsShown )
+                {
+                    Cursor.visible = true;
+                    Cursor.lockState = CursorLockMode.None;
+                }
+                else
+                {
+                    Cursor.visible = false;
+                    Cursor.lockState = CursorLockMode.Locked;
+                }
+            }
+
+            bindPath_Use = InputHandler.CompositeOf ( "Use" ).bindingPath;
+            bindPath_Grab = InputHandler.CompositeOf ( "Examine" ).bindingPath;
+            bindPath_Throw = InputHandler.CompositeOf ( "Zoom" ).bindingPath;
+            bindPath_Rotate = InputHandler.CompositeOf ( "Fire" ).bindingPath;
+            bindPath_Cursor = InputHandler.CompositeOf ( "Zoom" ).bindingPath;
+        }
+
         private void OnInventory(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
         {
-            if (!isPaused && !healthManager.isDead && !cutscene.cutsceneRunning && ctx.ReadValueAsButton())
+            if (!isPaused && ( HealthManager != null && !HealthManager.isDead ) && !cutscene.cutsceneRunning && ctx.ReadValueAsButton())
             {
                 gamePanels.TabButtonPanel.SetActive(!gamePanels.TabButtonPanel.activeSelf);
                 gamePanels.MiscPanel.SetActive(!gamePanels.TabButtonPanel.activeSelf);
@@ -349,7 +361,7 @@ namespace HFPS.Systems
 
         private void OnPause(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
         {
-            if (!healthManager.isDead && !cutscene.cutsceneRunning && ctx.ReadValueAsButton())
+            if ( ( HealthManager != null && !HealthManager.isDead ) && !cutscene.cutsceneRunning && ctx.ReadValueAsButton())
             {
                 gamePanels.PauseGamePanel.SetActive(!gamePanels.PauseGamePanel.activeSelf);
                 gamePanels.MainGamePanel.SetActive(!gamePanels.MainGamePanel.activeSelf);
@@ -368,7 +380,7 @@ namespace HFPS.Systems
                 {
                     userInterface.Crosshair.enabled = false;
                     LockPlayerControls(false, false, true, 3, true);
-                    scriptManager.Get<PlayerFunctions>().enabled = false;
+                    ScriptManager.Get<PlayerFunctions>().enabled = false;
                     GetComponent<FloatingIconManager>().SetAllIconsVisible(false);
 
                     if (pauseTime)
@@ -385,7 +397,7 @@ namespace HFPS.Systems
                 {
                     userInterface.Crosshair.enabled = true;
                     LockPlayerControls(true, true, false, 3, false);
-                    scriptManager.Get<PlayerFunctions>().enabled = true;
+                    ScriptManager.Get<PlayerFunctions>().enabled = true;
                     GetComponent<FloatingIconManager>().SetAllIconsVisible(true);
 
                     if (gamePanels.TabButtonPanel.activeSelf)
@@ -528,16 +540,16 @@ namespace HFPS.Systems
                 playerLocked = false;
             }
 
-            if (!playerLocked)
+            if (!playerLocked && PlayerObj )
             {
                 //Controller Lock
-                m_PlayerObj.GetComponent<PlayerController>().isControllable = Controller;
-                scriptManager.Get<PlayerFunctions>().enabled = Controller;
-                scriptManager.ScriptGlobalState = Controller;
+                PlayerObj.GetComponent<PlayerController>().isControllable = Controller;
+                ScriptManager.Get<PlayerFunctions>().enabled = Controller;
+                ScriptManager.ScriptGlobalState = Controller;
                 LockScript<MouseLook>(Controller);
 
                 //Interact Lock
-                scriptManager.Get<InteractManager>().inUse = !Interact;
+                ScriptManager.Get<InteractManager>().inUse = !Interact;
             }
 
             //Show Cursor
@@ -609,9 +621,9 @@ namespace HFPS.Systems
         /// <param name="enabled">true = enabled, false = disabled</param>
         public void LockScript<T>(bool enabled) where T : MonoBehaviour
         {
-            if (scriptManager.gameObject.GetComponent<T>())
+            if (ScriptManager.gameObject.GetComponent<T>())
             {
-                scriptManager.gameObject.GetComponent<T>().enabled = enabled;
+                ScriptManager.gameObject.GetComponent<T>().enabled = enabled;
                 return;
             }
 
@@ -1115,8 +1127,8 @@ namespace HFPS.Systems
         public void ShowDeadPanel()
         {
             LockPlayerControls(false, false, true);
-            scriptManager.Get<ItemSwitcher>().DisableItems();
-            scriptManager.Get<ItemSwitcher>().enabled = false;
+            ScriptManager.Get<ItemSwitcher>().DisableItems();
+            ScriptManager.Get<ItemSwitcher>().enabled = false;
 
             GetComponent<MenuController>().ShowPanel("Dead"); //Show Dead UI and Buttons
             MenuController.FirstOrAltButton(gamePanels.DeadFirstButton, null);

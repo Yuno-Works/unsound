@@ -5,6 +5,7 @@ using ThunderWire.Utility;
 using ThunderWire.Helpers;
 using ThunderWire.Input;
 using HFPS.Systems;
+using Mirror;
 
 namespace HFPS.Player
 {
@@ -12,7 +13,7 @@ namespace HFPS.Player
     /// Main HFPS Player Movement Script
     /// </summary>
     [RequireComponent(typeof(CharacterController), typeof(HealthManager), typeof(FootstepsController))]
-    public class PlayerController : Singleton<PlayerController>
+    public class PlayerController : NetworkBehaviour
     {
         public const string VERSION = "3.1";
 
@@ -142,10 +143,9 @@ namespace HFPS.Player
         #endregion
 
         #region Public Variables
-        [ReadOnly] public CharacterState characterState = CharacterState.Stand;
-        [ReadOnly] public MovementState movementState = MovementState.Normal;
+        [ReadOnly, SyncVar] public CharacterState characterState = CharacterState.Stand;
+        [ReadOnly, SyncVar] public MovementState movementState = MovementState.Normal;
 
-        private CharacterController m_characterControl;
         public CharacterController CharacterControl
         {
             get
@@ -156,8 +156,12 @@ namespace HFPS.Player
                 return m_characterControl;
             }
         }
+        private CharacterController m_characterControl;
 
         // references
+        public HFPS_GameManager gameManager;
+        public ScriptManager scriptManager;
+        public InputHandler inputHandler;
         public StabilizeKickback baseKickback;
         public StabilizeKickback weaponKickback;
         public Transform mouseLook;
@@ -190,15 +194,15 @@ namespace HFPS.Player
         #endregion
 
         #region Input
-        private bool JumpPressed;
-        private bool RunPressed;
-        private bool CrouchPressed;
-        private bool PronePressed;
-        private bool ZoomPressed;
+        [SyncVar] private bool JumpPressed;
+        [SyncVar] private bool RunPressed;
+        [SyncVar] private bool CrouchPressed;
+        [SyncVar] private bool PronePressed;
+        [SyncVar] private bool ZoomPressed;
 
-        private float inputX;
-        private float inputY;
-        private Vector2 inputMovement;
+        [SyncVar] private float inputX;
+        [SyncVar] private float inputY;
+        [SyncVar] private Vector2 inputMovement;
 
         private bool proneTimeStart;
         private float proneTime;
@@ -208,23 +212,21 @@ namespace HFPS.Player
         #endregion
 
         #region Hidden Variables
-        [HideInInspector] public bool ladderReady;
-        [HideInInspector] public bool isControllable;
-        [HideInInspector] public bool isRunning;
-        [HideInInspector] public bool isInWater;
-        [HideInInspector] public bool sliding;
-        [HideInInspector] public bool shakeCamera;
-        [HideInInspector] public bool steadyArms;
-        [HideInInspector] public float velMagnitude;
-        [HideInInspector] public float movementSpeed;
+        [HideInInspector, SyncVar] public bool ladderReady;
+        [HideInInspector, SyncVar] public bool isControllable;
+        [HideInInspector, SyncVar] public bool isRunning;
+        [HideInInspector, SyncVar] public bool isInWater;
+        [HideInInspector, SyncVar] public bool sliding;
+        [HideInInspector, SyncVar] public bool shakeCamera;
+        [HideInInspector, SyncVar] public bool steadyArms;
+        [HideInInspector, SyncVar] public float velMagnitude;
+        [HideInInspector, SyncVar] public float movementSpeed;
         #endregion
 
         #region Private Variables
         protected Timekeeper timekeeper = new Timekeeper();
         private (string, string) ExitLadder = ("GameUI.ExitLadder", "Exit Ladder");
 
-        private HFPS_GameManager gameManager;
-        private ScriptManager scriptManager;
         private ItemSwitcher itemSwitcher;
         private HealthManager healthManager;
         private FootstepsController footsteps;
@@ -268,9 +270,9 @@ namespace HFPS.Player
         {
             footsteps = GetComponent<FootstepsController>();
             healthManager = GetComponent<HealthManager>();
-            gameManager = HFPS_GameManager.Instance;
-            scriptManager = ScriptManager.Instance;
             itemSwitcher = scriptManager.Get<ItemSwitcher>();
+
+            //InputHandler.SetInstance ( inputHandler );
 
             TextsSource.Subscribe(OnInitTexts);
             gravity = controllerSettings.baseGravity * 2;
@@ -278,6 +280,8 @@ namespace HFPS.Player
 
         void OnInitTexts()
         {
+            if ( !isLocalPlayer ) return;
+
             string defaultText = ExitLadder.Item2;
             ExitLadder.Item2 = TextsSource.GetText(ExitLadder.Item1, defaultText);
 
@@ -289,6 +293,8 @@ namespace HFPS.Player
 
         void Start()
         {
+            if ( !isLocalPlayer ) return;
+
             slideAngleLimit = CharacterControl.slopeLimit - 0.2f;
 
             if (cameraHeadBob.cameraAnimations)
@@ -310,31 +316,63 @@ namespace HFPS.Player
             SetPlayerMaxStamina(staminaSettings.playerMaxStamina);
         }
 
-        void Update()
+        [Command]
+        void CmdGetInput ( Vector3 movement, int device, float inputSmoothing )
         {
-            velMagnitude = CharacterControl.velocity.magnitude;
-
-            void GetInput()
+            if ( ( movement ) != null )
             {
-                Vector2 movement;
-
-                if ((movement = InputHandler.ReadInput<Vector2>("Move")) != null)
+                if ( device != ( int ) InputHandler.Device.MouseKeyboard )
                 {
-                    if (InputHandler.CurrentDevice != InputHandler.Device.MouseKeyboard)
-                    {
-                        inputX = movement.x;
-                        inputY = movement.y;
-                        inputMovement = movement;
-                    }
-                    else
-                    {
-                        inputY = Mathf.MoveTowards(inputY, movement.y, Time.deltaTime * controllerSettings.inputSmoothing);
-                        inputX = Mathf.MoveTowards(inputX, movement.x, Time.deltaTime * controllerSettings.inputSmoothing);
-                        inputMovement.y = inputY;
-                        inputMovement.x = inputX;
-                    }
+                    inputX = movement.x;
+                    inputY = movement.y;
+                    inputMovement = movement;
+                }
+                else
+                {
+                    inputX = Mathf.MoveTowards ( inputX, movement.x, Time.deltaTime * inputSmoothing );
+                    inputY = Mathf.MoveTowards ( inputY, movement.y, Time.deltaTime * inputSmoothing );
+                    inputMovement.x = inputX;
+                    inputMovement.y = inputY;
                 }
             }
+        }
+
+        void GetInput ()
+        {
+            Vector2 movement;
+
+            if ( ( movement = InputHandler.ReadInput<Vector2> ( "Move" ) ) != null )
+            {
+                if ( InputHandler.CurrentDevice != InputHandler.Device.MouseKeyboard )
+                {
+                    inputX = movement.x;
+                    inputY = movement.y;
+                    inputMovement = movement;
+                }
+                else
+                {
+                    inputX = Mathf.MoveTowards ( inputX, movement.x, Time.deltaTime * controllerSettings.inputSmoothing );
+                    inputY = Mathf.MoveTowards ( inputY, movement.y, Time.deltaTime * controllerSettings.inputSmoothing );
+                    inputMovement.x = inputX;
+                    inputMovement.y = inputY;
+                }
+            }
+        }
+
+        [Command]
+        void CmdSetVelocityMagnitude ( float magnitude )
+        {
+            velMagnitude = magnitude;
+        }
+
+        void Update()
+        {
+            // Break update if not local player
+            if ( !isLocalPlayer ) return;
+
+            CmdSetVelocityMagnitude ( velMagnitude = CharacterControl.velocity.magnitude );
+
+            //void GetInput ()
 
             //Break update when player is dead and ragdoll is activated
             if (healthManager.isDead)
@@ -397,7 +435,7 @@ namespace HFPS.Player
 
                 if (!InputHandler.IsCompositesSame("Crouch", "Prone"))
                 {
-                    CrouchPressed = InputHandler.ReadButtonOnce(this, "Crouch");
+                    CrouchPressed = InputHandler.ReadButtonOnce ( this, "Crouch" );
                     PronePressed = InputHandler.ReadButtonOnce(this, "Prone");
                 }
                 else
@@ -436,7 +474,8 @@ namespace HFPS.Player
 
                 if (isControllable)
                 {
-                    GetInput();
+                    CmdGetInput ( InputHandler.ReadInput<Vector2> ( "Move" ), ( int ) InputHandler.CurrentDevice, controllerSettings.inputSmoothing );
+                    GetInput ();
 
                     if (inputDevice != InputHandler.Device.MouseKeyboard && inputY < 0.7f)
                     {
@@ -527,7 +566,7 @@ namespace HFPS.Player
 
                 if (JumpPressed)
                 {
-                    LadderExit();
+                    CmdLadderExit();
                 }
             }
             else
@@ -1076,7 +1115,8 @@ namespace HFPS.Player
         /// <summary>
         /// Use ladder function
         /// </summary>
-        public void UseLadder(Transform center, Vector2 look, bool climbUp)
+        [Command]
+        public void CmdUseLadder(Transform center, Vector2 look, bool climbUp)
         {
             ladderReady = false;
             characterState = CharacterState.Stand;
@@ -1084,6 +1124,8 @@ namespace HFPS.Player
             moveDirection = Vector3.zero;
             inputX = 0f;
             inputY = 0f;
+
+            Debug.Assert ( scriptManager != null, "Script Manager is null." );
 
             if (climbUp)
             {
@@ -1106,7 +1148,8 @@ namespace HFPS.Player
         /// <summary>
         /// Exit ladder movement
         /// </summary>
-        public void LadderExit()
+        [Command]
+        public void CmdLadderExit()
         {
             if (ladderReady)
             {

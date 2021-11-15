@@ -102,9 +102,9 @@ namespace HFPS.Editors
             GameObject Player = PrefabUtility.InstantiatePrefab(Resources.Load<GameObject>(PATH_PLAYER)) as GameObject;
 
             Player.transform.position = new Vector3(0, 0, 0);
-            GameManager.GetComponent<HFPS_GameManager>().m_PlayerObj = Player;
+            GameManager.GetComponent<HFPS_GameManager>().PlayerObj = Player;
             GameManager.GetComponent<SaveGameHandler>().constantSaveables = new System.Collections.Generic.List<SaveableDataPair>();
-            Player.GetComponentInChildren<ScriptManager>().m_GameManager = GameManager.GetComponent<HFPS_GameManager>();
+            Player.GetComponentInChildren<ScriptManager>().GameManager = GameManager.GetComponent<HFPS_GameManager>();
         }
 
         [MenuItem("Tools/HFPS KIT/Setup/Game/FirstPerson", true)]
@@ -135,9 +135,9 @@ namespace HFPS.Editors
             GameObject Player = PrefabUtility.InstantiatePrefab(Resources.Load<GameObject>(PATH_HERO)) as GameObject;
 
             Player.transform.position = new Vector3(0, 0, 0);
-            GameManager.GetComponent<HFPS_GameManager>().m_PlayerObj = Player;
+            GameManager.GetComponent<HFPS_GameManager>().PlayerObj = Player;
             GameManager.GetComponent<SaveGameHandler>().constantSaveables = new System.Collections.Generic.List<SaveableDataPair>();
-            Player.GetComponentInChildren<ScriptManager>().m_GameManager = GameManager.GetComponent<HFPS_GameManager>();
+            Player.GetComponentInChildren<ScriptManager>().GameManager = GameManager.GetComponent<HFPS_GameManager>();
         }
 
         [MenuItem("Tools/HFPS KIT/Setup/Game/FirstPerson Body", true)]
@@ -215,8 +215,8 @@ namespace HFPS.Editors
                 Player = PrefabUtility.InstantiatePrefab(Resources.Load<GameObject>(PATH_PLAYER)) as GameObject;
             }
 
-            GameManager.GetComponent<HFPS_GameManager>().m_PlayerObj = Player;
-            Player.GetComponentInChildren<ScriptManager>().m_GameManager = GameManager.GetComponent<HFPS_GameManager>();
+            GameManager.GetComponent<HFPS_GameManager>().PlayerObj = Player;
+            Player.GetComponentInChildren<ScriptManager>().GameManager = GameManager.GetComponent<HFPS_GameManager>();
 
             EditorUtility.SetDirty(GameManager.GetComponent<HFPS_GameManager>());
             EditorUtility.SetDirty(Player.GetComponentInChildren<ScriptManager>());
@@ -248,8 +248,8 @@ namespace HFPS.Editors
                 Player = PrefabUtility.InstantiatePrefab(Resources.Load<GameObject>(PATH_HERO)) as GameObject;
             }
 
-            GameManager.GetComponent<HFPS_GameManager>().m_PlayerObj = Player;
-            Player.GetComponentInChildren<ScriptManager>().m_GameManager = GameManager.GetComponent<HFPS_GameManager>();
+            GameManager.GetComponent<HFPS_GameManager>().PlayerObj = Player;
+            Player.GetComponentInChildren<ScriptManager>().GameManager = GameManager.GetComponent<HFPS_GameManager>();
 
             EditorUtility.SetDirty(GameManager.GetComponent<HFPS_GameManager>());
             EditorUtility.SetDirty(Player.GetComponentInChildren<ScriptManager>());

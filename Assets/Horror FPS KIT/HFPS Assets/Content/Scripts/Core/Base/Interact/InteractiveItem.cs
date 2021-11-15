@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using Newtonsoft.Json.Linq;
 using ThunderWire.Utility;
 using HFPS.UI;
+using HFPS.Player;
 
 #if TW_LOCALIZATION_PRESENT
 using ThunderWire.Localization;
@@ -115,18 +117,71 @@ namespace HFPS.Systems
         public bool floatingIconState = true;
         public Vector3 lastFloorPosition;
 
+        public ScriptManager ScriptManager
+        {
+            get
+            {
+                if ( m_scriptManager == null )
+                {
+                    PlayerController localPlayer = FindObjectsOfType<PlayerController> ().FirstOrDefault ( c => c.isLocalPlayer );
+                    return m_scriptManager = localPlayer?.scriptManager;
+                }
+                return m_scriptManager;
+            }
+            private set
+            {
+                m_scriptManager = value;
+            }
+        }
+        private ScriptManager m_scriptManager = null;
+        public Inventory Inventory
+        {
+            get
+            {
+                if ( m_inventory == null )
+                {
+                    return m_inventory = ScriptManager?.Inventory;
+                }
+                return m_inventory;
+            }
+            private set
+            {
+                m_inventory = value;
+            }
+        }
+        private Inventory m_inventory = null;
+
+        private AudioSource AudioSource
+        {
+            get
+            {
+                if ( audioSource == null )
+                {
+                    return audioSource = ScriptManager?.SoundEffects;
+                }
+                return audioSource;
+            }
+            set
+            {
+                audioSource = value;
+            }
+        }
         private AudioSource audioSource;
         private string objectParentPath;
 
         void Awake()
         {
-            if (Inventory.HasReference && (itemType == ItemType.InventoryItem || itemType == ItemType.SwitcherItem))
+            if ( Inventory )
             {
-                Inventory.Subscribe(OnInventoryItemUpdate);
-            }
-            else if(examineType != ExamineType.None)
-            {
-                if (useItemTitle) examineTitle = titleOrMsg;
+                if ( itemType == ItemType.InventoryItem || itemType == ItemType.SwitcherItem )
+                {
+                    Inventory.Subscribe ( OnInventoryItemUpdate );
+                    //Inventory.Subscribe(OnInventoryItemUpdate);
+                }
+                else if(examineType != ExamineType.None)
+                {
+                    if (useItemTitle) examineTitle = titleOrMsg;
+                }
             }
 
 #if TW_LOCALIZATION_PRESENT
@@ -152,9 +207,9 @@ namespace HFPS.Systems
             }
 #endif
 
-            if (ScriptManager.HasReference)
+            if ( ScriptManager )
             {
-                audioSource = ScriptManager.Instance.SoundEffects;
+                AudioSource = ScriptManager.SoundEffects;
             }
 
             if (itemData == null)
@@ -201,7 +256,7 @@ namespace HFPS.Systems
 
         public void OnInventoryItemUpdate()
         {
-            Item item = Inventory.Instance.GetItem(inventoryID);
+            Item item = Inventory.GetItem(inventoryID);
 
             if (item != null)
             {
@@ -259,11 +314,11 @@ namespace HFPS.Systems
         {
             if (itemType == ItemType.OnlyExamine) return;
 
-            if (pickupSound)
+            if ( pickupSound && AudioSource )
             {
-                audioSource.clip = pickupSound;
-                audioSource.volume = pickupVolume;
-                audioSource.Play();
+                AudioSource.clip = pickupSound;
+                AudioSource.volume = pickupVolume;
+                AudioSource.Play();
             }
 
             if (GetComponent<ItemEvent>())

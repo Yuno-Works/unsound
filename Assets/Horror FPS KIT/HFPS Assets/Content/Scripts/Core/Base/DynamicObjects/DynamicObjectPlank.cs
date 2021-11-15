@@ -27,7 +27,7 @@ namespace HFPS.Systems
         {
             if (HFPS_GameManager.HasReference)
             {
-                Physics.IgnoreCollision(GetComponent<Collider>(), HFPS_GameManager.Instance.m_PlayerObj.GetComponent<Collider>());
+                Physics.IgnoreCollision(GetComponent<Collider>(), HFPS_GameManager.Instance.PlayerObj.GetComponent<Collider>());
             }
         }
 

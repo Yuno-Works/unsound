@@ -17,7 +17,7 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
             {
                 if (!(Reference = FindObjectOfType<T>()))
                 {
-                    throw new MissingReferenceException($"The singleton reference to a {typeof(T).Name} does not found!");
+                    throw new MissingReferenceException($"The singleton reference to a {typeof(T).Name} is not found!");
                 }
             }
 
@@ -39,6 +39,11 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
     }
 
     protected static T Reference;
+
+    public static void SetInstance ( T reference )
+    {
+        Reference = reference;
+    }
 
     protected void Reset()
     {

@@ -6,6 +6,7 @@
 using System;
 using UnityEngine;
 //using UnityEngine.Rendering.PostProcessing;
+using HFPS.Player;
 
 namespace HFPS.Systems
 {
@@ -15,13 +16,16 @@ namespace HFPS.Systems
     public class ScriptManager : Singleton<ScriptManager>
     {
         [Header("Main Scripts")]
-        public HFPS_GameManager m_GameManager;
+        public HFPS_GameManager GameManager;
+        public PlayerController PlayerController;
+        public HealthManager HealthManager;
+        public Inventory Inventory;
 
         [Header("Cameras")]
         public Camera MainCamera;
         public Camera ArmsCamera;
 
-        [Header("Post-Processing")]
+        //[Header("Post-Processing")]
         //public PostProcessVolume MainPostProcess;
         //public PostProcessVolume ArmsPostProcess;
 

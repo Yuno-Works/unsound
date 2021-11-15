@@ -44,7 +44,22 @@ namespace HFPS.Systems
         public float distanceKeep = 4.5f;
         public float distanceRemove = 6;
 
-        private GameObject Player;
+        private GameObject Player
+        {
+            get
+            {
+                if ( player == null )
+                {
+                    return player = gameManager.PlayerObj;
+                }
+                return player;
+            }
+            set
+            {
+                player = value;
+            }
+        }
+        private GameObject player;
         private GameObject Cam;
 
         private bool IsVisibleGlobal;
@@ -52,8 +67,8 @@ namespace HFPS.Systems
         void Awake()
         {
             gameManager = GetComponent<HFPS_GameManager>();
-            Player = gameManager.m_PlayerObj;
-            Cam = Utilities.MainPlayerCamera().gameObject;
+            Player = gameManager.PlayerObj;
+            Cam = Utilities.MainPlayerCamera()?.gameObject;
         }
 
         void Update()

@@ -4,11 +4,15 @@ using ThunderWire.Helpers;
 using ThunderWire.Utility;
 using ThunderWire.Input;
 using HFPS.Systems;
+using Mirror;
 
 namespace HFPS.Player
 {
     public class MouseLook : MonoBehaviour
     {
+        [SerializeField]
+        private NetworkIdentity m_networkIdentity = null;
+
         protected Timekeeper timekeeper = new Timekeeper();
 
         private Camera mainCamera;
@@ -67,17 +71,23 @@ namespace HFPS.Player
         {
             player = transform.root.gameObject;
 
+            if ( !m_networkIdentity.isLocalPlayer ) return;
+
             OptionsController.OnOptionsUpdated += OnOptionsUpdated;
             InputHandler.OnDeviceMasked += _ => OnOptionsUpdated();
         }
 
         private void OnDestroy()
         {
+            if ( !m_networkIdentity.isLocalPlayer ) return;
+
             InputHandler.OnDeviceMasked -= _ => OnOptionsUpdated();
         }
 
         void Start()
         {
+            if ( !m_networkIdentity.isLocalPlayer ) return;
+
             if (!isLocalCamera)
             {
                 mainCamera = Utilities.MainPlayerCamera();
@@ -140,6 +150,8 @@ namespace HFPS.Player
 
         void Update()
         {
+            if ( !m_networkIdentity.isLocalPlayer ) return;
+
             timekeeper.UpdateTime();
 
             if (!lockLook)

@@ -13,6 +13,9 @@ namespace HFPS.Editors
         private SerializedProperty movementState;
 
         // references
+        private SerializedProperty gameManager;
+        private SerializedProperty scriptManager;
+        private SerializedProperty inputHandler;
         private SerializedProperty baseKickback;
         private SerializedProperty weaponKickback;
         private SerializedProperty mouseLook;
@@ -48,6 +51,9 @@ namespace HFPS.Editors
             characterState = serializedObject.FindProperty("characterState");
             movementState = serializedObject.FindProperty("movementState");
 
+            gameManager = serializedObject.FindProperty ( "gameManager" );
+            scriptManager = serializedObject.FindProperty ( "scriptManager" );
+            inputHandler = serializedObject.FindProperty ( "inputHandler" );
             baseKickback = serializedObject.FindProperty("baseKickback");
             weaponKickback = serializedObject.FindProperty("weaponKickback");
             mouseLook = serializedObject.FindProperty("mouseLook");
@@ -96,6 +102,9 @@ namespace HFPS.Editors
             EditorUtils.TrIconText("References", "FixedJoint Icon", EditorStyles.boldLabel);
             using (new EditorGUI.IndentLevelScope())
             {
+                EditorGUILayout.PropertyField ( gameManager );
+                EditorGUILayout.PropertyField ( scriptManager );
+                EditorGUILayout.PropertyField ( inputHandler );
                 EditorGUILayout.PropertyField(baseKickback);
                 EditorGUILayout.PropertyField(weaponKickback);
                 EditorGUILayout.PropertyField(mouseLook);

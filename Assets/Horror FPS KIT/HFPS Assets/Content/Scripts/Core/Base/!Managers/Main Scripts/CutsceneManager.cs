@@ -115,7 +115,7 @@ namespace HFPS.Systems
                     }
                 }
 
-                scriptManager.m_GameManager.LockPlayerControls(false, false, false);
+                scriptManager.GameManager.LockPlayerControls(false, false, false);
 
                 if (fadePanel)
                 {
