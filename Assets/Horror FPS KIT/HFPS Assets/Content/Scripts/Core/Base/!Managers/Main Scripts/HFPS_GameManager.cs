@@ -168,38 +168,10 @@ namespace HFPS.Systems
         private SaveGameHandler saveHandler;
         private MenuController menuUI;
         private CutsceneManager cutscene;
-        private ScriptManager ScriptManager
-        {
-            get
-            {
-                if ( scriptManager == null )
-                {
-                    return scriptManager = ScriptManager.HasReference ? ScriptManager.Instance : null;
-                }
-                return scriptManager;
-            }
-            set
-            {
-                scriptManager = value;
-            }
-        }
+        [SerializeField]
         private ScriptManager scriptManager;
-        private HealthManager HealthManager
-        {
-            get
-            {
-                if ( _healthManager == null )
-                {
-                    _healthManager = PlayerObj?.GetComponent<HealthManager> ();
-                }
-                return _healthManager;
-            }
-            set
-            {
-                _healthManager = value;
-            }
-        }
-        private HealthManager _healthManager;
+        [SerializeField]
+        private HealthManager healthManager;
 
         protected List<IPauseEvent> PauseEvents = new List<IPauseEvent>();
         protected List<GameObject> Notifications = new List<GameObject>();
@@ -232,11 +204,9 @@ namespace HFPS.Systems
             InputHandler.OnInputsUpdated += OnInputsUpdated;
             TextsSource.Subscribe(OnInitTexts);
 
-            ScriptManager = ScriptManager.HasReference ? ScriptManager.Instance : null;
             menuUI = GetComponent<MenuController>();
             saveHandler = GetComponent<SaveGameHandler>();
             cutscene = GetComponent<CutsceneManager>();
-            HealthManager = PlayerObj?.GetComponent<HealthManager>();
 
             currentScene = SceneManager.GetActiveScene();
             SetupUIControls();
@@ -334,7 +304,7 @@ namespace HFPS.Systems
 
         private void OnInventory(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
         {
-            if (!isPaused && ( HealthManager != null && !HealthManager.isDead ) && !cutscene.cutsceneRunning && ctx.ReadValueAsButton())
+            if (!isPaused && ( healthManager != null && !healthManager.isDead ) && !cutscene.cutsceneRunning && ctx.ReadValueAsButton())
             {
                 gamePanels.TabButtonPanel.SetActive(!gamePanels.TabButtonPanel.activeSelf);
                 gamePanels.MiscPanel.SetActive(!gamePanels.TabButtonPanel.activeSelf);
@@ -361,7 +331,7 @@ namespace HFPS.Systems
 
         private void OnPause(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
         {
-            if ( ( HealthManager != null && !HealthManager.isDead ) && !cutscene.cutsceneRunning && ctx.ReadValueAsButton())
+            if ( ( healthManager != null && !healthManager.isDead ) && !cutscene.cutsceneRunning && ctx.ReadValueAsButton())
             {
                 gamePanels.PauseGamePanel.SetActive(!gamePanels.PauseGamePanel.activeSelf);
                 gamePanels.MainGamePanel.SetActive(!gamePanels.MainGamePanel.activeSelf);
@@ -380,7 +350,7 @@ namespace HFPS.Systems
                 {
                     userInterface.Crosshair.enabled = false;
                     LockPlayerControls(false, false, true, 3, true);
-                    ScriptManager.Get<PlayerFunctions>().enabled = false;
+                    scriptManager.Get<PlayerFunctions>().enabled = false;
                     GetComponent<FloatingIconManager>().SetAllIconsVisible(false);
 
                     if (pauseTime)
@@ -397,7 +367,7 @@ namespace HFPS.Systems
                 {
                     userInterface.Crosshair.enabled = true;
                     LockPlayerControls(true, true, false, 3, false);
-                    ScriptManager.Get<PlayerFunctions>().enabled = true;
+                    scriptManager.Get<PlayerFunctions>().enabled = true;
                     GetComponent<FloatingIconManager>().SetAllIconsVisible(true);
 
                     if (gamePanels.TabButtonPanel.activeSelf)
@@ -544,12 +514,12 @@ namespace HFPS.Systems
             {
                 //Controller Lock
                 PlayerObj.GetComponent<PlayerController>().isControllable = Controller;
-                ScriptManager.Get<PlayerFunctions>().enabled = Controller;
-                ScriptManager.ScriptGlobalState = Controller;
+                scriptManager.Get<PlayerFunctions>().enabled = Controller;
+                scriptManager.ScriptGlobalState = Controller;
                 LockScript<MouseLook>(Controller);
 
                 //Interact Lock
-                ScriptManager.Get<InteractManager>().inUse = !Interact;
+                scriptManager.Get<InteractManager>().inUse = !Interact;
             }
 
             //Show Cursor
@@ -621,9 +591,9 @@ namespace HFPS.Systems
         /// <param name="enabled">true = enabled, false = disabled</param>
         public void LockScript<T>(bool enabled) where T : MonoBehaviour
         {
-            if (ScriptManager.gameObject.GetComponent<T>())
+            if (scriptManager.gameObject.GetComponent<T>())
             {
-                ScriptManager.gameObject.GetComponent<T>().enabled = enabled;
+                scriptManager.gameObject.GetComponent<T>().enabled = enabled;
                 return;
             }
 
@@ -1127,8 +1097,8 @@ namespace HFPS.Systems
         public void ShowDeadPanel()
         {
             LockPlayerControls(false, false, true);
-            ScriptManager.Get<ItemSwitcher>().DisableItems();
-            ScriptManager.Get<ItemSwitcher>().enabled = false;
+            scriptManager.Get<ItemSwitcher>().DisableItems();
+            scriptManager.Get<ItemSwitcher>().enabled = false;
 
             GetComponent<MenuController>().ShowPanel("Dead"); //Show Dead UI and Buttons
             MenuController.FirstOrAltButton(gamePanels.DeadFirstButton, null);

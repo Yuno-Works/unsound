@@ -1241,6 +1241,8 @@ MonoBehaviour:
   isExamining: 0
   isLocked: 0
   isWeaponZooming: 0
+  scriptManager: {fileID: 2044030335574967360}
+  healthManager: {fileID: 2043571047837966744}
 --- !u!114 &3466172910938190398
 MonoBehaviour:
   m_ObjectHideFlags: 0

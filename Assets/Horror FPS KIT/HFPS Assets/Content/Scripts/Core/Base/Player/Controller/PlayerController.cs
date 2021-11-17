@@ -360,6 +360,18 @@ namespace HFPS.Player
         }
 
         [Command]
+        void CmdRunPressed ( bool isPressed )
+        {
+            RunPressed = isPressed;
+        }
+
+        [Command]
+        void CmdIsRunning ( bool isRunning )
+        {
+            this.isRunning = isRunning;
+        }
+
+        [Command]
         void CmdSetVelocityMagnitude ( float magnitude )
         {
             velMagnitude = magnitude;
@@ -402,7 +414,8 @@ namespace HFPS.Player
                         {
                             if (InputHandler.ReadButtonOnce(this, "Run"))
                             {
-                                RunPressed = !RunPressed;
+                                CmdRunPressed ( RunPressed = !RunPressed );
+                                //RunPressed = !RunPressed;
                             }
                         }
                         else
@@ -411,12 +424,14 @@ namespace HFPS.Player
                             {
                                 if (!RunPressed && currentStamina > 0)
                                 {
-                                    RunPressed = true;
+                                    CmdRunPressed ( RunPressed = true );
+                                    //RunPressed = true;
                                 }
                             }
                             else if (currentStamina < 0)
                             {
-                                RunPressed = false;
+                                CmdRunPressed ( RunPressed = false );
+                                //RunPressed = false;
                             }
                         }
                     }
@@ -424,11 +439,13 @@ namespace HFPS.Player
                     {
                         if (!controllerFeatures.enableStamina)
                         {
-                            RunPressed = InputHandler.ReadButton("Run");
+                            CmdRunPressed ( RunPressed = InputHandler.ReadButton ( "Run" ) );
+                            //RunPressed = InputHandler.ReadButton ( "Run" );
                         }
                         else
                         {
-                            RunPressed = InputHandler.ReadButton("Run") && currentStamina > 0;
+                            CmdRunPressed ( RunPressed = InputHandler.ReadButton("Run") && currentStamina > 0 );
+                            //RunPressed = InputHandler.ReadButton("Run") && currentStamina > 0;
                         }
                     }
                 }
@@ -479,12 +496,14 @@ namespace HFPS.Player
 
                     if (inputDevice != InputHandler.Device.MouseKeyboard && inputY < 0.7f)
                     {
-                        RunPressed = false;
+                        CmdRunPressed ( RunPressed = false );
+                        //RunPressed = false;
                     }
                 }
                 else
                 {
-                    RunPressed = false;
+                    CmdRunPressed ( RunPressed = false );
+                    //RunPressed = false;
                     inputX = 0f;
                     inputY = 0f;
                     inputMovement = Vector2.zero;
@@ -512,7 +531,8 @@ namespace HFPS.Player
 
                     if(RunPressed && currentStamina <= 0f)
                     {
-                        RunPressed = false;
+                        CmdRunPressed ( RunPressed = false );
+                        //RunPressed = false
                     }
 
                     if (!isStaminaShown)
@@ -545,7 +565,8 @@ namespace HFPS.Player
 
             if (movementState == MovementState.Ladder)
             {
-                isRunning = false;
+                CmdIsRunning ( isRunning = false );
+                //isRunning = false;
                 highestPoint = transform.position.y;
 
                 if (armsHeadBob.armsAnimations)
@@ -584,11 +605,13 @@ namespace HFPS.Player
                     //Change player affect type to running when they are not in water
                     if (characterState == CharacterState.Stand && !isInWater)
                     {
-                        isRunning = isControllable && RunPressed && inputY > 0.5f && !ZoomPressed;
+                        CmdIsRunning ( isRunning = isControllable && RunPressed && inputY > 0.5f && !ZoomPressed );
+                        //isRunning = isControllable && RunPressed && inputY > 0.5f && !ZoomPressed;
                     }
                     else
                     {
-                        isRunning = false;
+                        CmdIsRunning ( isRunning = false );
+                        //isRunning = false;
                     }
 
                     if (isSliding)

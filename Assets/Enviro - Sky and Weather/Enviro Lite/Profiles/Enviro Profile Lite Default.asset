@@ -1293,13 +1293,13 @@ MonoBehaviour:
     useUnityFog: 0
     distanceFog: 1
     useRadialDistance: 1
-    startDistance: 123.3
-    distanceFogIntensity: 1.13
-    maximumFogDensity: 0.804
+    startDistance: 95.4
+    distanceFogIntensity: 0.46
+    maximumFogDensity: 1
     heightFog: 1
-    height: 14.4
-    heightFogIntensity: 0.861
-    heightDensity: 1.6
+    height: 56.5
+    heightFogIntensity: 0.1
+    heightDensity: 1.6000011
     noiseIntensity: 1
     noiseIntensityOffset: 0.3
     noiseScale: 0.001
@@ -1649,12 +1649,12 @@ MonoBehaviour:
     GlobalParticleEmissionRates: 1
     UpdateInterval: 0.5
   viewMode: 3
-  viewModeLW: 0
+  viewModeLW: 6
   showPlayerSetup: 0
   showRenderingSetup: 0
-  showComponentsSetup: 1
-  showTimeUI: 0
+  showComponentsSetup: 0
+  showTimeUI: 1
   showWeatherUI: 1
   showAudioUI: 1
   showEffectsUI: 0
-  modified: 1
+  modified: 0
