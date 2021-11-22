@@ -17360,9 +17360,9 @@ MonoBehaviour:
   WallHitSpeed: 1
   WallHitHideWeapon: {x: 0, y: -0.194, z: -0.253}
   WallHitShowWeapon: {x: 0, y: 0, z: 0}
-  startWithCurrentItem: 0
+  startWithCurrentItem: 1
   startWithoutAnimation: 0
-  startingItemID: 0
+  startingItemID: 26
   weaponItem: -1
 --- !u!1 &2147745882723280630
 GameObject:
@@ -18001,7 +18001,7 @@ Camera:
   m_AllowMSAA: 1
   m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
-  m_OcclusionCulling: 1
+  m_OcclusionCulling: 0
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
 --- !u!114 &2043850377440027700
@@ -18992,7 +18992,7 @@ Camera:
   m_AllowMSAA: 1
   m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
-  m_OcclusionCulling: 1
+  m_OcclusionCulling: 0
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
 --- !u!114 &1511464135930023919
@@ -19544,14 +19544,14 @@ MonoBehaviour:
   clipIsPlaying: 0
   gainLevel: 0
   directLevel: 0
-  reflectionLevel: 0
+  reflectionLevel: 3
   reverbLevel: 3
   azimuthCorrection: 1
   distanceCorrection: 1
   useUnityDistance: 0
   auralization: 1
-  roomPreset: 24
-  internalReverb: 0
+  roomPreset: 13
+  internalReverb: 1
   performanceMode: 0
   dearVRPlayOnAwake: 0
   bypass: 0
@@ -19562,8 +19562,8 @@ MonoBehaviour:
   reverbLP: 20000
   roomSize: 100
   bassBoost: 0
-  occlusionLevel: 0.45
-  obsturctionLevel: 0.45
+  occlusionLevel: 0.55
+  obsturctionLevel: 0.65
   occlusionActive: 1
   obstructionActive: 1
   forceOcclusion: 0
@@ -19704,8 +19704,8 @@ MonoBehaviour:
   groundCheckRadius: 0.4
   basicSettings:
     walkSpeed: 2
-    runSpeed: 4
-    crouchSpeed: 1.5
+    runSpeed: 4.25
+    crouchSpeed: 0.8
     proneSpeed: 1
     inWaterSpeed: 2
     climbSpeed: 1.5
@@ -19762,7 +19762,7 @@ MonoBehaviour:
     normalHeight: 1.8
     crouchHeight: 1
     proneHeight: 0.6
-    camNormalHeight: 0.64
+    camNormalHeight: 0.76
     camCrouchHeight: 0.2
     camProneHeight: -0.4
     normalCenter: {x: 0, y: 0, z: -0.1}
@@ -19773,16 +19773,16 @@ MonoBehaviour:
     cameraIdle: CameraIdle
     cameraWalk: CameraWalk
     cameraRun: CameraRun
-    walkAnimSpeed: 0.8
-    runAnimSpeed: 0.6
+    walkAnimSpeed: 1.1
+    runAnimSpeed: 0.55
   armsHeadBob:
     armsAnimations: {fileID: 2037378840049772628}
     armsIdle: ArmsIdle
     armsBreath: ArmsBreath
     armsWalk: ArmsWalk
     armsRun: ArmsRun
-    walkAnimSpeed: 0.65
-    runAnimSpeed: 0.7
+    walkAnimSpeed: 1
+    runAnimSpeed: 1
     breathAnimSpeed: 1
   jumpSounds:
   - {fileID: 8300000, guid: dc081766f821f1742b2137700b1533f3, type: 3}
@@ -19814,15 +19814,15 @@ MonoBehaviour:
   footstepsAudio: {fileID: 2084214231902761780}
   footstepsMask:
     serializedVersion: 2
-    m_Bits: 1793
-  surfaceID: 1
+    m_Bits: 1
+  surfaceID: 2
   surfaceDetails: {fileID: 11400000, guid: f0931411b65c541439ad55eb2d6d0a25, type: 2}
   defaultFootsteps:
-  - {fileID: 8300000, guid: 44a8c10c5c2b549459b32a827796b20d, type: 3}
-  - {fileID: 8300000, guid: c11d85a9d2a01004a9a67f86ef2376b8, type: 3}
-  - {fileID: 8300000, guid: e55f5ea53b98f9f49981610ef1c358da, type: 3}
-  - {fileID: 8300000, guid: 856fd62bddb61954fb7f7b9070673b8a, type: 3}
-  - {fileID: 8300000, guid: 93f2df94bfa7b18468d28cd5f29b2b1e, type: 3}
+  - {fileID: 8300000, guid: e9d406ac74fd697439a3ae7c2a9f7fb2, type: 3}
+  - {fileID: 8300000, guid: 70ead35e70aa3a144bca07ab2a2b130e, type: 3}
+  - {fileID: 8300000, guid: aaa6edc0934d7bc4592086402b49b8f8, type: 3}
+  - {fileID: 8300000, guid: 910b7360933f9ba409b1ea96f568a873, type: 3}
+  - {fileID: 8300000, guid: ef3bafe311083e2498c58ec11995de9b, type: 3}
   ladderFootsteps:
   - {fileID: 8300000, guid: dd5ccf511a7791a42a83a423bf15d873, type: 3}
   - {fileID: 8300000, guid: 53f9108bc11041240b07d3d74b6ce55f, type: 3}
@@ -19847,16 +19847,16 @@ MonoBehaviour:
   slideEndVolumeSpeed: 1
   slidingVolume: 0.1
   enableSlidingSound: 1
-  volumeJump: 0.6
-  volumeWalk: 0.6
-  volumeCrouch: 0.5
-  volumeRun: 0.7
+  volumeJump: 2
+  volumeWalk: 0.5
+  volumeCrouch: 0.1
+  volumeRun: 1.5
   volumeLadder: 0.6
   volumeWater: 0.6
   idleTime: 0.5
   walkNextWait: 0.75
   crouchNextWait: 0.75
-  runNextWait: 0.3
+  runNextWait: 0.2
   ladderNextWait: 0.5
   waterNextWait: 1
 --- !u!114 &2043571047837966744

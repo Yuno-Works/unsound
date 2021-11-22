@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   setRoomGeo: 0
   roomAnalyzer: 1
-  debugRoomAnalyzer: 0
-  roomUpdateFreq: 3
-  upDownGeo: {x: 1.2402034, y: 1.5602555}
-  frontBackGeo: {x: 10.694171, y: 1.1222925}
-  leftRightGeo: {x: 5.8352256, y: 11.025353}
+  debugRoomAnalyzer: 1
+  roomUpdateFreq: 2
+  upDownGeo: {x: -1, y: 1.6941044}
+  frontBackGeo: {x: 16.88267, y: -1}
+  leftRightGeo: {x: -1, y: 28.752014}
   bypass3DAudio: 0
   roomMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 1025

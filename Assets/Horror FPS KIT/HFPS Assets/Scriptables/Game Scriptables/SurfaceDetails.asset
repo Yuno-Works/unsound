@@ -18,6 +18,9 @@ MonoBehaviour:
       SurfaceTextures:
       - {fileID: 2800000, guid: ca79d3243d4cac34b99a9fa5ecc66dc8, type: 3}
       - {fileID: 2800000, guid: 84a829ea8ef534c44a1d3ef42199a47f, type: 3}
+      - {fileID: 2800000, guid: c0cb0e0737116cf47975d08e8da095aa, type: 3}
+      - {fileID: 2800000, guid: a2a51560974c2164d85538b6c8493dc9, type: 3}
+      - {fileID: 2800000, guid: 479e60c2c208f734da8004d48f9cacda, type: 3}
       SurfaceTag: Default
       AllowFootsteps: 1
       AllowImpactMark: 1
@@ -38,33 +41,12 @@ MonoBehaviour:
       MeleemarkImpacts:
       - {fileID: 8300000, guid: 6bdfc4e766afd1f4dba6f202be34205b, type: 3}
       ImpactVolume: 1
-  - SurfaceName: Wood
-    SurfaceProperties:
-      SurfaceTextures:
-      - {fileID: 2800000, guid: aa9b7bf7860ee7f40a9fa60fb452e28e, type: 3}
-      SurfaceTag: Wood
-      AllowFootsteps: 1
-      AllowImpactMark: 1
-    FootstepProperties:
-      SurfaceFootsteps:
-      - {fileID: 8300000, guid: 1d976b6320d999b4ea7b2ded25e70eee, type: 3}
-      - {fileID: 8300000, guid: 9fecd616194dd9e48bfecab7549c803f, type: 3}
-      - {fileID: 8300000, guid: 567645c21164de041afb02113b4e36a6, type: 3}
-      - {fileID: 8300000, guid: 8b72e31c625fac344aa055b5b82f9ce9, type: 3}
-      - {fileID: 8300000, guid: bc85a33c80ff6994fa43ddc783b85620, type: 3}
-      FootstepsModifier: 1
-    ImpactProperties:
-      SurfaceBulletmarks:
-      - {fileID: 1022249397687772, guid: 6f7e189a4292efe4d85842e9d0572cdf, type: 3}
-      BulletmarkImpacts: []
-      SurfaceMeleemarks:
-      - {fileID: 2587893571550442796, guid: 48ffc468e5536ec428970e957a099921, type: 3}
-      MeleemarkImpacts: []
-      ImpactVolume: 1
   - SurfaceName: Floor
     SurfaceProperties:
       SurfaceTextures:
       - {fileID: 2800000, guid: 571959d0003634c4c95350acca82fbaf, type: 3}
+      - {fileID: 2800000, guid: 1cbd9840115e3804589e23b320539c3a, type: 3}
+      - {fileID: 2800000, guid: 230ec8d04cf3cf44dbd0114dc7f6e6ce, type: 3}
       SurfaceTag: Floor
       AllowFootsteps: 1
       AllowImpactMark: 1
@@ -75,35 +57,10 @@ MonoBehaviour:
       - {fileID: 8300000, guid: aaa6edc0934d7bc4592086402b49b8f8, type: 3}
       - {fileID: 8300000, guid: 910b7360933f9ba409b1ea96f568a873, type: 3}
       - {fileID: 8300000, guid: ef3bafe311083e2498c58ec11995de9b, type: 3}
-      - {fileID: 8300000, guid: 91e6d3cbd86e9ad4f83a1334e427e221, type: 3}
-      FootstepsModifier: 1
+      FootstepsModifier: 0.5
     ImpactProperties:
       SurfaceBulletmarks:
       - {fileID: 1022249397687772, guid: 6f7e189a4292efe4d85842e9d0572cdf, type: 3}
-      BulletmarkImpacts: []
-      SurfaceMeleemarks:
-      - {fileID: 2587893571550442796, guid: 48ffc468e5536ec428970e957a099921, type: 3}
-      MeleemarkImpacts: []
-      ImpactVolume: 1
-  - SurfaceName: Dirt
-    SurfaceProperties:
-      SurfaceTextures:
-      - {fileID: 2800000, guid: 926b193d7389b414c9894bf813be3fbd, type: 3}
-      - {fileID: 2800000, guid: 138cd7a200fe85d4fa3a77a8d0a8e534, type: 3}
-      SurfaceTag: 
-      AllowFootsteps: 1
-      AllowImpactMark: 1
-    FootstepProperties:
-      SurfaceFootsteps:
-      - {fileID: 8300000, guid: 025395c408c7fdc43bb2a50a7112ca39, type: 3}
-      - {fileID: 8300000, guid: 51aa6b354de0b9749b4b22cd2a84f5a2, type: 3}
-      - {fileID: 8300000, guid: 80d2f8f793e69e34288f99e9056f2ec2, type: 3}
-      - {fileID: 8300000, guid: 60a6179a9d42f614291e7471864f8805, type: 3}
-      - {fileID: 8300000, guid: aac7f3e923afb3d4099c5bcb79b63421, type: 3}
-      FootstepsModifier: 1
-    ImpactProperties:
-      SurfaceBulletmarks:
-      - {fileID: 1604642742537266, guid: 39a67207b35f0e94aaeae4fd865fa7ae, type: 3}
       BulletmarkImpacts: []
       SurfaceMeleemarks:
       - {fileID: 2587893571550442796, guid: 48ffc468e5536ec428970e957a099921, type: 3}
@@ -113,6 +70,8 @@ MonoBehaviour:
     SurfaceProperties:
       SurfaceTextures:
       - {fileID: 2800000, guid: 08195c80d512b9347939f75fcecede1c, type: 3}
+      - {fileID: 2800000, guid: d4703fb248a299e4597a242aa6075573, type: 3}
+      - {fileID: 2800000, guid: 343aa6ff846cf5845823ffdc78f27fed, type: 3}
       SurfaceTag: Grass
       AllowFootsteps: 1
       AllowImpactMark: 1
@@ -136,7 +95,9 @@ MonoBehaviour:
       ImpactVolume: 1
   - SurfaceName: Gravel
     SurfaceProperties:
-      SurfaceTextures: []
+      SurfaceTextures:
+      - {fileID: 2800000, guid: 138cd7a200fe85d4fa3a77a8d0a8e534, type: 3}
+      - {fileID: 2800000, guid: 926b193d7389b414c9894bf813be3fbd, type: 3}
       SurfaceTag: Gravel
       AllowFootsteps: 1
       AllowImpactMark: 1
@@ -179,23 +140,6 @@ MonoBehaviour:
       - {fileID: 2587893571550442796, guid: 48ffc468e5536ec428970e957a099921, type: 3}
       MeleemarkImpacts: []
       ImpactVolume: 1
-  - SurfaceName: Flesh
-    SurfaceProperties:
-      SurfaceTextures: []
-      SurfaceTag: Flesh
-      AllowFootsteps: 0
-      AllowImpactMark: 1
-    FootstepProperties:
-      SurfaceFootsteps: []
-      FootstepsModifier: 1
-    ImpactProperties:
-      SurfaceBulletmarks:
-      - {fileID: 1177019025291314, guid: f4fc70f27b3a13946b0dd88f16b25e9e, type: 3}
-      BulletmarkImpacts: []
-      SurfaceMeleemarks:
-      - {fileID: 1177019025291314, guid: f4fc70f27b3a13946b0dd88f16b25e9e, type: 3}
-      MeleemarkImpacts: []
-      ImpactVolume: 1
   - SurfaceName: Wet Dirt/Mud
     SurfaceProperties:
       SurfaceTextures:
@@ -203,7 +147,6 @@ MonoBehaviour:
       - {fileID: 2800000, guid: 6ec7bd1b524fa9c4eb104c4583532a67, type: 3}
       - {fileID: 2800000, guid: 048025e39845d244f9b8b1283335de38, type: 3}
       - {fileID: 2800000, guid: 89426a1159c445e4e8e8c30355ab7da0, type: 3}
-      - {fileID: 2800000, guid: 343aa6ff846cf5845823ffdc78f27fed, type: 3}
       - {fileID: 2800000, guid: 636416b355c8f8a47aebff04ed01eb17, type: 3}
       SurfaceTag: 
       AllowFootsteps: 1
