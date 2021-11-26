@@ -41,7 +41,7 @@ MonoBehaviour:
       MeleemarkImpacts:
       - {fileID: 8300000, guid: 6bdfc4e766afd1f4dba6f202be34205b, type: 3}
       ImpactVolume: 1
-  - SurfaceName: Floor
+  - SurfaceName: Wood
     SurfaceProperties:
       SurfaceTextures:
       - {fileID: 2800000, guid: 571959d0003634c4c95350acca82fbaf, type: 3}
@@ -156,6 +156,38 @@ MonoBehaviour:
       - {fileID: 8300000, guid: 1cc44863823cb204ead4640e17e0f6ce, type: 3}
       - {fileID: 8300000, guid: faa4c04355949e642a28580d02d1f679, type: 3}
       - {fileID: 8300000, guid: 66b4d3533c4c8694892ab5784459e5b3, type: 3}
+      FootstepsModifier: 1
+    ImpactProperties:
+      SurfaceBulletmarks: []
+      BulletmarkImpacts: []
+      SurfaceMeleemarks: []
+      MeleemarkImpacts: []
+      ImpactVolume: 1
+  - SurfaceName: Carpet
+    SurfaceProperties:
+      SurfaceTextures:
+      - {fileID: 2800000, guid: 700d92e25e9d28349a2aea8a4cc20820, type: 3}
+      - {fileID: 2800000, guid: 02b69284fc26c604d93a6b3b28e21543, type: 3}
+      - {fileID: 2800000, guid: 6e5d14766dad23b42b9c53edbb3cf585, type: 3}
+      SurfaceTag: Carpet
+      AllowFootsteps: 1
+      AllowImpactMark: 1
+    FootstepProperties:
+      SurfaceFootsteps:
+      - {fileID: 8300000, guid: d61e9b5514a03e44795f458dc3e33fbd, type: 3}
+      - {fileID: 8300000, guid: acefb909f6d2ead45ac4c6e3cbf811ad, type: 3}
+      - {fileID: 8300000, guid: 7f4c61f7839c45b4baa72fd410101b9c, type: 3}
+      - {fileID: 8300000, guid: 29b3d1e1652851448ae3deddf3dfebc3, type: 3}
+      - {fileID: 8300000, guid: f3c912112490c4e49b60c5e990327215, type: 3}
+      - {fileID: 8300000, guid: 839dd25a9bfae6b489334852c42e54b0, type: 3}
+      - {fileID: 8300000, guid: f9bf52648e874374995eee34780fa479, type: 3}
+      - {fileID: 8300000, guid: d41e593988475af4388f246f41258741, type: 3}
+      - {fileID: 8300000, guid: 5ef1aa91073738f4bbfdb635e7dc6337, type: 3}
+      - {fileID: 8300000, guid: 57dcbdf0b11ae4b4c8571e1d464803fd, type: 3}
+      - {fileID: 8300000, guid: c4e056a176bfd32498515292faadd4fc, type: 3}
+      - {fileID: 8300000, guid: e92da554f835fde4498699c7bff7c26c, type: 3}
+      - {fileID: 8300000, guid: 6ba3808cc917bba4da54dea38df2944e, type: 3}
+      - {fileID: 8300000, guid: 15a1e7fe269104a4fa1f3f07e0e8d0fe, type: 3}
       FootstepsModifier: 1
     ImpactProperties:
       SurfaceBulletmarks: []

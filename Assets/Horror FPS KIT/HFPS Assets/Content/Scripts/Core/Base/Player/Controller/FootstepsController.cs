@@ -101,11 +101,13 @@ namespace HFPS.Player
                 {
                     if (isOnLadder && ladderFootsteps.Length > 0)
                     {
+                        // TODO: Update with newer solution
                         footstepsAudio.PlayOneShot(ladderFootsteps[rand.Range(0, ladderFootsteps.Length)], volumeLadder);
                         nextWaitTime = ladderNextWait;
                     }
                     else if (isInWater && waterFootsteps.Length > 0)
                     {
+                        // TODO: Update with newer solution
                         footstepsAudio.PlayOneShot(waterFootsteps[rand.Range(0, waterFootsteps.Length)], volumeWater);
                         nextWaitTime = waterNextWait;
                     }
@@ -181,12 +183,14 @@ namespace HFPS.Player
                         {
                             if (playerState == 0)
                             {
-                                footstepsAudio.PlayOneShot(footsteps[rand.Range(0, footsteps.Length)], isRunning ? volumeRun : volumeWalk);
+                                //footstepsAudio.PlayOneShot(footsteps[rand.Range(0, footsteps.Length)], isRunning ? volumeRun : volumeWalk);
+                                AudioSource.PlayClipAtPoint ( footsteps [ rand.Range ( 0, footsteps.Length ) ], transform.position, isRunning ? volumeRun : volumeWalk );
                                 nextWaitTime = isRunning ? runNextWait : walkNextWait;
                             }
                             else if (playerState == 1)
                             {
-                                footstepsAudio.PlayOneShot(footsteps[rand.Range(0, footsteps.Length)], volumeCrouch);
+                                //footstepsAudio.PlayOneShot(footsteps[rand.Range(0, footsteps.Length)], volumeCrouch);
+                                AudioSource.PlayClipAtPoint ( footsteps [ rand.Range ( 0, footsteps.Length ) ], transform.position, volumeCrouch );
                                 nextWaitTime = crouchNextWait;
                             }
                         }
@@ -194,12 +198,14 @@ namespace HFPS.Player
                         {
                             if (playerState == 0)
                             {
-                                footstepsAudio.PlayOneShot(defaultFootsteps[rand.Range(0, defaultFootsteps.Length)], isRunning ? volumeRun : volumeWalk);
+                                //footstepsAudio.PlayOneShot(defaultFootsteps[rand.Range(0, defaultFootsteps.Length)], isRunning ? volumeRun : volumeWalk);
+                                AudioSource.PlayClipAtPoint ( defaultFootsteps [ rand.Range ( 0, defaultFootsteps.Length ) ], transform.position, isRunning ? volumeRun : volumeWalk );
                                 nextWaitTime = isRunning ? runNextWait : walkNextWait;
                             }
                             else if (playerState == 1)
                             {
-                                footstepsAudio.PlayOneShot(defaultFootsteps[rand.Range(0, defaultFootsteps.Length)], volumeCrouch);
+                                //footstepsAudio.PlayOneShot(defaultFootsteps[rand.Range(0, defaultFootsteps.Length)], volumeCrouch);
+                                AudioSource.PlayClipAtPoint ( defaultFootsteps [ rand.Range ( 0, defaultFootsteps.Length ) ], transform.position, volumeCrouch );
                                 nextWaitTime = crouchNextWait;
                             }
                         }
@@ -224,22 +230,26 @@ namespace HFPS.Player
             {
                 if (playerState == 0)
                 {
-                    footstepsAudio.PlayOneShot(footsteps[rand.Range(0, footsteps.Length)], isRunning ? volumeRun : volumeWalk);
+                    //footstepsAudio.PlayOneShot(footsteps[rand.Range(0, footsteps.Length)], isRunning ? volumeRun : volumeWalk);
+                    AudioSource.PlayClipAtPoint ( footsteps [ rand.Range ( 0, footsteps.Length ) ], transform.position, isRunning ? volumeRun : volumeWalk );
                 }
                 else if (playerState == 1)
                 {
-                    footstepsAudio.PlayOneShot(footsteps[rand.Range(0, footsteps.Length)], volumeCrouch);
+                    //footstepsAudio.PlayOneShot(footsteps[rand.Range(0, footsteps.Length)], volumeCrouch);
+                    AudioSource.PlayClipAtPoint ( footsteps [ rand.Range ( 0, footsteps.Length ) ], transform.position, volumeCrouch );
                 }
             }
             else if (defaultFootsteps.Length > 0 && allowDefaultFootsteps)
             {
                 if (playerState == 0)
                 {
-                    footstepsAudio.PlayOneShot(defaultFootsteps[rand.Range(0, defaultFootsteps.Length)], isRunning ? volumeRun : volumeWalk);
+                    //footstepsAudio.PlayOneShot(defaultFootsteps[rand.Range(0, defaultFootsteps.Length)], isRunning ? volumeRun : volumeWalk);
+                    AudioSource.PlayClipAtPoint ( defaultFootsteps [ rand.Range ( 0, defaultFootsteps.Length ) ], transform.position, isRunning ? volumeRun : volumeWalk );
                 }
                 else if (playerState == 1)
                 {
-                    footstepsAudio.PlayOneShot(defaultFootsteps[rand.Range(0, defaultFootsteps.Length)], volumeCrouch);
+                    //footstepsAudio.PlayOneShot(defaultFootsteps[rand.Range(0, defaultFootsteps.Length)], volumeCrouch);
+                    AudioSource.PlayClipAtPoint ( defaultFootsteps [ rand.Range ( 0, defaultFootsteps.Length ) ], transform.position, isRunning ? volumeRun : volumeWalk );
                 }
             }
         }
@@ -259,15 +269,19 @@ namespace HFPS.Player
 
             if (footsteps.Length > 0)
             {
-                footstepsAudio.PlayOneShot(footsteps[rand.Range(0, footsteps.Length)], volumeJump);
+                //footstepsAudio.PlayOneShot(footsteps[rand.Range(0, footsteps.Length)], volumeJump);
+                AudioSource.PlayClipAtPoint ( footsteps [ rand.Range ( 0, footsteps.Length ) ], transform.position, volumeJump );
                 yield return new WaitForSeconds(0.075f);
-                footstepsAudio.PlayOneShot(footsteps[rand.Range(0, footsteps.Length)], volumeJump);
+                //footstepsAudio.PlayOneShot(footsteps[rand.Range(0, footsteps.Length)], volumeJump);
+                AudioSource.PlayClipAtPoint ( footsteps [ rand.Range ( 0, footsteps.Length ) ], transform.position, volumeJump );
             }
             else if (defaultFootsteps.Length > 0 && allowDefaultFootsteps)
             {
-                footstepsAudio.PlayOneShot(defaultFootsteps[rand.Range(0, defaultFootsteps.Length)], volumeJump);
+                //footstepsAudio.PlayOneShot(defaultFootsteps[rand.Range(0, defaultFootsteps.Length)], volumeJump);
+                AudioSource.PlayClipAtPoint ( defaultFootsteps [ rand.Range ( 0, defaultFootsteps.Length ) ], transform.position, volumeJump );
                 yield return new WaitForSeconds(0.075f);
-                footstepsAudio.PlayOneShot(defaultFootsteps[rand.Range(0, defaultFootsteps.Length)], volumeJump);
+                //footstepsAudio.PlayOneShot(defaultFootsteps[rand.Range(0, defaultFootsteps.Length)], volumeJump);
+                AudioSource.PlayClipAtPoint ( defaultFootsteps [ rand.Range ( 0, defaultFootsteps.Length ) ], transform.position, volumeJump );
             }
         }
 

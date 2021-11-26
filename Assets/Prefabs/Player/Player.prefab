@@ -19542,10 +19542,10 @@ MonoBehaviour:
   occlusionRayUpdateTime: 1
   obstructionRayUpdateTime: 1
   clipIsPlaying: 0
-  gainLevel: 0
+  gainLevel: 1
   directLevel: 0
-  reflectionLevel: 3
-  reverbLevel: 3
+  reflectionLevel: 4
+  reverbLevel: 6
   azimuthCorrection: 1
   distanceCorrection: 1
   useUnityDistance: 0
@@ -19562,7 +19562,7 @@ MonoBehaviour:
   reverbLP: 20000
   roomSize: 100
   bassBoost: 0
-  occlusionLevel: 0.55
+  occlusionLevel: 0.75
   obsturctionLevel: 0.65
   occlusionActive: 1
   obstructionActive: 1
@@ -19781,8 +19781,8 @@ MonoBehaviour:
     armsBreath: ArmsBreath
     armsWalk: ArmsWalk
     armsRun: ArmsRun
-    walkAnimSpeed: 1
-    runAnimSpeed: 1
+    walkAnimSpeed: 0.1
+    runAnimSpeed: 0.85
     breathAnimSpeed: 1
   jumpSounds:
   - {fileID: 8300000, guid: dc081766f821f1742b2137700b1533f3, type: 3}
@@ -57424,10 +57424,10 @@ MonoBehaviour:
   angledBody: 1
   rotateBodySpeed: 20
   dirAngleIncrease: 5
-  minAngleBody: -55
-  maxAngleBody: 55
-  minBodyMaxDeadzone: -70
-  maxBodyMaxDeadzone: 70
+  minAngleBody: -35
+  maxAngleBody: 35
+  minBodyMaxDeadzone: -60
+  maxBodyMaxDeadzone: 60
   SpineBones:
   - Bone: {fileID: 4716715173597234405}
     WeightMin: 0.3

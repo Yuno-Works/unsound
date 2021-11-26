@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 6073684922712694922}
   - component: {fileID: 7198383693530967855}
   - component: {fileID: 4900264515837385701}
-  - component: {fileID: 8940644132944355111}
+  - component: {fileID: 3301756458394981779}
   m_Layer: 0
   m_Name: Carpet_D
-  m_TagString: Untagged
+  m_TagString: Carpet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -82,7 +82,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &8940644132944355111
+--- !u!65 &3301756458394981779
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -91,7 +91,7 @@ BoxCollider:
   m_GameObject: {fileID: 6845965034823088688}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.3999999, y: 0.007571276, z: 1}
+  m_Size: {x: 2.4000003, y: 0.007571276, z: 1.0000002}
   m_Center: {x: 0, y: 0.003785638, z: 0}

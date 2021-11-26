@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 8300907143063703970}
   - component: {fileID: 4944218485126307335}
   - component: {fileID: 7167922793496931021}
-  - component: {fileID: 8410479367077885515}
+  - component: {fileID: 3278950813087829981}
   m_Layer: 0
   m_Name: Carpet_persian_B
-  m_TagString: Untagged
+  m_TagString: Carpet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -56,6 +56,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -80,7 +81,8 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &8410479367077885515
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &3278950813087829981
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -91,5 +93,5 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.3529755, y: 0.0086757755, z: 2.940944}
-  m_Center: {x: -0.00000002980233, y: 0.004300386, z: 0.00000005960466}
+  m_Size: {x: 1.3529751, y: 0.0086757755, z: 2.9409432}
+  m_Center: {x: -0.000000029802322, y: 0.004300386, z: 0.000000059604645}
