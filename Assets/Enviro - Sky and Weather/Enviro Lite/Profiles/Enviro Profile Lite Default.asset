@@ -1293,13 +1293,13 @@ MonoBehaviour:
     useUnityFog: 0
     distanceFog: 1
     useRadialDistance: 1
-    startDistance: 95.4
-    distanceFogIntensity: 0.46
-    maximumFogDensity: 1
+    startDistance: 123.3
+    distanceFogIntensity: 1.13
+    maximumFogDensity: 0.804
     heightFog: 1
-    height: 56.5
-    heightFogIntensity: 0.1
-    heightDensity: 1.6000011
+    height: 14.4
+    heightFogIntensity: 0.861
+    heightDensity: 1.6
     noiseIntensity: 1
     noiseIntensityOffset: 0.3
     noiseScale: 0.001
