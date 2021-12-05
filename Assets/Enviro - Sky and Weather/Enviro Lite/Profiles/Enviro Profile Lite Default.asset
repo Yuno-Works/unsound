@@ -911,7 +911,7 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    dithering: 0.5
+    dithering: 1
     setEnviroSkybox: 1
   cloudsSettings:
     cloudsWorldScale: 120000
@@ -1293,12 +1293,12 @@ MonoBehaviour:
     useUnityFog: 0
     distanceFog: 1
     useRadialDistance: 1
-    startDistance: 123.3
-    distanceFogIntensity: 1.13
-    maximumFogDensity: 0.804
+    startDistance: 100
+    distanceFogIntensity: 0.5
+    maximumFogDensity: 0.95
     heightFog: 1
-    height: 14.4
-    heightFogIntensity: 0.861
+    height: 12
+    heightFogIntensity: 0.08
     heightDensity: 1.6
     noiseIntensity: 1
     noiseIntensityOffset: 0.3
@@ -1337,7 +1337,7 @@ MonoBehaviour:
       m_NumColorKeys: 5
       m_NumAlphaKeys: 2
     skyFogIntensity: 1.9999999
-    fogExposure: 0.5
+    fogExposure: 1
     useEnviroGroundFog: 1
     useHDRPFog: 1
     fogColorTint:
@@ -1653,8 +1653,8 @@ MonoBehaviour:
   showPlayerSetup: 0
   showRenderingSetup: 0
   showComponentsSetup: 0
-  showTimeUI: 1
+  showTimeUI: 0
   showWeatherUI: 1
-  showAudioUI: 1
+  showAudioUI: 0
   showEffectsUI: 0
   modified: 0

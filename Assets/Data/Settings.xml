@@ -2,13 +2,13 @@
   <General>
     <Option Name="input_controller" Value="0" />
     <Option Name="game_volume" Value="1" />
-    <Option Name="mouse_sensitivity" Value="1.51" />
+    <Option Name="mouse_sensitivity" Value="1" />
     <Option Name="vertical_sensitivity" Value="2" />
     <Option Name="horizontal_sensitivity" Value="2" />
     <Option Name="invert_look" Value="False" />
   </General>
   <Graphic>
-    <Option Name="game_resolution" Value="0" />
+    <Option Name="game_resolution" Value="1" />
     <Option Name="game_fullscreen" Value="2" />
     <Option Name="game_antialising" Value="1" />
     <Option Name="game_texquality" Value="3" />
