@@ -40,7 +40,7 @@ MonoBehaviour:
       m_Center: {x: -0.20502305, y: 0.22957027, z: -0.035674334}
       m_Extent: {x: 1.1207211, y: 0.2957772, z: 1.229269}
     ScaleMultiplier: {x: 1, y: 1, z: 1}
-    RenderDistanceFactor: 0.16
+    RenderDistanceFactor: 0.3
     Seed: 44
     MinScale: 0.6
     MaxScale: 1
@@ -259,7 +259,7 @@ MonoBehaviour:
       m_Center: {x: -0.036720872, y: 0.6406638, z: 0.05964333}
       m_Extent: {x: 0.5816039, y: 0.6406638, z: 0.7051733}
     ScaleMultiplier: {x: 1, y: 1, z: 1}
-    RenderDistanceFactor: 0.5
+    RenderDistanceFactor: 0.4
     Seed: 92
     MinScale: 0.3
     MaxScale: 1
@@ -478,7 +478,7 @@ MonoBehaviour:
       m_Center: {x: -0.21407795, y: 0.23156172, z: -0.00069499016}
       m_Extent: {x: 0.9875847, y: 0.2780888, z: 1.0542736}
     ScaleMultiplier: {x: 1, y: 1, z: 1}
-    RenderDistanceFactor: 0.5
+    RenderDistanceFactor: 0.4
     Seed: 48
     MinScale: 0.6
     MaxScale: 1
