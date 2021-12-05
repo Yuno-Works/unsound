@@ -183,14 +183,12 @@ namespace HFPS.Player
                         {
                             if (playerState == 0)
                             {
-                                //footstepsAudio.PlayOneShot(footsteps[rand.Range(0, footsteps.Length)], isRunning ? volumeRun : volumeWalk);
-                                AudioSource.PlayClipAtPoint ( footsteps [ rand.Range ( 0, footsteps.Length ) ], transform.position, isRunning ? volumeRun : volumeWalk );
+                                PlayFootstep ( footsteps, isRunning ? volumeRun : volumeWalk );
                                 nextWaitTime = isRunning ? runNextWait : walkNextWait;
                             }
                             else if (playerState == 1)
                             {
-                                //footstepsAudio.PlayOneShot(footsteps[rand.Range(0, footsteps.Length)], volumeCrouch);
-                                AudioSource.PlayClipAtPoint ( footsteps [ rand.Range ( 0, footsteps.Length ) ], transform.position, volumeCrouch );
+                                PlayFootstep ( footsteps, volumeCrouch );
                                 nextWaitTime = crouchNextWait;
                             }
                         }
@@ -198,14 +196,13 @@ namespace HFPS.Player
                         {
                             if (playerState == 0)
                             {
-                                //footstepsAudio.PlayOneShot(defaultFootsteps[rand.Range(0, defaultFootsteps.Length)], isRunning ? volumeRun : volumeWalk);
-                                AudioSource.PlayClipAtPoint ( defaultFootsteps [ rand.Range ( 0, defaultFootsteps.Length ) ], transform.position, isRunning ? volumeRun : volumeWalk );
+                                PlayFootstep ( defaultFootsteps, isRunning ? volumeRun : volumeWalk );
                                 nextWaitTime = isRunning ? runNextWait : walkNextWait;
                             }
                             else if (playerState == 1)
                             {
-                                //footstepsAudio.PlayOneShot(defaultFootsteps[rand.Range(0, defaultFootsteps.Length)], volumeCrouch);
-                                AudioSource.PlayClipAtPoint ( defaultFootsteps [ rand.Range ( 0, defaultFootsteps.Length ) ], transform.position, volumeCrouch );
+
+                                PlayFootstep ( defaultFootsteps, volumeCrouch );
                                 nextWaitTime = crouchNextWait;
                             }
                         }
@@ -220,7 +217,7 @@ namespace HFPS.Player
         /// <summary>
         /// Event function to play one footstep.
         /// </summary>
-        public void PlayFootstep()
+        public void PlayFootstep ()
         {
             if (!eventBasedFootsteps || isInWater || isOnLadder) return;
 
@@ -230,29 +227,26 @@ namespace HFPS.Player
             {
                 if (playerState == 0)
                 {
-                    //footstepsAudio.PlayOneShot(footsteps[rand.Range(0, footsteps.Length)], isRunning ? volumeRun : volumeWalk);
-                    AudioSource.PlayClipAtPoint ( footsteps [ rand.Range ( 0, footsteps.Length ) ], transform.position, isRunning ? volumeRun : volumeWalk );
+                    PlayFootstep ( footsteps, isRunning ? volumeRun : volumeWalk );
                 }
                 else if (playerState == 1)
                 {
-                    //footstepsAudio.PlayOneShot(footsteps[rand.Range(0, footsteps.Length)], volumeCrouch);
-                    AudioSource.PlayClipAtPoint ( footsteps [ rand.Range ( 0, footsteps.Length ) ], transform.position, volumeCrouch );
+                    PlayFootstep ( footsteps, volumeCrouch );
                 }
             }
             else if (defaultFootsteps.Length > 0 && allowDefaultFootsteps)
             {
                 if (playerState == 0)
                 {
-                    //footstepsAudio.PlayOneShot(defaultFootsteps[rand.Range(0, defaultFootsteps.Length)], isRunning ? volumeRun : volumeWalk);
-                    AudioSource.PlayClipAtPoint ( defaultFootsteps [ rand.Range ( 0, defaultFootsteps.Length ) ], transform.position, isRunning ? volumeRun : volumeWalk );
+                    PlayFootstep ( defaultFootsteps, isRunning ? volumeRun : volumeWalk );
                 }
                 else if (playerState == 1)
                 {
-                    //footstepsAudio.PlayOneShot(defaultFootsteps[rand.Range(0, defaultFootsteps.Length)], volumeCrouch);
-                    AudioSource.PlayClipAtPoint ( defaultFootsteps [ rand.Range ( 0, defaultFootsteps.Length ) ], transform.position, isRunning ? volumeRun : volumeWalk );
+                    PlayFootstep ( defaultFootsteps, volumeCrouch );
                 }
             }
         }
+
 
         /// <summary>
         /// Play jump footsteps.
@@ -263,25 +257,27 @@ namespace HFPS.Player
                 StartCoroutine(JumpFootsteps());
         }
 
+        private void PlayFootstep ( AudioClip [] footsteps, float volume )
+        {
+            footstepsAudio.PlayOneShot ( footsteps [ rand.Range ( 0, footsteps.Length ) ], volume );
+            //AudioSource.PlayClipAtPoint ( footsteps [ rand.Range ( 0, footsteps.Length ) ], transform.position, volume );
+        }
+
         IEnumerator JumpFootsteps()
         {
             AudioClip[] footsteps = GetSurfaceFootsteps();
 
             if (footsteps.Length > 0)
             {
-                //footstepsAudio.PlayOneShot(footsteps[rand.Range(0, footsteps.Length)], volumeJump);
-                AudioSource.PlayClipAtPoint ( footsteps [ rand.Range ( 0, footsteps.Length ) ], transform.position, volumeJump );
+                PlayFootstep ( footsteps, volumeJump );
                 yield return new WaitForSeconds(0.075f);
-                //footstepsAudio.PlayOneShot(footsteps[rand.Range(0, footsteps.Length)], volumeJump);
-                AudioSource.PlayClipAtPoint ( footsteps [ rand.Range ( 0, footsteps.Length ) ], transform.position, volumeJump );
+                PlayFootstep ( footsteps, volumeJump );
             }
             else if (defaultFootsteps.Length > 0 && allowDefaultFootsteps)
             {
-                //footstepsAudio.PlayOneShot(defaultFootsteps[rand.Range(0, defaultFootsteps.Length)], volumeJump);
-                AudioSource.PlayClipAtPoint ( defaultFootsteps [ rand.Range ( 0, defaultFootsteps.Length ) ], transform.position, volumeJump );
+                PlayFootstep ( defaultFootsteps, volumeJump );
                 yield return new WaitForSeconds(0.075f);
-                //footstepsAudio.PlayOneShot(defaultFootsteps[rand.Range(0, defaultFootsteps.Length)], volumeJump);
-                AudioSource.PlayClipAtPoint ( defaultFootsteps [ rand.Range ( 0, defaultFootsteps.Length ) ], transform.position, volumeJump );
+                PlayFootstep ( defaultFootsteps, volumeJump );
             }
         }
 
