@@ -450,44 +450,7 @@ namespace HFPS.Player
                     }
                 }
 
-                if (!InputHandler.IsCompositesSame("Crouch", "Prone"))
-                {
-                    CrouchPressed = InputHandler.ReadButtonOnce ( this, "Crouch" );
-                    PronePressed = InputHandler.ReadButtonOnce(this, "Prone");
-                }
-                else
-                {
-                    bool prone = InputHandler.ReadButton("Prone");
-
-                    if (prone && !inProne)
-                    {
-                        proneTimeStart = true;
-                        proneTime += Time.deltaTime;
-
-                        if (proneTime >= controllerSettings.consoleToProneTime)
-                        {
-                            PronePressed = true;
-                            inProne = true;
-                        }
-                    }
-                    else if (proneTimeStart && proneTime < controllerSettings.consoleToProneTime)
-                    {
-                        CrouchPressed = true;
-                        proneTimeStart = false;
-                        proneTime = 0;
-                    }
-                    else
-                    {
-                        CrouchPressed = false;
-                        PronePressed = false;
-                        proneTime = 0;
-
-                        if (!prone && inProne)
-                        {
-                            inProne = false;
-                        }
-                    }
-                }
+                CrouchPressed = InputHandler.ReadButtonOnce ( this, "Crouch" );
 
                 if (isControllable)
                 {

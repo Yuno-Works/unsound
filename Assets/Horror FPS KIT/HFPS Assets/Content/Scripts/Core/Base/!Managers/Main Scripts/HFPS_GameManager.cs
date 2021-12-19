@@ -15,6 +15,7 @@ using ThunderWire.Input;
 using ThunderWire.Helpers;
 using HFPS.Player;
 using HFPS.UI;
+using Mirror;
 
 #if TW_LOCALIZATION_PRESENT
 using ThunderWire.Localization;
@@ -164,7 +165,7 @@ namespace HFPS.Systems
         #region Private Variables
         //private PostProcessVolume postProcessing;
         //private ColorGrading colorGrading;
-        private GameObject playerObj;
+        private NetworkIdentity playerIdentity;
         private SaveGameHandler saveHandler;
         private MenuController menuUI;
         private CutsceneManager cutscene;
@@ -208,8 +209,20 @@ namespace HFPS.Systems
             saveHandler = GetComponent<SaveGameHandler>();
             cutscene = GetComponent<CutsceneManager>();
 
+            playerIdentity = PlayerObj?.GetComponent<NetworkIdentity> ();
+
             currentScene = SceneManager.GetActiveScene();
             SetupUIControls();
+        }
+
+        private void OnInitTexts ()
+        {
+            ExamineText = TextsSource.GetText ( "Interact.Examine", "Examine" );
+            TakeText = TextsSource.GetText ( "Interact.Take", "Take" );
+            PutAwayText = TextsSource.GetText ( "Examine.PutAway", "Put Away" );
+            RotateText = TextsSource.GetText ( "Examine.Rotate", "Rotate" );
+            ThrowText = TextsSource.GetText ( "Examine.Throw", "Throw" );
+            ShowCursorText = TextsSource.GetText ( "Examine.ShowCursor", "Show Cursor" );
         }
 
         private void Start ()
@@ -232,28 +245,18 @@ namespace HFPS.Systems
             }
         }
 
+        void SetupUIControls ()
+        {
+            InputHandler.GetInputAction ( "Pause" ).performed += OnPause;
+            InputHandler.GetInputAction ( "Inventory" ).performed += OnInventory;
+        }
+
         void OnDestroy()
         {
             if ( InputHandler.GetInputAction ( "Pause" ) != null ) InputHandler.GetInputAction("Pause").performed -= OnPause;
             InputHandler.GetInputAction("Inventory").performed -= OnInventory;
             InputHandler.OnInputsUpdated -= OnInputsUpdated;
             //colorGrading.saturation.Override(0);
-        }
-
-        private void OnInitTexts ()
-        {
-            ExamineText = TextsSource.GetText ( "Interact.Examine", "Examine" );
-            TakeText = TextsSource.GetText ( "Interact.Take", "Take" );
-            PutAwayText = TextsSource.GetText ( "Examine.PutAway", "Put Away" );
-            RotateText = TextsSource.GetText ( "Examine.Rotate", "Rotate" );
-            ThrowText = TextsSource.GetText ( "Examine.Throw", "Throw" );
-            ShowCursorText = TextsSource.GetText ( "Examine.ShowCursor", "Show Cursor" );
-        }
-
-        void SetupUIControls ()
-        {
-            InputHandler.GetInputAction ( "Pause" ).performed += OnPause;
-            InputHandler.GetInputAction ( "Inventory" ).performed += OnInventory;
         }
 
         void SetupUI()
@@ -304,6 +307,9 @@ namespace HFPS.Systems
 
         private void OnInventory(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
         {
+            // Local player check
+            if ( !playerIdentity.isLocalPlayer ) return;
+
             if (!isPaused && ( healthManager != null && !healthManager.isDead ) && !cutscene.cutsceneRunning && ctx.ReadValueAsButton())
             {
                 gamePanels.TabButtonPanel.SetActive(!gamePanels.TabButtonPanel.activeSelf);
@@ -331,6 +337,9 @@ namespace HFPS.Systems
 
         private void OnPause(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
         {
+            // Local player check
+            if ( !playerIdentity.isLocalPlayer ) return;
+
             if ( ( healthManager != null && !healthManager.isDead ) && !cutscene.cutsceneRunning && ctx.ReadValueAsButton())
             {
                 gamePanels.PauseGamePanel.SetActive(!gamePanels.PauseGamePanel.activeSelf);

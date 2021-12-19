@@ -17,17 +17,23 @@ namespace HFPS.Player
     /// </summary>
     public class InteractManager : MonoBehaviour
     {
-        private HFPS_GameManager gameManager;
-        private ItemSwitcher itemSelector;
-        private Inventory inventory;
+        [Header("References")]
+        [SerializeField]
+        private HFPS_GameManager GameManager;
+        [SerializeField]
+        private Inventory Inventory;
+        [SerializeField]
+        private ScriptManager ScriptManager;
 
-        private Camera mainCamera;
+        private ItemSwitcher itemSelector;
+
         private DynamicObject dynamicObj;
         private InteractiveItem interactItem;
         private UIObjectInfo objectInfo;
         private DraggableObject dragRigidbody;
 
         [Header("Raycast")]
+        public Camera MainCamera;
         public float RaycastRange = 3;
         public LayerMask cullLayers;
         public LayerMask interactLayers;
@@ -78,12 +84,9 @@ namespace HFPS.Player
 
         void Awake()
         {
-            inventory = Inventory.Instance;
-            gameManager = HFPS_GameManager.Instance;
-            mainCamera = ScriptManager.Instance.MainCamera;
-            itemSelector = ScriptManager.Instance.Get<ItemSwitcher>();
+            itemSelector = ScriptManager.Get<ItemSwitcher>();
 
-            CrosshairUI = gameManager.userInterface.Crosshair;
+            CrosshairUI = GameManager.userInterface.Crosshair;
             default_interactCrosshair = interactCrosshair;
             default_crosshairSize = crosshairSize;
             default_interactSize = interactSize;
@@ -111,35 +114,38 @@ namespace HFPS.Player
             NoInventorySpace = TextsSource.GetText("Interact.NoInventorySpace", "No inventory space!");
         }
 
-        void Update()
+        private void Update ()
         {
-            if (InputHandler.InputIsInitialized)
+            if ( InputHandler.InputIsInitialized )
             {
-                bp_Use = InputHandler.CompositeOf("Use").bindingPath;
-                bp_Pickup = InputHandler.CompositeOf("Examine").bindingPath;
-                UsePressed = InputHandler.ReadButtonOnce(this, "Use");
+                bp_Use = InputHandler.CompositeOf ( "Use" ).bindingPath;
+                bp_Pickup = InputHandler.CompositeOf ( "Examine" ).bindingPath;
+                UsePressed = InputHandler.ReadButtonOnce ( this, "Use" );
             }
 
-            if (UsePressed && RaycastObject && !isPressed && !isHeld && !inUse && !gameManager.isWeaponZooming)
+            if ( UsePressed && RaycastObject && !isPressed && !isHeld && !inUse && !GameManager.isWeaponZooming )
             {
-                Interact(RaycastObject);
+                Interact ( RaycastObject );
                 isPressed = true;
             }
 
-            if (!UsePressed && isPressed)
+            if ( !UsePressed && isPressed )
             {
                 isPressed = false;
             }
+        }
 
-            Ray playerAim = mainCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+        void FixedUpdate()
+        {
+            Ray playerAim = MainCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
 
             if (Physics.Raycast(playerAim, out RaycastHit hit, RaycastRange, cullLayers))
             {
-                if (interactLayers.CompareLayer(hit.collider.gameObject.layer) && !gameManager.isWeaponZooming)
+                if (interactLayers.CompareLayer(hit.collider.gameObject.layer) && !GameManager.isWeaponZooming)
                 {
                     if (hit.collider.gameObject != RaycastObject)
                     {
-                        gameManager.HideSprites(0);
+                        GameManager.HideSprites(0);
                     }
 
                     RaycastObject = hit.collider.gameObject;
@@ -178,7 +184,7 @@ namespace HFPS.Player
 
                     if (objectInfo && !string.IsNullOrEmpty(objectInfo.ObjectTitle))
                     {
-                        gameManager.ShowInteractInfo(objectInfo.ObjectTitle);
+                        GameManager.ShowInteractInfo(objectInfo.ObjectTitle);
                     }
 
                     if (!inUse)
@@ -187,7 +193,7 @@ namespace HFPS.Player
                         {
                             if (dynamicObj.useType == Type_Use.Locked && dynamicObj.CheckHasKey())
                             {
-                                gameManager.ShowInteractSprite(1, UnlockText, bp_Use);
+                                GameManager.ShowInteractSprite(1, UnlockText, bp_Use);
                             }
                             else
                             {
@@ -195,19 +201,19 @@ namespace HFPS.Player
                                 {
                                     if (dynamicObj.interactType == Type_Interact.Mouse)
                                     {
-                                        gameManager.ShowInteractSprite(1, DragText, bp_Use);
+                                        GameManager.ShowInteractSprite(1, DragText, bp_Use);
                                     }
                                     else
                                     {
-                                        gameManager.ShowInteractSprite(1, UseText, bp_Use);
+                                        GameManager.ShowInteractSprite(1, UseText, bp_Use);
                                     }
                                 }
                                 else
                                 {
                                     if (!string.IsNullOrEmpty(objectInfo.UseText))
-                                        gameManager.ShowInteractSprite(1, objectInfo.UseText, bp_Use);
+                                        GameManager.ShowInteractSprite(1, objectInfo.UseText, bp_Use);
                                     else
-                                        gameManager.ShowInteractSprite(1, UseText, bp_Use);
+                                        GameManager.ShowInteractSprite(1, UseText, bp_Use);
                                 }
                             }
                         }
@@ -217,78 +223,78 @@ namespace HFPS.Player
                             {
                                 if (interactItem.interactShowTitle && !string.IsNullOrEmpty(interactItem.examineTitle))
                                 {
-                                    gameManager.ShowInteractInfo(interactItem.examineTitle);
+                                    GameManager.ShowInteractInfo(interactItem.examineTitle);
                                 }
 
                                 if (!dragRigidbody || dragRigidbody && !dragRigidbody.dragAndUse)
                                 {
                                     if (interactItem.itemType == InteractiveItem.ItemType.OnlyExamine)
                                     {
-                                        gameManager.ShowInteractSprite(1, ExamineText, bp_Pickup);
+                                        GameManager.ShowInteractSprite(1, ExamineText, bp_Pickup);
                                     }
                                     else if (interactItem.itemType == InteractiveItem.ItemType.GenericItem)
                                     {
                                         if (interactItem.examineType != InteractiveItem.ExamineType.None)
                                         {
-                                            gameManager.ShowInteractSprite(1, UseText, bp_Use);
-                                            gameManager.ShowInteractSprite(2, ExamineText, bp_Pickup);
+                                            GameManager.ShowInteractSprite(1, UseText, bp_Use);
+                                            GameManager.ShowInteractSprite(2, ExamineText, bp_Pickup);
                                         }
                                         else
                                         {
-                                            gameManager.ShowInteractSprite(1, UseText, bp_Use);
+                                            GameManager.ShowInteractSprite(1, UseText, bp_Use);
                                         }
                                     }
                                     else if (interactItem.examineType != InteractiveItem.ExamineType.None && interactItem.itemType != InteractiveItem.ItemType.GenericItem)
                                     {
-                                        gameManager.ShowInteractSprite(1, TakeText, bp_Use);
-                                        gameManager.ShowInteractSprite(2, ExamineText, bp_Pickup);
+                                        GameManager.ShowInteractSprite(1, TakeText, bp_Use);
+                                        GameManager.ShowInteractSprite(2, ExamineText, bp_Pickup);
                                     }
                                     else if (interactItem.examineType == InteractiveItem.ExamineType.Paper)
                                     {
-                                        gameManager.ShowInteractSprite(1, ExamineText, bp_Pickup);
+                                        GameManager.ShowInteractSprite(1, ExamineText, bp_Pickup);
                                     }
                                     else
                                     {
-                                        gameManager.ShowInteractSprite(1, TakeText, bp_Use);
+                                        GameManager.ShowInteractSprite(1, TakeText, bp_Use);
                                     }
                                 }
                                 else if (dragRigidbody && dragRigidbody.dragAndUse)
                                 {
                                     if (interactItem.itemType != InteractiveItem.ItemType.OnlyExamine)
                                     {
-                                        gameManager.ShowInteractSprite(1, TakeText, bp_Use);
-                                        gameManager.ShowInteractSprite(2, GrabText, bp_Pickup);
+                                        GameManager.ShowInteractSprite(1, TakeText, bp_Use);
+                                        GameManager.ShowInteractSprite(2, GrabText, bp_Pickup);
                                     }
                                 }
                             }
                             else if (RaycastObject.GetComponent<DynamicObjectPlank>())
                             {
-                                gameManager.ShowInteractSprite(1, RemoveText, bp_Use);
+                                GameManager.ShowInteractSprite(1, RemoveText, bp_Use);
                             }
                             else if (dragRigidbody)
                             {
                                 if (!dragRigidbody.dragAndUse)
                                 {
-                                    gameManager.ShowInteractSprite(1, GrabText, bp_Pickup);
+                                    GameManager.ShowInteractSprite(1, GrabText, bp_Pickup);
                                 }
                                 else if(objectInfo && !string.IsNullOrEmpty(objectInfo.UseText))
                                 {
-                                    gameManager.ShowInteractSprite(1, objectInfo.UseText, bp_Use);
-                                    gameManager.ShowInteractSprite(2, GrabText, bp_Pickup);
+                                    GameManager.ShowInteractSprite(1, objectInfo.UseText, bp_Use);
+                                    GameManager.ShowInteractSprite(2, GrabText, bp_Pickup);
                                 }
                                 else
                                 {
-                                    gameManager.ShowInteractSprite(1, UseText, bp_Use);
-                                    gameManager.ShowInteractSprite(2, GrabText, bp_Pickup);
+                                    GameManager.ShowInteractSprite(1, UseText, bp_Use);
+                                    GameManager.ShowInteractSprite(2, GrabText, bp_Pickup);
                                 }
                             }
                             else if (objectInfo && !string.IsNullOrEmpty(objectInfo.UseText))
                             {
-                                gameManager.ShowInteractSprite(1, objectInfo.UseText, bp_Use);
+                                GameManager.ShowInteractSprite(1, objectInfo.UseText, bp_Use);
                             }
                             else
                             {
-                                gameManager.ShowInteractSprite(1, UseText, bp_Use);
+                                GameManager.ShowInteractSprite(1, UseText, bp_Use);
                             }
                         }
                     }
@@ -309,7 +315,7 @@ namespace HFPS.Player
             {
                 ResetCrosshair();
                 CrosshairChange(false);
-                gameManager.HideSprites(0);
+                GameManager.HideSprites(0);
                 interactItem = null;
                 RaycastObject = null;
                 dynamicObj = null;
@@ -317,7 +323,7 @@ namespace HFPS.Player
 
             if (!RaycastObject)
             {
-                gameManager.HideSprites(0);
+                GameManager.HideSprites(0);
                 CrosshairChange(false);
                 dynamicObj = null;
             }
@@ -346,30 +352,9 @@ namespace HFPS.Player
             interactCrosshair = default_interactCrosshair;
         }
 
-        public void CrosshairVisible(bool state)
-        {
-            switch (state)
-            {
-                case true:
-                    CrosshairUI.enabled = true;
-                    break;
-                case false:
-                    CrosshairUI.enabled = false;
-                    break;
-            }
-        }
+        public void CrosshairVisible ( bool state ) => CrosshairUI.enabled = state;
 
-        public bool GetInteractBool()
-        {
-            if (RaycastObject)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
+        public bool GetInteractBool () => RaycastObject != null;
 
         public void Interact(GameObject InteractObject)
         {
@@ -385,19 +370,19 @@ namespace HFPS.Player
             {
                 if (msg.messageType == Message.MessageType.Hint)
                 {
-                    gameManager.ShowHintPopup(msg.message, msg.messageTime);
+                    GameManager.ShowHintPopup(msg.message, msg.messageTime);
                 }
                 else if (msg.messageType == Message.MessageType.PickupHint)
                 {
-                    gameManager.ShowHintPopup($"{PickupHint} {msg.message}", msg.messageTime);
+                    GameManager.ShowHintPopup($"{PickupHint} {msg.message}", msg.messageTime);
                 }
                 else if (msg.messageType == Message.MessageType.Message)
                 {
-                    gameManager.ShowQuickMessage(msg.message, "");
+                    GameManager.ShowQuickMessage(msg.message, "");
                 }
                 else if (msg.messageType == Message.MessageType.ItemName)
                 {
-                    gameManager.ShowQuickMessage($"{PickupMessage} {msg.message}", "");
+                    GameManager.ShowQuickMessage($"{PickupMessage} {msg.message}", "");
                 }
             }
 
@@ -408,7 +393,7 @@ namespace HFPS.Player
                 string autoShortcut = string.Empty;
 
                 if (interactiveItem.itemType == InteractiveItem.ItemType.InventoryItem || interactiveItem.itemType == InteractiveItem.ItemType.SwitcherItem)
-                    item = inventory.GetItem(interactiveItem.inventoryID);
+                    item = Inventory.GetItem(interactiveItem.inventoryID);
 
                 if (interactiveItem.itemType == InteractiveItem.ItemType.GenericItem)
                 {
@@ -416,43 +401,43 @@ namespace HFPS.Player
                 }
                 else if (interactiveItem.itemType == InteractiveItem.ItemType.BackpackExpand)
                 {
-                    if ((inventory.settings.SlotAmount + interactiveItem.invExpandAmount) > inventory.settings.MaxSlots)
+                    if ((Inventory.settings.SlotAmount + interactiveItem.invExpandAmount) > Inventory.settings.MaxSlots)
                     {
-                        gameManager.ShowQuickMessage(BackpacksMax, "", true);
+                        GameManager.ShowQuickMessage(BackpacksMax, "", true);
                         return;
                     }
 
-                    inventory.ExpandSlots(interactiveItem.invExpandAmount);
+                    Inventory.ExpandSlots(interactiveItem.invExpandAmount);
                     InteractEvent(InteractObject);
                 }
                 else if (interactiveItem.itemType == InteractiveItem.ItemType.InventoryItem)
                 {
-                    if (inventory.CheckInventorySpace() || inventory.CheckItemInventoryStack(interactiveItem.inventoryID))
+                    if (Inventory.CheckInventorySpace() || Inventory.CheckItemInventoryStack(interactiveItem.inventoryID))
                     {
-                        if (inventory.GetItemAmount(item.ID) < item.Settings.maxStackAmount || item.Settings.maxStackAmount == 0)
+                        if (Inventory.GetItemAmount(item.ID) < item.Settings.maxStackAmount || item.Settings.maxStackAmount == 0)
                         {
-                            autoShortcut = inventory.AddItem(interactiveItem.inventoryID, interactiveItem.itemAmount, interactiveItem.itemData, interactiveItem.autoShortcut);
+                            autoShortcut = Inventory.AddItem(interactiveItem.inventoryID, interactiveItem.itemAmount, interactiveItem.itemData, interactiveItem.autoShortcut);
                             InteractEvent(InteractObject);
                         }
-                        else if (inventory.GetItemAmount(item.ID) >= item.Settings.maxStackAmount)
+                        else if (Inventory.GetItemAmount(item.ID) >= item.Settings.maxStackAmount)
                         {
-                            gameManager.ShowQuickMessage($"{CantTake} {item.Title}", "MaxItemCount");
+                            GameManager.ShowQuickMessage($"{CantTake} {item.Title}", "MaxItemCount");
                             showMessage = false;
                         }
                     }
                     else
                     {
-                        gameManager.ShowQuickMessage(NoInventorySpace, "NoSpace");
+                        GameManager.ShowQuickMessage(NoInventorySpace, "NoSpace");
                         showMessage = false;
                     }
                 }
                 else if (interactiveItem.itemType == InteractiveItem.ItemType.SwitcherItem)
                 {
-                    if (inventory.CheckInventorySpace() || inventory.CheckItemInventoryStack(interactiveItem.inventoryID))
+                    if (Inventory.CheckInventorySpace() || Inventory.CheckItemInventoryStack(interactiveItem.inventoryID))
                     {
-                        if (inventory.GetItemAmount(item.ID) < item.Settings.maxStackAmount || item.Settings.maxStackAmount == 0)
+                        if (Inventory.GetItemAmount(item.ID) < item.Settings.maxStackAmount || item.Settings.maxStackAmount == 0)
                         {
-                            autoShortcut = inventory.AddItem(interactiveItem.inventoryID, interactiveItem.itemAmount, null, interactiveItem.autoShortcut);
+                            autoShortcut = Inventory.AddItem(interactiveItem.inventoryID, interactiveItem.itemAmount, null, interactiveItem.autoShortcut);
 
                             if (interactiveItem.autoSwitch)
                             {
@@ -466,15 +451,15 @@ namespace HFPS.Player
 
                             InteractEvent(InteractObject);
                         }
-                        else if (inventory.GetItemAmount(item.ID) >= item.Settings.maxStackAmount)
+                        else if (Inventory.GetItemAmount(item.ID) >= item.Settings.maxStackAmount)
                         {
-                            gameManager.ShowQuickMessage($"{CantTake} {item.Title}", "MaxItemCount");
+                            GameManager.ShowQuickMessage($"{CantTake} {item.Title}", "MaxItemCount");
                             showMessage = false;
                         }
                     }
                     else
                     {
-                        gameManager.ShowQuickMessage(NoInventorySpace, "NoSpace");
+                        GameManager.ShowQuickMessage(NoInventorySpace, "NoSpace");
                         showMessage = false;
                     }
                 }
@@ -497,17 +482,17 @@ namespace HFPS.Player
                         }
 
                         if (interactiveItem.useDefaultHint) 
-                            gameManager.ShowHintPopup($"{PickupHint} {interactiveItem.titleOrMsg.ToLower()}", interactiveItem.messageTime, interactiveItem.messageTips);
+                            GameManager.ShowHintPopup($"{PickupHint} {interactiveItem.titleOrMsg.ToLower()}", interactiveItem.messageTime, interactiveItem.messageTips);
                         else
-                            gameManager.ShowHintPopup(interactiveItem.titleOrMsg, interactiveItem.messageTime, interactiveItem.messageTips);
+                            GameManager.ShowHintPopup(interactiveItem.titleOrMsg, interactiveItem.messageTime, interactiveItem.messageTips);
                     }
                     else if (interactiveItem.messageType == InteractiveItem.MessageType.Message)
                     {
-                        gameManager.ShowQuickMessage(interactiveItem.titleOrMsg, "");
+                        GameManager.ShowQuickMessage(interactiveItem.titleOrMsg, "");
                     }
                     else if (interactiveItem.messageType == InteractiveItem.MessageType.ItemName)
                     {
-                        gameManager.ShowQuickMessage($"{PickupMessage} {interactiveItem.titleOrMsg}", "");
+                        GameManager.ShowQuickMessage($"{PickupMessage} {interactiveItem.titleOrMsg}", "");
                     }
                 }
             }
@@ -519,7 +504,7 @@ namespace HFPS.Player
 
         void InteractEvent(GameObject InteractObject)
         {
-            gameManager.HideSprites(0);
+            GameManager.HideSprites(0);
             InteractObject.SendMessage("UseObject", SendMessageOptions.DontRequireReceiver);
         }
     }

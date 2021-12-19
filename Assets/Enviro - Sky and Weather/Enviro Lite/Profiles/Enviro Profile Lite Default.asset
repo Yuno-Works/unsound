@@ -134,7 +134,7 @@ MonoBehaviour:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 1
+        value: 0.85
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -143,7 +143,7 @@ MonoBehaviour:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 1
-        value: 1
+        value: 0.85
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -159,8 +159,8 @@ MonoBehaviour:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0
-        value: 0.750625
+        time: -0.0019257013
+        value: 0.69956523
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -168,8 +168,8 @@ MonoBehaviour:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 1
-        value: 0.750625
+        time: 0.8978882
+        value: 0.69956875
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -1294,11 +1294,11 @@ MonoBehaviour:
     distanceFog: 1
     useRadialDistance: 1
     startDistance: 100
-    distanceFogIntensity: 0.5
-    maximumFogDensity: 0.95
+    distanceFogIntensity: 2
+    maximumFogDensity: 1
     heightFog: 1
-    height: 12
-    heightFogIntensity: 0.08
+    height: 7.94
+    heightFogIntensity: 1
     heightDensity: 1.6
     noiseIntensity: 1
     noiseIntensityOffset: 0.3
@@ -1654,7 +1654,7 @@ MonoBehaviour:
   showRenderingSetup: 0
   showComponentsSetup: 0
   showTimeUI: 0
-  showWeatherUI: 1
+  showWeatherUI: 0
   showAudioUI: 0
   showEffectsUI: 0
-  modified: 0
+  modified: 1

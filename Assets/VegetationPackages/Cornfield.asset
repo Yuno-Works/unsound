@@ -228,7 +228,7 @@ MonoBehaviour:
     DisableLOD: 0
     LODFactor: 1
     UseDistanceFalloff: 1
-    DistanceFalloffStartDistance: 0.45
+    DistanceFalloffStartDistance: 0.4
     UseVegetationMask: 0
     VegetationTypeIndex: 1
     RuntimePrefabRuleList: []
@@ -478,7 +478,7 @@ MonoBehaviour:
       m_Center: {x: 0.00006993674, y: 0.00013424084, z: 0.03247506}
       m_Extent: {x: 0.011808325, y: 0.007289054, z: 0.033736996}
     ScaleMultiplier: {x: 60, y: 60, z: 60}
-    RenderDistanceFactor: 0.8
+    RenderDistanceFactor: 0.6
     Seed: 6
     MinScale: 0.6
     MaxScale: 1.2
@@ -666,7 +666,7 @@ MonoBehaviour:
     DisableLOD: 0
     LODFactor: 1
     UseDistanceFalloff: 1
-    DistanceFalloffStartDistance: 0.5
+    DistanceFalloffStartDistance: 0.4
     UseVegetationMask: 0
     VegetationTypeIndex: 1
     RuntimePrefabRuleList: []
@@ -697,7 +697,7 @@ MonoBehaviour:
       m_Center: {x: 0.00006993674, y: 0.00013424084, z: 0.03247506}
       m_Extent: {x: 0.011808325, y: 0.007289054, z: 0.033736996}
     ScaleMultiplier: {x: 70, y: 70, z: 70}
-    RenderDistanceFactor: 1
+    RenderDistanceFactor: 0.8
     Seed: 25
     MinScale: 0.5
     MaxScale: 1.2
@@ -885,7 +885,7 @@ MonoBehaviour:
     DisableLOD: 0
     LODFactor: 1
     UseDistanceFalloff: 1
-    DistanceFalloffStartDistance: 0.4
+    DistanceFalloffStartDistance: 0.3
     UseVegetationMask: 0
     VegetationTypeIndex: 1
     RuntimePrefabRuleList: []
@@ -916,7 +916,7 @@ MonoBehaviour:
       m_Center: {x: 0.00006993674, y: 0.00013424084, z: 0.03247506}
       m_Extent: {x: 0.011808325, y: 0.007289054, z: 0.033736996}
     ScaleMultiplier: {x: 80, y: 80, z: 80}
-    RenderDistanceFactor: 1
+    RenderDistanceFactor: 0.8
     Seed: 24
     MinScale: 0.8
     MaxScale: 1.1

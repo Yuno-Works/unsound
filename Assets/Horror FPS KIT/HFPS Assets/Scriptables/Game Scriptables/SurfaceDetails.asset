@@ -98,6 +98,7 @@ MonoBehaviour:
       SurfaceTextures:
       - {fileID: 2800000, guid: 138cd7a200fe85d4fa3a77a8d0a8e534, type: 3}
       - {fileID: 2800000, guid: 926b193d7389b414c9894bf813be3fbd, type: 3}
+      - {fileID: 2800000, guid: 5dbbaa94bdd57d0449cfcf8549b95a26, type: 3}
       SurfaceTag: Gravel
       AllowFootsteps: 1
       AllowImpactMark: 1
@@ -106,9 +107,8 @@ MonoBehaviour:
       - {fileID: 8300000, guid: fe617912a3a6f0b4d8dc85ea841f3d03, type: 3}
       - {fileID: 8300000, guid: d54b163a9e20e0c4b989b631798c4643, type: 3}
       - {fileID: 8300000, guid: ec42a7475a2cd6b429e3cf1e3473390f, type: 3}
-      - {fileID: 8300000, guid: ac78045cb61a5eb4e831861abc949d81, type: 3}
       - {fileID: 8300000, guid: 100e5c51fa6433c43bb8981c42e0cb5a, type: 3}
-      FootstepsModifier: 1
+      FootstepsModifier: 0.3
     ImpactProperties:
       SurfaceBulletmarks:
       - {fileID: 1604642742537266, guid: 39a67207b35f0e94aaeae4fd865fa7ae, type: 3}

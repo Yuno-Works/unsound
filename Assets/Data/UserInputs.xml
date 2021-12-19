@@ -12,11 +12,6 @@
     <Binding Index="1" Bind="DualShockGamepad.buttonEast" />
     <Binding Index="2" Bind="XInputController.buttonEast" />
   </Action>
-  <Action Name="Prone">
-    <Binding Index="0" Bind="null" />
-    <Binding Index="1" Bind="DualShockGamepad.buttonEast" />
-    <Binding Index="2" Bind="XInputController.buttonEast" />
-  </Action>
   <Action Name="Run">
     <Binding Index="0" Bind="Keyboard.leftShift" />
     <Binding Index="1" Bind="DualShockGamepad.leftStickPress" />
@@ -46,6 +41,11 @@
     <Binding Index="0" Bind="Keyboard.e" />
     <Binding Index="1" Bind="DualShockGamepad.buttonWest" />
     <Binding Index="2" Bind="XInputController.buttonWest" />
+  </Action>
+  <Action Name="ToggleFlashlight">
+    <Binding Index="0" Bind="Keyboard.f" />
+    <Binding Index="1" Bind="DualShockGamepad.buttonEast" />
+    <Binding Index="2" Bind="XInputController.buttonEast" />
   </Action>
   <Action Name="Examine">
     <Binding Index="0" Bind="Keyboard.q" />
