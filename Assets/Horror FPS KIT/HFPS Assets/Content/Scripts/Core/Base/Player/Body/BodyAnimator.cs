@@ -134,7 +134,7 @@ namespace HFPS.Player
 
             localBodyAngle = transform.localEulerAngles;
             localBodyAngle.y = 0;
-            originalOffset = transform.localPosition;
+            //originalOffset = transform.localPosition;
 
             yBodyAngle = transform.root.eulerAngles.y;
             Vector3 current = transform.localEulerAngles; current.x = 0; current.z = 0;

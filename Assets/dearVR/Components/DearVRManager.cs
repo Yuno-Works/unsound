@@ -21,8 +21,8 @@ namespace DearVR
         /// <value>The dear listener.</value>
         public static AudioListener DearListener
         {
-            get { return instance_.managerListener_; }
-            set { instance_.managerListener_ = value; }
+            get { return Instance.managerListener_; }
+            set { Instance.managerListener_ = value; }
         }
 
         #region Singleton

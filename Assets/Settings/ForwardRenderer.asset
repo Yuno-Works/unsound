@@ -59,7 +59,8 @@ MonoBehaviour:
   - {fileID: -7522823631348639930}
   - {fileID: -9171927388434143489}
   - {fileID: -8741916559195057835}
-  m_RendererFeatureMap: cbe944f681896b0846d78cd1c38f9997ffe6b49aa2c4b68055d112c13479ae86
+  - {fileID: 8259996597887086672}
+  m_RendererFeatureMap: cbe944f681896b0846d78cd1c38f9997ffe6b49aa2c4b68055d112c13479ae8650b0fe762467a172
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
   shaders:
@@ -110,3 +111,16 @@ MonoBehaviour:
     DirectLightingStrength: 0.25
     Radius: 0.035
     SampleCount: 6
+--- !u!114 &8259996597887086672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03b4ec73907ff472f811959d3cd1919c, type: 3}
+  m_Name: NewDepthRenderPrePassFeature
+  m_EditorClassIdentifier: 
+  m_Active: 1

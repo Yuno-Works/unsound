@@ -52,13 +52,17 @@ namespace HFPS.Player
                 gameManager = value;
             }
         }
+        [SerializeField]
         private HFPS_GameManager gameManager;
+        [SerializeField]
         private Inventory inventory;
+        [SerializeField]
+        private ScriptManager scriptManager;
+
         private InteractManager interact;
         private PlayerFunctions pfunc;
         private FloatingIconManager floatingItem;
         private DelayEffect delay;
-        private ScriptManager scriptManager;
         private ItemSwitcher itemSwitcher;
 
         private GameObject paperUI;
@@ -176,7 +180,6 @@ namespace HFPS.Player
         {
             TextsSource.OnInitTexts += OnInitTexts;
 
-            scriptManager = ScriptManager.Instance;
             itemSwitcher = scriptManager.Get<ItemSwitcher>();
 
             if (!TextsSource.HasReference)

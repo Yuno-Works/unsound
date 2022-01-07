@@ -12,13 +12,15 @@ namespace HFPS.Player
 {
     public class DragRigidbody : MonoBehaviour
     {
+        [SerializeField]
+        private ScriptManager scriptManager;
+
         private Camera playerCam;
         private HFPS_GameManager gameManager;
         private InteractManager interact;
         private PlayerFunctions pfunc;
         private DelayEffect delay;
         private ItemSwitcher itemSwitcher;
-        private ScriptManager scriptManager;
 
         [Header("Main")]
         public LayerMask CullLayers;
@@ -85,7 +87,7 @@ namespace HFPS.Player
 
         void Awake()
         {
-            scriptManager = ScriptManager.Instance;
+            //scriptManager = ScriptManager.Instance;
             delay = transform.root.GetComponentInChildren<DelayEffect>(true);
             interact = GetComponent<InteractManager>();
             gameManager = HFPS_GameManager.Instance;

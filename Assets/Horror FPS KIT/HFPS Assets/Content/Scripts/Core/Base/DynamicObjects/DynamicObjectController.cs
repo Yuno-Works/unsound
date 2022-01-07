@@ -6,10 +6,13 @@ namespace HFPS.Player
 {
     public class DynamicObjectController : MonoBehaviour
     {
+        [SerializeField]
         private HFPS_GameManager gameManager;
+        [SerializeField]
+        private Camera mainCamera;
+
         private DynamicObject dynamicObj;
         private DelayEffect delay;
-        private Camera mainCamera;
 
         [Header("Raycast")]
         public LayerMask CullLayers;
@@ -44,8 +47,8 @@ namespace HFPS.Player
 
         void Awake()
         {
-            mainCamera = ScriptManager.Instance.MainCamera;
-            gameManager = HFPS_GameManager.Instance;
+            //mainCamera = ScriptManager.Instance.MainCamera;
+            //gameManager = HFPS_GameManager.Instance;
             delay = transform.root.GetComponentInChildren<DelayEffect>(true);
             RayLength = GetComponent<InteractManager>().RaycastRange;
         }

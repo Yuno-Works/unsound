@@ -14,7 +14,9 @@ public class HeadlampController : NetworkBehaviour
     [SerializeField]
     private Transform m_lightObject = null;
     [SerializeField]
-    private Light m_light = null;
+    private Light m_localLight = null;
+    [SerializeField]
+    private Light m_remoteLight = null;
     [SerializeField]
     private Material m_emissiveMaterial = null;
     [SerializeField]
@@ -34,7 +36,7 @@ public class HeadlampController : NetworkBehaviour
     {
         Debug.Assert ( m_networkIdentity != null, "" );
         Debug.Assert ( m_lightObject != null, "m_lightObject is null." );
-        Debug.Assert ( m_light != null, "m_headlampLight is null." );
+        Debug.Assert ( m_localLight != null, "m_headlampLight is null." );
     }
 
     // Start is called before the first frame update
@@ -75,31 +77,8 @@ public class HeadlampController : NetworkBehaviour
     {
         // Toggle state flag
         m_lightState = !lightState;
-        Debug.Log ( $"[Server] ToggleFlashlight() - {m_lightState}" );
 
         RpcToggleLight ( m_lightState );
-
-       /* // Set Light component state
-        m_light.enabled = m_lightState;
-
-        // Toggle emissive property of material
-        if ( m_emissiveMaterial != null )
-        {
-            if ( m_lightState )
-            {
-                // Material emission on
-                m_emissiveMaterial.EnableKeyword ( "_EMISSION" );
-                m_emissiveMaterial.globalIlluminationFlags = MaterialGlobalIlluminationFlags.AnyEmissive;
-                m_emissiveMaterial.SetColor ( "_EmissionColor", m_lightColor );
-            }
-            else
-            {
-                // Material emission off
-                m_emissiveMaterial.DisableKeyword ( "_EMISSION" );
-                m_emissiveMaterial.globalIlluminationFlags = MaterialGlobalIlluminationFlags.EmissiveIsBlack;
-                m_emissiveMaterial.SetColor ( "_EmissionColor", Color.black );
-            }
-        }*/
     }
 
     [ClientRpc]
@@ -107,10 +86,16 @@ public class HeadlampController : NetworkBehaviour
     {
         // Toggle state flag
         m_lightState = lightState;
-        Debug.Log ( $"[Client] ToggleFlashlight() - {m_lightState}" );
 
         // Set Light component state
-        m_light.enabled = m_lightState;
+        if ( isLocalPlayer )
+        {
+            m_localLight.enabled = m_lightState;
+        }
+        else
+        {
+            m_remoteLight.enabled = m_lightState;
+        }
 
         // Toggle emissive property of material
         if ( m_emissiveMaterial != null )
