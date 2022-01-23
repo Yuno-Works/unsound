@@ -1,6 +1,7 @@
 using System.Linq;
 using UnityEngine;
 using Mirror;
+using Steamworks;
 
 namespace SilverDogGames.Mirror.Lobby
 {
@@ -40,9 +41,17 @@ namespace SilverDogGames.Mirror.Lobby
 
         public override void OnStartAuthority ()
         {
-            CmdSetDisplayName ( PlayerNameInput.DisplayName );
+            if ( SteamManager.Initialized )
+            {
+                // Set room player display name
+                CmdSetDisplayName ( SteamFriends.GetPersonaName () );
 
-            m_view.DisplayPanel ( true );
+                m_view.DisplayPanel ( true );
+            }
+            else
+            {
+                Debug.LogError ( $"{this} SteamManager not initialized." );
+            }
         }
 
         public override void OnStartClient ()
@@ -70,10 +79,22 @@ namespace SilverDogGames.Mirror.Lobby
 
         #endregion
 
+        #region Listeners
+
+        /// <summary>
+        /// Activates Steam friends invite overlay.
+        /// </summary>
+        public void OpenSteamOverlayInviteDialog ()
+        {
+            SteamFriends.ActivateGameOverlayInviteDialog ( SteamLobby.LobbyId );
+        }
+
         public void HandleReadyToStart ()
         {
             CmdStartGame ();
         }
+
+        #endregion
 
         private void UpdateView ()
         {
@@ -95,13 +116,13 @@ namespace SilverDogGames.Mirror.Lobby
         #region Commands
 
         [Command]
-        private void CmdSetDisplayName ( string displayName ) => DisplayName = displayName;
+        public void CmdSetDisplayName ( string displayName ) => DisplayName = displayName;
 
         [Command]
         public void CmdReadyUp () => IsReady = !IsReady;
 
         [Command]
-        public void CmdStartGame ()
+        private void CmdStartGame ()
         {
             // Check ready status all
             if ( Room.IsReadyToStart () == false ) { return; }
@@ -120,7 +141,6 @@ namespace SilverDogGames.Mirror.Lobby
         #endregion
 
         #region RPCs
-
 
         [ClientRpc]
         private void RpcStartGameClient () => Room.OnStartGameClient ();

@@ -1,4 +1,5 @@
 using Mirror;
+using Steamworks;
 using System;
 using System.Linq;
 using System.Collections;
@@ -121,12 +122,17 @@ namespace SilverDogGames.Mirror.Lobby
             if ( SceneManager.GetActiveScene ().path == m_menuScene )
             {
                 bool isLeader = RoomPlayers.Count == 0;
+                CSteamID steamId = SteamMatchmaking.GetLobbyMemberByIndex ( SteamLobby.LobbyId, numPlayers - 1 );
 
+                // Add room player instance
                 NetworkRoomPlayer roomPlayerInstance = Instantiate ( m_roomPlayerPrefab );
-
                 roomPlayerInstance.IsLeader = isLeader;
 
                 NetworkServer.AddPlayerForConnection ( conn, roomPlayerInstance.gameObject );
+
+                // Add Steam info
+                LobbyPlayerInfoHandler lobbyPlayerInfo = conn.identity.GetComponent<LobbyPlayerInfoHandler> ();
+                lobbyPlayerInfo.SetSteamId ( steamId.m_SteamID );
             }
         }
 
@@ -148,16 +154,7 @@ namespace SilverDogGames.Mirror.Lobby
 
         public override void OnServerSceneChanged ( string sceneName )
         {
-            Debug.Log ( $"Scene loaded [{sceneName}]" );
-
-            // Instantiate Player Spawn System
-            /*if ( sceneName == m_gameScene )
-            {
-                Debug.Log ( "Instantiate Player Spawn System" );
-
-                GameObject playerSpawnSystemInstance = Instantiate ( m_playerSpawnSystemPrefab );
-                NetworkServer.Spawn ( playerSpawnSystemInstance );
-            }*/
+            Debug.Log ( $"OnServerSceneChanged() [{sceneName}]" );
         }
 
         /// <summary>

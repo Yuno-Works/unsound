@@ -2,11 +2,8 @@ using UnityEngine;
 
 namespace SilverDogGames.Mirror.Lobby
 {
-    public class MainMenu : MonoBehaviour
+    public class LandingPageController : MonoBehaviour
     {
-        [SerializeField]
-        private NetworkManagerLobby m_networkManager = null;
-
         [Header ( "UI" )]
         [SerializeField]
         private GameObject m_landingPagePanel = null;
@@ -21,10 +18,9 @@ namespace SilverDogGames.Mirror.Lobby
             NetworkManagerLobby.OnClientStopped -= HandleClientStopped;
         }
 
-        public void HostLobby ()
+        public void SetView ( bool state )
         {
-            m_networkManager.StartHost ();
-            m_landingPagePanel.SetActive ( false );
+            m_landingPagePanel.SetActive ( state );
         }
 
         private void HandleClientStopped ()
