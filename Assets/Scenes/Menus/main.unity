@@ -3146,7 +3146,7 @@ GameObject:
   - component: {fileID: 2047548404}
   - component: {fileID: 2047548406}
   m_Layer: 0
-  m_Name: NetworkManager
+  m_Name: SteamNetworkManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3197,6 +3197,8 @@ MonoBehaviour:
   spawnPrefabs:
   - {fileID: 4935450373795327799, guid: d004f2fe8042ed440af24e2ea7fbbde2, type: 3}
   - {fileID: 2148197228353032826, guid: ca1c52b44c24b824ebc8c269298ba167, type: 3}
+  roomPlayers: []
+  gamePlayers: []
   m_minPlayers: 1
   m_menuScene: Assets/Scenes/Menus/main.unity
   m_gameScene: Assets/Scenes/TestMaps/mirror-test/mirror-test.unity

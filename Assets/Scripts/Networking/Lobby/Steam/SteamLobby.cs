@@ -19,6 +19,7 @@ namespace SilverDogGames.Mirror.Lobby
         [SerializeField]
         private NetworkManager m_networkManager = null;
 
+        [Header ( "Events" )]
         [SerializeField]
         private UnityEvent OnLobbyCreated;
         [SerializeField]

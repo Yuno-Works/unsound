@@ -1,34 +1,23 @@
-using UnityEngine;
-using UnityEngine.Events;
 using Mirror;
 using Steamworks;
 
 public class LobbyPlayerInfoHandler : NetworkBehaviour
 {
-    [SerializeField]
-    private UnityEvent<string> OnPlayerSteamNameUpdated;
-
     [SyncVar ( hook = nameof ( HandleSteamIdUpdated ) )]
-    private ulong m_steamId;
+    private ulong steamId;
 
     #region Server
 
-    public void SetSteamId ( ulong steamId )
-    {
-        Debug.Log ( $"SetSteamId() - steamId={steamId}" );
-        m_steamId = steamId;
-    }
+    public void SetSteamId ( ulong steamId ) => CmdSetSteamId ( steamId );
+
+    [Command]
+    private void CmdSetSteamId ( ulong steamId ) => this.steamId = steamId;
 
     #endregion
 
     #region Client
 
-    private void HandleSteamIdUpdated ( ulong oldSteamId, ulong newSteamId )
-    {
-        CSteamID cSteamId = new CSteamID ( newSteamId );
-
-        OnPlayerSteamNameUpdated?.Invoke ( SteamFriends.GetFriendPersonaName ( cSteamId ) );
-    }
+    private void HandleSteamIdUpdated ( ulong oldSteamId, ulong newSteamId ) => steamId = newSteamId;
 
     #endregion
 }

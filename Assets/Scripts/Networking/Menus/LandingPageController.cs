@@ -8,24 +8,33 @@ namespace SilverDogGames.Mirror.Lobby
         [SerializeField]
         private GameObject m_landingPagePanel = null;
 
+        #region Initialization
+
         private void OnEnable ()
         {
-            NetworkManagerLobby.OnClientStopped += HandleClientStopped;
+            NetworkManagerLobby.OnClientConnected += NetworkManagerLobby_OnClientConnected;
+            NetworkManagerLobby.OnClientStopped += NetworkManagerLobby_OnClientStopped;
         }
 
         private void OnDisable ()
         {
-            NetworkManagerLobby.OnClientStopped -= HandleClientStopped;
+            NetworkManagerLobby.OnClientConnected -= NetworkManagerLobby_OnClientConnected;
+            NetworkManagerLobby.OnClientStopped -= NetworkManagerLobby_OnClientStopped;
         }
+
+        #endregion
+
+        #region Callbacks
+
+        private void NetworkManagerLobby_OnClientConnected () => SetView ( false );
+
+        private void NetworkManagerLobby_OnClientStopped () => SetView ( true );
+
+        #endregion
 
         public void SetView ( bool state )
         {
             m_landingPagePanel.SetActive ( state );
-        }
-
-        private void HandleClientStopped ()
-        {
-            m_landingPagePanel.SetActive ( true );
         }
 
         public void Quit ()

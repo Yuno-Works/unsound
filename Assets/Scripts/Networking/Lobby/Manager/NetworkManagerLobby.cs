@@ -11,6 +11,22 @@ namespace SilverDogGames.Mirror.Lobby
 {
     public class NetworkManagerLobby : NetworkManager
     {
+        public static event Action OnClientStarted;
+        public static event Action OnClientStopped;
+        public static event Action OnClientConnected;
+        public static event Action OnClientDisconnected;
+        public static event Action<AsyncOperation> OnGameStarted;
+        public static event Action<NetworkConnection> OnClientSceneReady;
+        public static event Action OnGameReady;
+
+        public List<NetworkRoomPlayer> RoomPlayers => roomPlayers;
+        public List<NetworkGamePlayer> GamePlayers => gamePlayers;
+
+        [SerializeField]
+        private List<NetworkRoomPlayer> roomPlayers = new List<NetworkRoomPlayer> ();
+        [SerializeField]
+        private List<NetworkGamePlayer> gamePlayers = new List<NetworkGamePlayer> ();
+
         [SerializeField]
         private int m_minPlayers = 1;
         [Scene]
@@ -30,17 +46,6 @@ namespace SilverDogGames.Mirror.Lobby
         private PlayerSpawnSystem m_playerSpawnSystemPrefab = null;
         [SerializeField]
         private float m_startGameDelay = 0f;
-
-        public static event Action OnClientStarted;
-        public static event Action OnClientStopped;
-        public static event Action OnClientConnected;
-        public static event Action OnClientDisconnected;
-        public static event Action<AsyncOperation> OnGameStarted;
-        public static event Action<NetworkConnection> OnClientReady;
-        public static event Action OnGameReady;
-
-        public List<NetworkRoomPlayer> RoomPlayers { get; } = new List<NetworkRoomPlayer> ();
-        public List<NetworkGamePlayer> GamePlayers { get; } = new List<NetworkGamePlayer> ();
 
         #region Overrides
 
@@ -64,8 +69,6 @@ namespace SilverDogGames.Mirror.Lobby
 
             base.ServerChangeScene ( newSceneName );
         }
-
-        #endregion
 
         #region Callbacks
 
@@ -119,7 +122,7 @@ namespace SilverDogGames.Mirror.Lobby
 
         public override void OnServerAddPlayer ( NetworkConnection conn )
         {
-            if ( SceneManager.GetActiveScene ().path == m_menuScene )
+            if ( SceneManager.GetActiveScene ().path == m_menuScene && SteamManager.Initialized )
             {
                 bool isLeader = RoomPlayers.Count == 0;
                 CSteamID steamId = SteamMatchmaking.GetLobbyMemberByIndex ( SteamLobby.LobbyId, numPlayers - 1 );
@@ -151,11 +154,6 @@ namespace SilverDogGames.Mirror.Lobby
         }
 
         public override void OnStopServer () => RoomPlayers.Clear ();
-
-        public override void OnServerSceneChanged ( string sceneName )
-        {
-            Debug.Log ( $"OnServerSceneChanged() [{sceneName}]" );
-        }
 
         /// <summary>
         /// Called on the server when the client is ready (loaded into scene).
@@ -191,7 +189,7 @@ namespace SilverDogGames.Mirror.Lobby
         {
             if ( SceneManager.GetActiveScene ().path != m_gameScene ) { return; }
 
-            OnClientReady?.Invoke ( conn );
+            OnClientSceneReady?.Invoke ( conn );
 
             base.OnClientSceneChanged ( conn );
         }
@@ -237,11 +235,13 @@ namespace SilverDogGames.Mirror.Lobby
 
         #endregion
 
+        #endregion
+
         public void NotifyPlayersOfReadyState ()
         {
             foreach ( NetworkRoomPlayer player in RoomPlayers )
             {
-                player.HandleReadyToStart ();
+                player.OnClientReady ();
             }
         }
 
@@ -252,6 +252,5 @@ namespace SilverDogGames.Mirror.Lobby
             // Check ready status all
             return RoomPlayers.All ( p => p.IsReady );
         }
-
     }
 }
