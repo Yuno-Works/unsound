@@ -7,6 +7,14 @@ public class PlayerManager : NetworkBehaviour
 {
     #region Members
 
+    [Header ( "Player Volume" )]
+    [SerializeField]
+    private AudioSource m_targetAudioSource = null;
+    [SerializeField]
+    private float m_localOutputVolume = 0.7f;
+    [SerializeField]
+    private float m_remoteOutputVolume = 1.0f;
+
     [Header ( "Render Targets" )]
     [SerializeField]
     private GameObject [] m_renderTargets = null;
@@ -31,6 +39,9 @@ public class PlayerManager : NetworkBehaviour
     {
         if ( !isLocalPlayer )
         {
+            //  Remote player output volume
+            m_targetAudioSource.volume = m_remoteOutputVolume;
+
             // Disable remote player GameObjects
             foreach ( GameObject gameObj in m_remoteDisableObjects )
             {
@@ -54,6 +65,11 @@ public class PlayerManager : NetworkBehaviour
             {
                 target.layer = LayerMask.NameToLayer ( m_visibleLayer );
             }
+        }
+        else
+        {
+            //  Local player output volume
+            m_targetAudioSource.volume = m_localOutputVolume;
         }
     }
 

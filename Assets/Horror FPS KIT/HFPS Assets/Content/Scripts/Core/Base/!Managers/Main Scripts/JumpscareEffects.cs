@@ -18,11 +18,13 @@ namespace HFPS.Player
         //private PostProcessVolume postProcessing;
         //private ChromaticAberration chromatic;
         //private Vignette vignette;
-        private ItemSwitcher itemSwitcher;
-        private AudioSource PlayerBreath;
 
         [Header ( "References" )]
         public PlayerController PlayerController;
+        [SerializeField]
+        private ItemSwitcher m_itemSwitcher;
+        [SerializeField]
+        private AudioSource m_playerAudioSource;
 
         [ Header("Speed Settings")]
         public float scareEffectSpeed;
@@ -67,23 +69,20 @@ namespace HFPS.Player
                 Debug.LogError($"[PostProcessing] There is no PostProcessVolume script added to a {GetComponent<ScriptManager>().ArmsCamera.gameObject.name}!");
             }*/
 
-            itemSwitcher = GetComponentInChildren<ItemSwitcher>();
-
-            PlayerBreath = PlayerController.transform.GetChild(1).transform.GetChild(0).GetComponent<AudioSource>();
-            defaultVolume = PlayerBreath.volume;
+            defaultVolume = m_playerAudioSource.volume;
         }
 
         void Update()
         {
             if (isFeelingBetter)
             {
-                if (PlayerBreath.volume > 0.05f)
+                if (m_playerAudioSource.volume > 0.05f)
                 {
-                    PlayerBreath.volume = Mathf.MoveTowards(PlayerBreath.volume, 0f, lerpSpeed * Time.deltaTime);
+                    m_playerAudioSource.volume = Mathf.MoveTowards(m_playerAudioSource.volume, 0f, lerpSpeed * Time.deltaTime);
                 }
                 else
                 {
-                    PlayerBreath.Stop();
+                    m_playerAudioSource.Stop();
                     isFeelingBetter = false;
                 }
             }
@@ -117,14 +116,14 @@ namespace HFPS.Player
             chromaticMax = chromaticAmount;
             vigneteMax = vigneteAmount;
 
-            if (itemSwitcher.currentItem != -1 && itemSwitcher.GetCurrentItem().GetComponent<FlashlightItem>())
+            if (m_itemSwitcher.currentItem != -1 && m_itemSwitcher.GetCurrentItem().GetComponent<FlashlightItem>())
             {
-                itemSwitcher.GetCurrentItem().GetComponent<FlashlightItem>().Event_Scare();
+                m_itemSwitcher.GetCurrentItem().GetComponent<FlashlightItem>().Event_Scare();
             }
 
             if (scaredBreathSound != null)
             {
-                PlayerBreath.clip = scaredBreathSound;
+                m_playerAudioSource.clip = scaredBreathSound;
             }
 
             enableEffects = true;
@@ -140,8 +139,8 @@ namespace HFPS.Player
 
         IEnumerator ScareBreath(float time)
         {
-            PlayerBreath.volume = defaultVolume;
-            PlayerBreath.Play();
+            m_playerAudioSource.volume = defaultVolume;
+            m_playerAudioSource.Play();
             yield return new WaitForSeconds(time);
             isFeelingBetter = true;
         }

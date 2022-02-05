@@ -15,6 +15,7 @@ namespace HFPS.Player
 
         protected Timekeeper timekeeper = new Timekeeper();
 
+        [SerializeField]
         private Camera mainCamera;
         private GameObject player;
 
@@ -88,15 +89,18 @@ namespace HFPS.Player
         {
             if ( !m_networkIdentity.isLocalPlayer ) return;
 
-            if (!isLocalCamera)
+            if ( mainCamera == null )
             {
-                mainCamera = Utilities.MainPlayerCamera();
-            }
-            else
-            {
-                mainCamera = GetComponent<Camera>();
-                Cursor.visible = false;
-                Cursor.lockState = CursorLockMode.Locked;
+                if (!isLocalCamera)
+                {
+                    mainCamera = Utilities.MainPlayerCamera();
+                }
+                else
+                {
+                    mainCamera = GetComponent<Camera>();
+                    Cursor.visible = false;
+                    Cursor.lockState = CursorLockMode.Locked;
+                }
             }
 
             // Make the rigid body not change rotation

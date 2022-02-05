@@ -11,7 +11,7 @@
     <Option Name="game_resolution" Value="1" />
     <Option Name="game_fullscreen" Value="2" />
     <Option Name="game_antialising" Value="1" />
-    <Option Name="game_texquality" Value="3" />
+    <Option Name="game_texquality" Value="2" />
     <Option Name="game_shadowquality" Value="1" />
     <Option Name="game_shadowdist" Value="40" />
     <Option Name="game_vsync" Value="True" />

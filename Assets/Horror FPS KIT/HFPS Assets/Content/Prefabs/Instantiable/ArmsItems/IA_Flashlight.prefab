@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 54414890514900876}
   - component: {fileID: 65511422321972192}
   - component: {fileID: 114949877913760778}
+  - component: {fileID: 4548807018381401742}
   m_Layer: 10
   m_Name: IA_Flashlight
   m_TagString: Untagged
@@ -172,3 +173,17 @@ MonoBehaviour:
   isExamined: 0
   floatingIconState: 1
   lastFloorPosition: {x: 0, y: 0, z: 0}
+--- !u!114 &4548807018381401742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1552328439722386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e2b621ab3b9c1643bcd38d6c4cc0fdc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactSprite: {fileID: 21300000, guid: 8744cef0b8d07824eb45013147cd4cae, type: 3}
+  size: 24
