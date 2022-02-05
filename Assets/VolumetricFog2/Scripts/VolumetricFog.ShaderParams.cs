@@ -18,7 +18,6 @@ namespace VolumetricFogAndMist2 {
         public static int NoiseFinalMultiplier = Shader.PropertyToID("_NoiseFinalMultiplier");
         public static int NoiseStrength = Shader.PropertyToID("_NoiseStrength");
         public static int TurbulenceAmount = Shader.PropertyToID("_TurbulenceAmount");
-        public static int BoundsVerticalOffset = Shader.PropertyToID("_BoundsVerticalOffset");
         public static int FogOfWarCenterAdjusted = Shader.PropertyToID("_FogOfWarCenterAdjusted");
         public static int FogOfWarSize = Shader.PropertyToID("_FogOfWarSize");
         public static int FogOfWarCenter = Shader.PropertyToID("_FogOfWarCenter");
@@ -36,6 +35,7 @@ namespace VolumetricFogAndMist2 {
         public static int BoundsBorder = Shader.PropertyToID("_BoundsBorder");
         public static int BoundsExtents = Shader.PropertyToID("_BoundsExtents");
         public static int BoundsCenter = Shader.PropertyToID("_BoundsCenter");
+        public static int BoundsData = Shader.PropertyToID("_BoundsData");
         public static int SurfaceCaptureMatrix = Shader.PropertyToID("_SurfaceCaptureMatrix");
         public static int SurfaceDepthTexture = Shader.PropertyToID("_SurfaceDepthTexture");
         public static int SurfaceData = Shader.PropertyToID("_SurfaceData");

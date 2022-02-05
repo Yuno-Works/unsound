@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: DistanceFog_map-1
   m_EditorClassIdentifier: 
   raymarchQuality: 2
-  raymarchMinStep: 5
-  jittering: 1
+  raymarchMinStep: 8
+  jittering: 4
   dithering: 0.15
   renderQueue: 3100
   sortingLayerID: 0
