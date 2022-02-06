@@ -228,7 +228,7 @@ MonoBehaviour:
     DisableLOD: 0
     LODFactor: 1
     UseDistanceFalloff: 1
-    DistanceFalloffStartDistance: 0.9
+    DistanceFalloffStartDistance: 0.6
     UseVegetationMask: 0
     VegetationTypeIndex: 1
     RuntimePrefabRuleList: []
