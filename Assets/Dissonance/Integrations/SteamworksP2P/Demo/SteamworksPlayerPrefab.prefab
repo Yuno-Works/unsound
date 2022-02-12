@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4026244040045020}
   - component: {fileID: 143343798196049608}
-  - component: {fileID: 114441762403694022}
+  - component: {fileID: -3747099120921357559}
   - component: {fileID: 135954542376440746}
   - component: {fileID: 114773902453850552}
   - component: {fileID: 114922543415495630}
@@ -57,7 +57,7 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 1, z: 0}
---- !u!114 &114441762403694022
+--- !u!114 &-3747099120921357559
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -71,9 +71,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _tokens:
     _tokens: []
-  _channelTypeExpanded: 0
-  _metadataExpanded: 0
-  _activationModeExpanded: 0
+  _channelTypeExpanded: 1
+  _metadataExpanded: 1
+  _activationModeExpanded: 1
   _tokensExpanded: 0
   _ampExpanded: 0
   _activationFaderSettings:
@@ -86,13 +86,13 @@ MonoBehaviour:
     _fadeOutTicks: 11500000
   _broadcastPosition: 1
   _channelType: 2
-  _inputName: TeamChat
+  _inputName: 
   _mode: 1
   _muted: 0
   _playerId: 
   _useTrigger: 1
-  _roomName: 
-  _priority: -2
+  _roomName: Global
+  _priority: 2
 --- !u!135 &135954542376440746
 SphereCollider:
   m_ObjectHideFlags: 0

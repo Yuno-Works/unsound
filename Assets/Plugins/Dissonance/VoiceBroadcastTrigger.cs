@@ -25,7 +25,7 @@ namespace Dissonance
         private PlayerChannel? _playerChannel;
         private RoomChannel? _roomChannel;
 
-        private bool _isVadSpeaking;
+        protected bool _isVadSpeaking;
         private CommActivationMode? _previousMode;
         private IDissonancePlayer _self;
 

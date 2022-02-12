@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using ThunderWire.Input;
 
 namespace Dissonance.Integrations.SteamworksP2P.Demo
 {
@@ -15,6 +16,8 @@ namespace Dissonance.Integrations.SteamworksP2P.Demo
         private Quaternion _targetRotation;
         private float _interpolationTime;
         private bool _haveTarget;
+        private float rotation;
+        private float speed;
 
         public void OnEnable()
         {
@@ -24,10 +27,10 @@ namespace Dissonance.Integrations.SteamworksP2P.Demo
 
         public void Update()
         {
-            if (_player.Type == NetworkPlayerType.Local)
+            if (_player.Type == NetworkPlayerType.Local && InputHandler.InputIsInitialized )
             {
-                var rotation = Input.GetAxis("Horizontal") * Time.deltaTime * 150.0f;
-                var speed = Input.GetAxis("Vertical") * 3.0f;
+                rotation = InputHandler.ReadInput<Vector2> ( "Move", "Player" ).x * Time.deltaTime * 150.0f;
+                speed = InputHandler.ReadInput<Vector2> ( "Move", "Player" ).y * 9.0f;
 
                 transform.Rotate(0, rotation, 0);
                 var forward = transform.TransformDirection(Vector3.forward);

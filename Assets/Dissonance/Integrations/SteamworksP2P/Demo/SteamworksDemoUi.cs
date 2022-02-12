@@ -533,13 +533,13 @@ namespace Dissonance.Integrations.SteamworksP2P.Demo
             public override void Activate()
             {
                 SceneManager.sceneLoaded += SceneLoaded;
-                SceneManager.LoadScene("SteamworksDotnetGameWorld");
+                SceneManager.LoadScene( "DissonanceGameWorldTest" );
             }
 
             private void SceneLoaded(Scene scene, LoadSceneMode mode)
             {
                 //We've loaded the game scene, so we need to tell Dissonance to startup in the right mode
-                if (scene.name == "SteamworksDotnetGameWorld")
+                if (scene.name == "DissonanceGameWorldTest")
                 {
                     var comms = FindObjectOfType<SteamworksP2PCommsNetwork>();
                     if (_host)
@@ -602,7 +602,7 @@ namespace Dissonance.Integrations.SteamworksP2P.Demo
                 base.Update();
 
                 if (_async == null)
-                    _async = SceneManager.LoadSceneAsync("SteamworksDotnetDemo", LoadSceneMode.Single);
+                    _async = SceneManager.LoadSceneAsync("DissonanceGameWorldTest", LoadSceneMode.Single);
                 if (_async.isDone)
                     _complete = true;
 
