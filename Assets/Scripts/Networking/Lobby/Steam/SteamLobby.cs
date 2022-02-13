@@ -1,5 +1,5 @@
+using System;
 using UnityEngine;
-using UnityEngine.Events;
 using Steamworks;
 using Mirror;
 
@@ -11,19 +11,17 @@ namespace SilverDogGames.Mirror.Lobby
 
         public static CSteamID LobbyId { get; private set; }
 
+        public static event EventHandler<LobbyCreated_t> OnLobbyCreated;
+        public static event EventHandler<LobbyEnter_t> OnLobbyEnter;
+
         protected Callback<LobbyCreated_t> lobbyCreated;
         protected Callback<GameLobbyJoinRequested_t> gameLobbyJoinRequested;
         protected Callback<LobbyEnter_t> lobbyEntered;
+        private CallResult<LobbyEnter_t> lobbyEnterResult;
 
         [Header ( "References" )]
         [SerializeField]
         private NetworkManager m_networkManager = null;
-
-        [Header ( "Events" )]
-        [SerializeField]
-        private UnityEvent OnLobbyCreated;
-        [SerializeField]
-        private UnityEvent OnLobbyCreateFailed;
 
         // Start is called before the first frame update
         void Start ()
@@ -32,7 +30,7 @@ namespace SilverDogGames.Mirror.Lobby
 
             lobbyCreated = Callback<LobbyCreated_t>.Create ( LobbyCreated );
             gameLobbyJoinRequested = Callback<GameLobbyJoinRequested_t>.Create ( GameLobbyJoinRequested );
-            lobbyEntered = Callback<LobbyEnter_t>.Create ( LobbyEntered );
+            //lobbyEntered = Callback<LobbyEnter_t>.Create ( LobbyEntered );
         }
 
         public void HostLobby ()
@@ -49,19 +47,13 @@ namespace SilverDogGames.Mirror.Lobby
 
         private void LobbyCreated ( LobbyCreated_t callback )
         {
-            if ( callback.m_eResult != EResult.k_EResultOK )
+            if ( callback.m_eResult == EResult.k_EResultOK )
             {
-                OnLobbyCreateFailed?.Invoke ();
-                return;
+                LobbyId = new CSteamID ( callback.m_ulSteamIDLobby );
+                m_networkManager.StartHost ();
+                SteamMatchmaking.SetLobbyData ( LobbyId, HOST_ADDRESS_KEY, SteamUser.GetSteamID ().ToString () );
             }
-
-            LobbyId = new CSteamID ( callback.m_ulSteamIDLobby );
-
-            m_networkManager.StartHost ();
-
-            SteamMatchmaking.SetLobbyData ( LobbyId, HOST_ADDRESS_KEY, SteamUser.GetSteamID ().ToString () );
-
-            OnLobbyCreated?.Invoke ();
+            OnLobbyCreated?.Invoke ( this, callback );
         }
 
         /// <summary>
@@ -70,17 +62,24 @@ namespace SilverDogGames.Mirror.Lobby
         /// <param name="callback"></param>
         private void GameLobbyJoinRequested ( GameLobbyJoinRequested_t callback )
         {
-            SteamMatchmaking.JoinLobby ( callback.m_steamIDLobby );
+            SteamAPICall_t result = SteamMatchmaking.JoinLobby ( callback.m_steamIDLobby );
+            lobbyEnterResult = CallResult<LobbyEnter_t>.Create ( LobbyEnterCallback );
+            lobbyEnterResult.Set ( result );
         }
 
-        private void LobbyEntered ( LobbyEnter_t callback )
+        private void LobbyEnterCallback ( LobbyEnter_t callback, bool bIOFailure )
         {
             if ( NetworkServer.active ) { return; }
+            if ( bIOFailure )
+            {
+                Debug.LogError ( "Failed to join lobby" );
+                return;
+            }
 
             string hostAddress = SteamMatchmaking.GetLobbyData ( new CSteamID ( callback.m_ulSteamIDLobby ), HOST_ADDRESS_KEY );
-
             m_networkManager.networkAddress = hostAddress;
             m_networkManager.StartClient ();
+            OnLobbyEnter?.Invoke ( this, callback );
         }
 
         #endregion

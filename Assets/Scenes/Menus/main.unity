@@ -378,6 +378,78 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &291739304
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 291739305}
+  - component: {fileID: 291739306}
+  m_Layer: 0
+  m_Name: GlobalChatLobby
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &291739305
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 291739304}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &291739306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 291739304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a066ddbf125f9546bcadc947418566b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _tokens:
+    _tokens: []
+  _channelTypeExpanded: 1
+  _metadataExpanded: 1
+  _activationModeExpanded: 1
+  _tokensExpanded: 1
+  _ampExpanded: 1
+  _activationFaderSettings:
+    _volume: 1
+    _fadeInTicks: 0
+    _fadeOutTicks: 1500000
+  _triggerFaderSettings:
+    _volume: 1
+    _fadeInTicks: 7500000
+    _fadeOutTicks: 11500000
+  _broadcastPosition: 0
+  _channelType: 0
+  _inputName: 
+  _mode: 1
+  _muted: 0
+  _playerId: 
+  _useTrigger: 0
+  _roomName: Lobby
+  _priority: 0
+--- !u!4 &321971863 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4598389476696988, guid: f1ab891fe17ad5d45889c2d4395e74e7, type: 3}
+  m_PrefabInstance: {fileID: 571644681}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &430486940
 GameObject:
   m_ObjectHideFlags: 0
@@ -845,7 +917,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 2047548405}
     m_Modifications:
     - target: {fileID: 1404861632408976, guid: f1ab891fe17ad5d45889c2d4395e74e7, type: 3}
       propertyPath: m_Name
@@ -853,7 +925,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4598389476696988, guid: f1ab891fe17ad5d45889c2d4395e74e7, type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4598389476696988, guid: f1ab891fe17ad5d45889c2d4395e74e7, type: 3}
       propertyPath: m_LocalPosition.x
@@ -873,15 +945,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4598389476696988, guid: f1ab891fe17ad5d45889c2d4395e74e7, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4598389476696988, guid: f1ab891fe17ad5d45889c2d4395e74e7, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4598389476696988, guid: f1ab891fe17ad5d45889c2d4395e74e7, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4598389476696988, guid: f1ab891fe17ad5d45889c2d4395e74e7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -3202,6 +3274,7 @@ GameObject:
   - component: {fileID: 2047548402}
   - component: {fileID: 2047548404}
   - component: {fileID: 2047548406}
+  - component: {fileID: 2047548407}
   m_Layer: 0
   m_Name: SteamNetworkManager
   m_TagString: Untagged
@@ -3258,7 +3331,7 @@ MonoBehaviour:
   gamePlayers: []
   m_minPlayers: 1
   m_menuScene: Assets/Scenes/Menus/main.unity
-  m_gameScene: Assets/Scenes/Maps/map-1/map-1.unity
+  m_gameScene: Assets/Scenes/TestMaps/mirror-test/mirror-test.unity
   m_roomPlayerPrefab: {fileID: 7546141829718515214, guid: 13674c12835a966419a7412acf5947c0, type: 3}
   m_gamePlayerPrefab: {fileID: 4564943667198198450, guid: 589f7044deabfd84ea9e48ac6d05de70, type: 3}
   m_playerSpawnSystemPrefab: {fileID: 7120322595345495822, guid: d004f2fe8042ed440af24e2ea7fbbde2, type: 3}
@@ -3285,7 +3358,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 321971863}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3302,25 +3376,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_networkManager: {fileID: 2047548403}
-  OnLobbyCreated:
-    m_PersistentCalls:
-      m_Calls: []
-  OnLobbyCreateFailed:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 729588133}
-        m_TargetAssemblyTypeName: SilverDogGames.Mirror.Lobby.LandingPageController,
-          Assembly-CSharp
-        m_MethodName: SetView
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
+--- !u!114 &2047548407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2047548401}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f150197c1b79a044080147e51500ae35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2116119301
 GameObject:
   m_ObjectHideFlags: 0
