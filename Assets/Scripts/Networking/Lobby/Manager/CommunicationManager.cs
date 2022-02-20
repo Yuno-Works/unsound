@@ -7,8 +7,10 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace SilverDogGames.Mirror.Lobby
+namespace SilverDogGames
 {
+    using SilverDogGames.Mirror.Lobby;
+
     public enum CommsStates
     {
         DISCONNECTED,

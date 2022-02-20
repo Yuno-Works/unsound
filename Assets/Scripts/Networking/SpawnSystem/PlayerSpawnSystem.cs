@@ -1,12 +1,15 @@
 using Mirror;
-using System.Linq;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-namespace SilverDogGames.Mirror.Lobby
+namespace SilverDogGames
 {
     public class PlayerSpawnSystem : NetworkBehaviour
     {
+        public static event EventHandler<NetworkConnection> OnSpawnPlayer;
+
         [SerializeField]
         private GameObject m_playerPrefab = null;
 
@@ -17,19 +20,17 @@ namespace SilverDogGames.Mirror.Lobby
         public static void AddSpawnPoint ( Transform transform )
         {
             m_spawnPoints.Add ( transform );
-
             m_spawnPoints = m_spawnPoints.OrderBy ( x => x.GetSiblingIndex () ).ToList ();
         }
 
         public static bool RemoveSpawnPoint ( Transform transform ) => m_spawnPoints.Remove ( transform );
+
 
         [Server]
         public void SpawnPlayers ( IEnumerable<NetworkConnection> connections )
         {
             foreach ( NetworkConnection conn in connections )
             {
-                Debug.Log ( $"SpawnPlayer () - conn.identity.netId={conn.identity.netId}" );
-
                 Transform spawnPoint = m_spawnPoints.ElementAtOrDefault ( m_nextIndex );
 
                 if ( spawnPoint == null )
@@ -39,12 +40,23 @@ namespace SilverDogGames.Mirror.Lobby
                 }
 
                 GameObject playerInstance = Instantiate ( m_playerPrefab, m_spawnPoints [ m_nextIndex ].position, m_spawnPoints [ m_nextIndex ].rotation );
-                NetworkServer.ReplacePlayerForConnection ( conn, playerInstance, true );
+                NetworkServer.ReplacePlayerForConnection ( conn, playerInstance );
+                //RpcDissonancePlayer ( conn );
 
                 playerInstance.name = $"Player [{conn.identity.netId}]";
 
                 m_nextIndex = ( m_nextIndex + 1 ) % m_spawnPoints.Count;
             }
+        }
+
+        /// <summary>
+        /// Setup local DissonancePlayer on client.
+        /// </summary>
+        /// <param name="target">Target client connection.</param>
+        [TargetRpc]
+        private void RpcDissonancePlayer ( NetworkConnection target )
+        {
+            OnSpawnPlayer?.Invoke ( this, target );
         }
     }
 }

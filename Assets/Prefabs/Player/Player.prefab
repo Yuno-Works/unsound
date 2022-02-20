@@ -5431,8 +5431,6 @@ MonoBehaviour:
   ColliderList:
   - Collider: {fileID: 2817758717751318597}
     Scale: 1
-  - Collider: {fileID: 2817758717751318597}
-    Scale: 1
   AddChildColliders: 0
   ColliderScale: 1
 --- !u!1 &894994610626062311
@@ -19638,6 +19636,9 @@ GameObject:
   - component: {fileID: 8069172031545111466}
   - component: {fileID: 8838321541742723312}
   - component: {fileID: 8606651521835514124}
+  - component: {fileID: 6408190698264928799}
+  - component: {fileID: 4203241684307544878}
+  - component: {fileID: 7042170274964774271}
   m_Layer: 11
   m_Name: Player
   m_TagString: Player
@@ -20277,6 +20278,71 @@ MonoBehaviour:
   showOverlay: 0
   overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
   target: {fileID: 7639112944827635380}
+--- !u!114 &6408190698264928799
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2148197228353032826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ea79c84870748f4da1988f6e6d3752a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  _isTracking: 0
+  _isLocal: 0
+--- !u!114 &4203241684307544878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2148197228353032826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a066ddbf125f9546bcadc947418566b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _tokens:
+    _tokens: []
+  _channelTypeExpanded: 1
+  _metadataExpanded: 1
+  _activationModeExpanded: 1
+  _tokensExpanded: 1
+  _ampExpanded: 1
+  _activationFaderSettings:
+    _volume: 1
+    _fadeInTicks: 0
+    _fadeOutTicks: 1500000
+  _triggerFaderSettings:
+    _volume: 1
+    _fadeInTicks: 7500000
+    _fadeOutTicks: 11500000
+  _broadcastPosition: 1
+  _channelType: 2
+  _inputName: 
+  _mode: 1
+  _muted: 0
+  _playerId: 
+  _useTrigger: 1
+  _roomName: 
+  _priority: 0
+--- !u!135 &7042170274964774271
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2148197228353032826}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 30
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2148198236364230414
 GameObject:
   m_ObjectHideFlags: 0

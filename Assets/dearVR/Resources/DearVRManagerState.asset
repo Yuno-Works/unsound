@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a440692872815a42b6be9d98e14b3ad, type: 3}
   m_Name: DearVRManagerState
   m_EditorClassIdentifier: 
-  setRoomGeo: 0
-  roomAnalyzer: 1
-  debugRoomAnalyzer: 1
+  setRoomGeo: 1
+  roomAnalyzer: 0
+  debugRoomAnalyzer: 0
   roomUpdateFreq: 2
-  upDownGeo: {x: -1, y: 1.6814748}
-  frontBackGeo: {x: -1, y: -1}
-  leftRightGeo: {x: -1, y: -1}
+  upDownGeo: {x: 6, y: 1}
+  frontBackGeo: {x: 6, y: 6}
+  leftRightGeo: {x: 6, y: 6}
   bypass3DAudio: 0
   roomMask:
     serializedVersion: 2

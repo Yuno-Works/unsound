@@ -59,7 +59,7 @@ namespace SilverDogGames.Mirror.Lobby
                 {
                     NetworkConnection conn = RoomPlayers [ i ].connectionToClient;
                     NetworkGamePlayer gamePlayerInstance = Instantiate ( m_gamePlayerPrefab );
-                    gamePlayerInstance.SetDisplayName ( RoomPlayers [ i ].DisplayName );
+                    gamePlayerInstance.Initialize ( RoomPlayers [ i ].DisplayName );
 
                     // Destroy connection room player
                     NetworkServer.Destroy ( conn.identity.gameObject );
@@ -155,6 +155,8 @@ namespace SilverDogGames.Mirror.Lobby
 
         public override void OnStopServer () => RoomPlayers.Clear ();
 
+        #region Spawn Game Players
+
         /// <summary>
         /// Called on the server when the client is ready (loaded into scene).
         /// </summary>
@@ -175,15 +177,23 @@ namespace SilverDogGames.Mirror.Lobby
             // Spawn players if all ready
             if ( GamePlayers.All ( p => p.IsReady ) )
             {
-                OnGameReady?.Invoke ();
-
-                // Instantiate spawn system
-                PlayerSpawnSystem playerSpawnSystemInstance = Instantiate ( m_playerSpawnSystemPrefab );
-                NetworkServer.Spawn ( playerSpawnSystemInstance.gameObject );
-                // Spawn players
-                playerSpawnSystemInstance.SpawnPlayers ( GamePlayers.Select ( p => p.connectionToClient ) );
+                StartCoroutine ( SpawnPlayers () );
             }
         }
+
+        private IEnumerator SpawnPlayers ()
+        {
+            yield return null;
+            OnGameReady?.Invoke ();
+
+            // Instantiate spawn system
+            PlayerSpawnSystem playerSpawnSystemInstance = Instantiate ( m_playerSpawnSystemPrefab );
+            NetworkServer.Spawn ( playerSpawnSystemInstance.gameObject );
+            // Spawn players
+            playerSpawnSystemInstance.SpawnPlayers ( GamePlayers.Select ( p => p.connectionToClient ) );
+        }
+
+        #endregion
 
         public override void OnClientSceneChanged ( NetworkConnection conn )
         {
