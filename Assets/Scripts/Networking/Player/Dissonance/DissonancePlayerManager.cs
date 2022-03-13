@@ -19,14 +19,12 @@ namespace SilverDogGames
         {
             comms.OnPlayerJoinedSession += OnPlayerJoined;
             comms.OnPlayerLeftSession += OnPlayerLeft;
-            PlayerSpawnSystem.OnSpawnPlayer += SetupLocalPlayer;
         }
 
         public void OnDisable ()
         {
             comms.OnPlayerJoinedSession -= OnPlayerJoined;
             comms.OnPlayerLeftSession -= OnPlayerLeft;
-            PlayerSpawnSystem.OnSpawnPlayer -= SetupLocalPlayer;
         }
 
         private void OnPlayerJoined ( VoicePlayerState player )
@@ -45,13 +43,6 @@ namespace SilverDogGames
             {
                 players.Remove ( player.Name );
             }
-        }
-
-        private void SetupLocalPlayer ( object sender, NetworkConnection conn )
-        {
-            Debug.Log ( $"DissonancePlayerManager.SetupLocalPlayer () - {comms.LocalPlayerName}" );
-            DissonancePlayer dissonancePlayer = conn.identity.GetComponent<DissonancePlayer> ();
-            dissonancePlayer.Setup ( comms.LocalPlayerName );
         }
     }
 }

@@ -66,3 +66,8 @@ Assets/BOXOPHOBIC/The Vegetation Engine/Learn/
 Assets/Mirror/Examples/
 Assets/VolumetricFog2/Demo/Noise Textures/
 UserSettings/EditorUserSettings.asset
+
+# Scene lighting data/lightmaps
+Assets/Scenes/Maps/map-1/map-1/*.png
+Assets/Scenes/Maps/map-1/map-1/*.exr
+Assets/Scenes/Maps/map-1/map-1/LightingData.asset

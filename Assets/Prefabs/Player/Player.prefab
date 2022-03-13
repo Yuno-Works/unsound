@@ -5431,6 +5431,8 @@ MonoBehaviour:
   ColliderList:
   - Collider: {fileID: 2817758717751318597}
     Scale: 1
+  - Collider: {fileID: 2817758717751318597}
+    Scale: 1
   AddChildColliders: 0
   ColliderScale: 1
 --- !u!1 &894994610626062311
@@ -20327,7 +20329,7 @@ MonoBehaviour:
   _mode: 1
   _muted: 0
   _playerId: 
-  _useTrigger: 1
+  _useTrigger: 0
   _roomName: 
   _priority: 0
 --- !u!135 &7042170274964774271
@@ -20339,9 +20341,9 @@ SphereCollider:
   m_GameObject: {fileID: 2148197228353032826}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
-  m_Radius: 30
+  m_Radius: 500
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2148198236364230414
 GameObject:
@@ -26337,6 +26339,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6386820021113712492}
   - component: {fileID: 479458445102882030}
+  - component: {fileID: 6202525073358663877}
   m_Layer: 11
   m_Name: RemoteLight
   m_TagString: Untagged
@@ -26420,6 +26423,20 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!114 &6202525073358663877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3204342746724333078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36623de105e834ec4a6ebd06d48c0018, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inscattering: 1
+  intensity: 1
 --- !u!1 &3248516831906338478
 GameObject:
   m_ObjectHideFlags: 0

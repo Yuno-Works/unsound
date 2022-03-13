@@ -17,7 +17,7 @@ namespace SilverDogGames
         private bool _isTracking = false;
         [SerializeField]
         private bool _isLocal = false;
-        [SyncVar ( hook = nameof ( SetupCallback ) )]
+        [SyncVar ( hook = nameof ( Setup ) )]
         private string _playerId = null;
 
         private DissonanceComms _comms;
@@ -41,43 +41,26 @@ namespace SilverDogGames
         }
 
         private void SetPlayerName ( string playerName ) => CmdSetPlayerId ( playerName );
-        //private void SetPlayerName ( string playerName ) => _playerId = playerName;
 
         [Command]
         private void CmdSetPlayerId ( string playerId ) => _playerId = playerId;
-
-        public void Setup ( string playerId )
-        {
-            Debug.Log ( $"DissonancePlayer.Setup () - {playerId}" );
-            _playerId = playerId;
-            _isLocal = true;
-            _isTracking = true;
-            _comms.TrackPlayerPosition ( this );
-        }
 
         /// <summary>
         /// Invoked on the client for this DissonancePlayer when <see cref="_playerId"/> changes.
         /// </summary>
         /// <param name="_">Old playerId (unused)</param>
         /// <param name="playerId">New playerId</param>
-        private void SetupCallback ( string _, string playerId )
+        private void Setup ( string _, string playerId )
         {
-            Debug.Log ( $"DissonancePlayer.SetupCallback () {playerId} isLocalPlayer:{isLocalPlayer}" );
+            Debug.Log ( $"DissonancePlayer.Setup () playerId:{playerId} - isLocalPlayer:{isLocalPlayer}" );
             _isLocal = isLocalPlayer;
             _isTracking = true;
             _comms.TrackPlayerPosition ( this );
-
-            /*if ( !isLocalPlayer )
-            {
-                Debug.Log ( $"DissonancePlayer.SetupRemote () {playerId}" );
-                _isLocal = false;
-                _isTracking = true;
-                _comms.TrackPlayerPosition ( this );
-            }*/
         }
 
         private void OnDisable ()
         {
+            Debug.Log ( $"DissonancePlayer.OnDisable() _comms={_comms} - isTracking={_isTracking}" );
             if ( _comms != null && _isTracking )
                 _comms.StopTracking ( this );
             _isTracking = false;
