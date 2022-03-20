@@ -47,6 +47,16 @@ namespace SilverDogGames.Mirror.Lobby
         [SerializeField]
         private float m_startGameDelay = 0f;
 
+        #region Initialization
+
+        public override void Start()
+        {
+            base.Start();
+            Application.targetFrameRate = 60;
+        }
+
+        #endregion
+
         #region Overrides
 
         public override void ServerChangeScene ( string newSceneName )
@@ -197,14 +207,38 @@ namespace SilverDogGames.Mirror.Lobby
 
         public override void OnClientSceneChanged ( NetworkConnection conn )
         {
-            if ( SceneManager.GetActiveScene ().path != m_gameScene ) { return; }
+            if ( SceneManager.GetActiveScene ().path == m_gameScene )
+            {
+                // Set game fps target - use platform maximum
+                Application.targetFrameRate = -1;
 
-            OnClientSceneReady?.Invoke ( conn );
+                OnClientSceneReady?.Invoke ( conn );
 
-            base.OnClientSceneChanged ( conn );
+                base.OnClientSceneChanged ( conn );
+            }
+            else if (SceneManager.GetActiveScene().path == m_menuScene)
+            {
+                Application.targetFrameRate = 60;
+            }
         }
 
         #region Game Start-up
+
+        public void NotifyPlayersOfReadyState()
+        {
+            foreach (NetworkRoomPlayer player in RoomPlayers)
+            {
+                player.OnClientReady();
+            }
+        }
+
+        public bool IsReadyToStart()
+        {
+            if (numPlayers < m_minPlayers) { return false; }
+
+            // Check ready status all
+            return RoomPlayers.All(p => p.IsReady);
+        }
 
         /// <summary>
         /// Changes the server scene and all client's scenes to game scene immediately.
@@ -246,21 +280,5 @@ namespace SilverDogGames.Mirror.Lobby
         #endregion
 
         #endregion
-
-        public void NotifyPlayersOfReadyState ()
-        {
-            foreach ( NetworkRoomPlayer player in RoomPlayers )
-            {
-                player.OnClientReady ();
-            }
-        }
-
-        public bool IsReadyToStart ()
-        {
-            if ( numPlayers < m_minPlayers ) { return false; }
-
-            // Check ready status all
-            return RoomPlayers.All ( p => p.IsReady );
-        }
     }
 }

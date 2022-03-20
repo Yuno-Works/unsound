@@ -19640,7 +19640,6 @@ GameObject:
   - component: {fileID: 8606651521835514124}
   - component: {fileID: 6408190698264928799}
   - component: {fileID: 4203241684307544878}
-  - component: {fileID: 7042170274964774271}
   m_Layer: 11
   m_Name: Player
   m_TagString: Player
@@ -20318,7 +20317,7 @@ MonoBehaviour:
   _activationFaderSettings:
     _volume: 1
     _fadeInTicks: 0
-    _fadeOutTicks: 1500000
+    _fadeOutTicks: 30000000
   _triggerFaderSettings:
     _volume: 1
     _fadeInTicks: 7500000
@@ -20331,20 +20330,7 @@ MonoBehaviour:
   _playerId: 
   _useTrigger: 0
   _roomName: 
-  _priority: 0
---- !u!135 &7042170274964774271
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2148197228353032826}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Radius: 500
-  m_Center: {x: 0, y: 0, z: 0}
+  _priority: 2
 --- !u!1 &2148198236364230414
 GameObject:
   m_ObjectHideFlags: 0
