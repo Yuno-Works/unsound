@@ -14,11 +14,5 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Maps/map-1/map-1.unity
     guid: 4e95e915208a67043963b1bcd07b1255
-  - enabled: 0
-    path: Assets/Scenes/TestMaps/DissonanceDemo/SteamworksDotnetDemo.unity
-    guid: d01d501ec8cfa264a99be127ef71b95d
-  - enabled: 0
-    path: Assets/Scenes/TestMaps/DissonanceDemo/DissonanceGameWorldTest.unity
-    guid: bb54b721d25a3b847be71989382e40a7
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 43e80a2d17abefd49836b9565d897e1c, type: 2}

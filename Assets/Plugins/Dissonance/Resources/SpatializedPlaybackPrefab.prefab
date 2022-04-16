@@ -13,7 +13,9 @@ GameObject:
   - component: {fileID: 114231507455867820}
   - component: {fileID: -4868513708953726720}
   - component: {fileID: 82079769357423168}
-  m_Layer: 0
+  - component: {fileID: 1683338576120800925}
+  - component: {fileID: -1329351962980523356}
+  m_Layer: 14
   m_Name: SpatializedPlaybackPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -88,7 +90,7 @@ MonoBehaviour:
   useUnityDistance: 1
   auralization: 1
   roomPreset: 35
-  internalReverb: 1
+  internalReverb: 0
   performanceMode: 0
   dearVRPlayOnAwake: 0
   bypass: 0
@@ -119,7 +121,7 @@ AudioSource:
   m_GameObject: {fileID: 1041743830464418}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: ae32cf73fde6f7348aeb05009b01c3cf, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -206,3 +208,31 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+--- !u!135 &1683338576120800925
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1041743830464418}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.3
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-1329351962980523356
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1041743830464418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fdb01953113a434d8754465de75e3a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ReverbZoneMask:
+    serializedVersion: 2
+    m_Bits: 16384
