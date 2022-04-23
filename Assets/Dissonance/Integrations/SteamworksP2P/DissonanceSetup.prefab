@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4598389476696988}
   - component: {fileID: 114066603737766104}
   - component: {fileID: 114038578330846534}
+  - component: {fileID: 531693884958810197}
   m_Layer: 0
   m_Name: DissonanceSetup
   m_TagString: Untagged
@@ -68,3 +69,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _channelToServer: 144984105
   _channelToClient: 144984106
+--- !u!114 &531693884958810197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1404861632408976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41c80b02543ed7e47b05b567382465b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

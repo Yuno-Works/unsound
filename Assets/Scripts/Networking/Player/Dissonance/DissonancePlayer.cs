@@ -10,7 +10,7 @@ namespace SilverDogGames
         public string PlayerId => _playerId;
         public Vector3 Position => transform.position;
         public Quaternion Rotation => transform.rotation;
-        public NetworkPlayerType Type => _isLocal ? NetworkPlayerType.Local : NetworkPlayerType.Remote;
+        public NetworkPlayerType Type => isLocalPlayer ? NetworkPlayerType.Local : NetworkPlayerType.Remote;
         public bool IsTracking => _isTracking;
 
         [SerializeField]
@@ -40,6 +40,12 @@ namespace SilverDogGames
             _comms.LocalPlayerNameChanged += SetPlayerName;
         }
 
+        public override void OnStopAuthority()
+        {
+            _comms.LocalPlayerNameChanged -= SetPlayerName;
+            base.OnStopAuthority();
+        }
+
         private void SetPlayerName ( string playerName ) => CmdSetPlayerId ( playerName );
 
         [Command]
@@ -52,7 +58,7 @@ namespace SilverDogGames
         /// <param name="playerId">New playerId</param>
         private void Setup ( string _, string playerId )
         {
-            Debug.Log ( $"DissonancePlayer.Setup () playerId:{playerId} - isLocalPlayer:{isLocalPlayer}" );
+            //Debug.Log ( $"DissonancePlayer.Setup () playerId:{playerId} - isLocalPlayer:{isLocalPlayer}" );
             _isLocal = isLocalPlayer;
             _isTracking = true;
             _comms.TrackPlayerPosition ( this );
@@ -60,10 +66,12 @@ namespace SilverDogGames
 
         private void OnDisable ()
         {
-            Debug.Log ( $"DissonancePlayer.OnDisable() _comms={_comms} - isTracking={_isTracking}" );
+            //Debug.Log ( $"DissonancePlayer.OnDisable() _comms={_comms} - isTracking={_isTracking}" );
             if ( _comms != null && _isTracking )
+            {
+                _isTracking = false;
                 _comms.StopTracking ( this );
-            _isTracking = false;
+            }
         }
     }
 }

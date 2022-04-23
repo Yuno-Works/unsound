@@ -10,6 +10,7 @@ using UnityEngine;
 namespace SilverDogGames
 {
     using SilverDogGames.Mirror.Lobby;
+    using SilverDogGames.Audio;
 
     public enum CommsStates
     {
@@ -23,8 +24,7 @@ namespace SilverDogGames
         private const string DissonanceLobbyKey = "1A67E8FC-BCD9-4F53-845D-4F69531F0B29";
         private const string DissonanceLobbyVal = "536366D9-A522-456B-BEC5-51986EE2E515";
 
-        [SerializeField]
-        private CommsStates commsState;
+        [SerializeField] private CommsStates commsState;
 
         private BaseState _state;
         private BaseState _nextState;
