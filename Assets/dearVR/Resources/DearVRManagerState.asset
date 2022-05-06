@@ -16,9 +16,9 @@ MonoBehaviour:
   roomAnalyzer: 0
   debugRoomAnalyzer: 0
   roomUpdateFreq: 2
-  upDownGeo: {x: 6, y: 1}
-  frontBackGeo: {x: 6, y: 6}
-  leftRightGeo: {x: 6, y: 6}
+  upDownGeo: {x: 2, y: 2}
+  frontBackGeo: {x: 2, y: 2}
+  leftRightGeo: {x: 2, y: 2}
   bypass3DAudio: 0
   roomMask:
     serializedVersion: 2

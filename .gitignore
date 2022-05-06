@@ -71,3 +71,7 @@ UserSettings/EditorUserSettings.asset
 Assets/Scenes/Maps/map-1/map-1/*.png
 Assets/Scenes/Maps/map-1/map-1/*.exr
 Assets/Scenes/Maps/map-1/map-1/LightingData.asset
+
+# Blender backup file
+Assets/Models/**/*.blend1
+Assets/Models/**/*.blend1.meta
