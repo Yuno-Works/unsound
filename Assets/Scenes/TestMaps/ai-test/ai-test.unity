@@ -1111,6 +1111,7 @@ GameObject:
   - component: {fileID: 1032174447}
   - component: {fileID: 1032174452}
   - component: {fileID: 1032174453}
+  - component: {fileID: 1032174454}
   m_Layer: 0
   m_Name: GoapAgent
   m_TagString: Untagged
@@ -1244,6 +1245,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8383a54d31c0b64cb323d61aa678251, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1032174454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1032174446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16fd39aa7828639438b789abf969b0c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  viewRadius: 16
+  viewAngle: 160
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 2048
+  targets: []
 --- !u!1 &1069902143
 GameObject:
   m_ObjectHideFlags: 0

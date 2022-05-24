@@ -32,7 +32,7 @@ namespace SilverDogGames.AI.Goap.Sensors
         /// </summary>
         /// <param name="angle">Angle in degrees.</param>
         /// <returns></returns>
-        public Vector2 DirFromAngle(float angle, bool isGlobal)
+        public Vector3 DirFromAngle(float angle, bool isGlobal)
         {
             if (!isGlobal)
             {
@@ -54,7 +54,7 @@ namespace SilverDogGames.AI.Goap.Sensors
                 {
                     float distToTarget = Vector3.Distance(transform.position, target.position);
 
-                    if (!Physics.Raycast(transform.position, dirToTarget, distToTarget))
+                    if (Physics.Raycast(transform.position, dirToTarget, distToTarget))
                     {
                         targets.Add(target);
                     }
