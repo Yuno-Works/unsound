@@ -9,11 +9,15 @@ namespace SilverDogGames.AI.Goap.Sensors
     {
         public float ViewRadius { get => viewRadius; set => viewRadius = value; }
         public float ViewAngle { get => viewAngle; set => viewAngle = value; }
+        public Vector3 SightPosition => sightObject != null ? sightObject.position : transform.position;
+        public Vector3 SightDirection => sightObject != null ? sightObject.forward : transform.forward;
 
         [SerializeField] private float viewRadius = 10f;
         [Range(0, 360)]
         [SerializeField] private float viewAngle = 160f;
         [SerializeField] private LayerMask targetMask;
+        [SerializeField] private LayerMask visibilityCheckMask;
+        [SerializeField] private Transform sightObject = null;
         [SerializeField] private List<Transform> targets = new List<Transform>();
 
         public override void Init(IReGoapMemory<string, object> memory)
@@ -25,6 +29,8 @@ namespace SilverDogGames.AI.Goap.Sensors
         public override void UpdateSensor()
         {
             FindVisibleTargets();
+            var worldState = memory.GetWorldState();
+            worldState.Set("visibleTargets", targets.ToArray());
         }
 
         /// <summary>
@@ -44,22 +50,31 @@ namespace SilverDogGames.AI.Goap.Sensors
         private void FindVisibleTargets()
         {
             targets.Clear();
-            Collider[] targetsInViewRadius = Physics.OverlapSphere(transform.position, viewRadius, targetMask);
+            Collider[] targetsInViewRadius = Physics.OverlapSphere(SightPosition, viewRadius, targetMask);
 
             for (int i = 0; i < targetsInViewRadius.Length; i++)
             {
                 Transform target = targetsInViewRadius[i].transform;
-                Vector3 dirToTarget = (target.position - transform.position).normalized;
-                if (Vector3.Angle(transform.forward, dirToTarget) < viewAngle / 2f)
+                Vector3 dirToTarget = (target.position - SightPosition).normalized;
+                if (Vector3.Angle(SightDirection, dirToTarget) < viewAngle / 2f)
                 {
-                    float distToTarget = Vector3.Distance(transform.position, target.position);
-
-                    if (Physics.Raycast(transform.position, dirToTarget, distToTarget))
+                    float distToTarget = Vector3.Distance(SightPosition, target.position);
+                    if (!Physics.Raycast(SightPosition, dirToTarget, distToTarget, visibilityCheckMask))
                     {
                         targets.Add(target);
                     }
                 }
             }
         }
+#if UNITY_EDITOR
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.white;
+            foreach (Transform target in targets)
+            {
+                Gizmos.DrawLine(SightPosition, target.position);
+            }
+        }
+#endif
     }
 }

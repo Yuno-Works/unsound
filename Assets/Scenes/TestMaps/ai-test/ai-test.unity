@@ -296,6 +296,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: skinny (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 78d82de299862f64c916317bfe083439, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5050422055867433376, guid: 78d82de299862f64c916317bfe083439, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -350,6 +354,11 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!4 &114610689 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -6629467766876677825, guid: 78d82de299862f64c916317bfe083439, type: 3}
+  m_PrefabInstance: {fileID: 114610684}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &158118146
 GameObject:
   m_ObjectHideFlags: 0
@@ -692,6 +701,60 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 227711470}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &253060809
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 253060811}
+  - component: {fileID: 253060810}
+  m_Layer: 0
+  m_Name: GoapPlannerManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &253060810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 253060809}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f07e24589d2a7634b9035bfcdf2f3cb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MultiThread: 0
+  ThreadsCount: 1
+  PlannerSettings:
+    PlanningEarlyExit: 0
+    MaxIterations: 1000
+    MaxNodesToExpand: 10000
+    UsingDynamicActions: 1
+    DebugPlan: 1
+  LogLevel: 3
+  NodeWarmupCount: 1000
+  StatesWarmupCount: 10000
+--- !u!4 &253060811
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 253060809}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &333342578
 GameObject:
   m_ObjectHideFlags: 0
@@ -1112,7 +1175,14 @@ GameObject:
   - component: {fileID: 1032174452}
   - component: {fileID: 1032174453}
   - component: {fileID: 1032174454}
-  m_Layer: 0
+  - component: {fileID: 1032174460}
+  - component: {fileID: 1032174459}
+  - component: {fileID: 1032174456}
+  - component: {fileID: 1032174455}
+  - component: {fileID: 1032174457}
+  - component: {fileID: 1032174458}
+  - component: {fileID: 1032174461}
+  m_Layer: 16
   m_Name: GoapAgent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1190,7 +1260,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.2
-  m_Speed: 3
+  m_Speed: 4
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 720
@@ -1199,7 +1269,7 @@ NavMeshAgent:
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 1.8
-  m_BaseOffset: 0
+  m_BaseOffset: -0.09
   m_WalkableMask: 5
   m_ObstacleAvoidanceType: 4
 --- !u!4 &1032174451
@@ -1215,7 +1285,7 @@ Transform:
   m_Children:
   - {fileID: 114610685}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1032174452
 MonoBehaviour:
@@ -1245,6 +1315,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8383a54d31c0b64cb323d61aa678251, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SensorsUpdateDelay: 0.3
 --- !u!114 &1032174454
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1258,11 +1329,150 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   viewRadius: 16
-  viewAngle: 160
+  viewAngle: 270
   targetMask:
     serializedVersion: 2
     m_Bits: 2048
+  visibilityCheckMask:
+    serializedVersion: 2
+    m_Bits: 33825
+  sightObject: {fileID: 114610689}
   targets: []
+--- !u!114 &1032174455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1032174446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d1b7e45e9b0af04f9e6e40528840c53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  priority: 0
+  navMeshAgent: {fileID: 0}
+  speed: 3
+  workInFixedUpdate: 1
+  objectiveTransform: {fileID: 0}
+  minPowDistanceToObjective: 0.5
+  checkForStuck: 1
+  stuckCheckDelay: 1
+  maxStuckDistance: 0.1
+  lastStuckCheckUpdatePosition: {x: 0, y: 0, z: 0}
+  stuckCheckCooldown: 0
+  currentState: 0
+--- !u!114 &1032174456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1032174446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbf16971b92d9984b98b36ec612566e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  priority: 0
+--- !u!114 &1032174457
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1032174446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb4bbaf3452cd6e44aa72b38aa8d8feb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: AttackPlayerGoal
+  Priority: 2
+  ErrorDelay: 0.5
+  WarnPossibleGoal: 1
+--- !u!114 &1032174458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1032174446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be768326b6c1eb74ca7ae435c92cb605, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: GoToPlayerAction
+  Cost: 1
+--- !u!114 &1032174459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1032174446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ba45453f8f799b4988059b1116e8132, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: currentStates
+      Entry: 7
+      Data: 0|System.Collections.Generic.Stack`1[[ReGoap.Unity.FSM.ISmState, Assembly-CSharp]],
+        System
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: currentState
+      Entry: 6
+      Data: 
+  enableStackedStates: 0
+  initialState: {fileID: 1032174456}
+  permitLoopTransition: 1
+  orderTransitions: 0
+--- !u!114 &1032174460
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1032174446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae8bb6a1f2d962c48aba417ba80c51c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targets: []
+--- !u!114 &1032174461
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1032174446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8dccda5a853ae39448bd60f0d36e346c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: AttackPlayerAction
+  Cost: 1
 --- !u!1 &1069902143
 GameObject:
   m_ObjectHideFlags: 0

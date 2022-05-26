@@ -82,7 +82,7 @@ namespace SilverDogGames.AI.Goap.States
         protected virtual void MoveTo(Vector3 position)
         {
             // Set destination
-            navMeshAgent.SetTarget(position);
+            navMeshAgent.SetDestination(position);
             
             // Check min move distance
             var delta = position - transform.position;
@@ -103,7 +103,7 @@ namespace SilverDogGames.AI.Goap.States
                 stuckCheckCooldown = Time.time + StuckCheckDelay;
                 if ((lastStuckCheckUpdatePosition - transform.position).magnitude < MaxStuckDistance)
                 {
-                    ReGoapLogger.Log("[SmsGoTo] '" + name + "' is stuck.");
+                    ReGoapLogger.Log("[AgentGoToState] '" + name + "' is stuck.");
                     return true;
                 }
                 lastStuckCheckUpdatePosition = transform.position;

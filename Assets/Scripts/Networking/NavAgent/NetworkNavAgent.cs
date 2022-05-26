@@ -13,6 +13,9 @@ namespace SilverDogGames.Networking.NavAgent
         private void Awake()
         {
             navMeshAgent = GetComponent<NavMeshAgent>();
+        }
+        private void Start()
+        {
             if (!isServer)
             {
                 navMeshAgent.enabled = false;
@@ -28,7 +31,7 @@ namespace SilverDogGames.Networking.NavAgent
             }
         }
 
-        public void SetTarget(Vector3 position)
+        public void SetDestination(Vector3 position)
         {
             if (isServer)
             {
