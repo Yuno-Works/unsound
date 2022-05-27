@@ -1180,6 +1180,7 @@ GameObject:
   - component: {fileID: 1032174456}
   - component: {fileID: 1032174455}
   - component: {fileID: 1032174457}
+  - component: {fileID: 1032174462}
   - component: {fileID: 1032174458}
   - component: {fileID: 1032174461}
   m_Layer: 16
@@ -1417,31 +1418,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ba45453f8f799b4988059b1116e8132, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
-    ReferencedUnityObjects: []
-    SerializedBytesString: 
-    Prefab: {fileID: 0}
-    PrefabModificationsReferencedUnityObjects: []
-    PrefabModifications: []
-    SerializationNodes:
-    - Name: currentStates
-      Entry: 7
-      Data: 0|System.Collections.Generic.Stack`1[[ReGoap.Unity.FSM.ISmState, Assembly-CSharp]],
-        System
-    - Name: 
-      Entry: 12
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: currentState
-      Entry: 6
-      Data: 
   enableStackedStates: 0
   initialState: {fileID: 1032174456}
   permitLoopTransition: 1
@@ -1473,6 +1449,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: AttackPlayerAction
   Cost: 1
+--- !u!114 &1032174462
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1032174446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bea83edb61ed3d43a61a5d0d6de18d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: PatrolGoal
+  Priority: 1
+  ErrorDelay: 0.5
+  WarnPossibleGoal: 1
 --- !u!1 &1069902143
 GameObject:
   m_ObjectHideFlags: 0
