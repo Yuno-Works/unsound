@@ -1181,6 +1181,8 @@ GameObject:
   - component: {fileID: 1032174455}
   - component: {fileID: 1032174457}
   - component: {fileID: 1032174462}
+  - component: {fileID: 1032174463}
+  - component: {fileID: 1032174464}
   - component: {fileID: 1032174458}
   - component: {fileID: 1032174461}
   m_Layer: 16
@@ -1465,6 +1467,35 @@ MonoBehaviour:
   Priority: 1
   ErrorDelay: 0.5
   WarnPossibleGoal: 1
+--- !u!114 &1032174463
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1032174446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d049c7b58ffe8894ab8463a2289a31d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: GoToAction
+  Cost: 1
+--- !u!114 &1032174464
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1032174446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3a49418d5013e94582f50b64f49d515, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: PatrolAction
+  Cost: 1
+  maxWaypointDistance: 20
 --- !u!1 &1069902143
 GameObject:
   m_ObjectHideFlags: 0

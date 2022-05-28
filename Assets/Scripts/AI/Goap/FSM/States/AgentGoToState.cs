@@ -93,6 +93,7 @@ namespace SilverDogGames.AI.Goap.States
             if (CheckForStuck && CheckIfStuck())
             {
                 currentState = GoToState.Failure;
+                Exit();
             }
         }
 

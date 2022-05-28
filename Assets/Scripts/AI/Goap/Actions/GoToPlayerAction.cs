@@ -9,84 +9,40 @@ namespace SilverDogGames.AI.Goap.Actions
     using System;
 
     [RequireComponent(typeof(AgentGoToState))]
-    public class GoToPlayerAction : ReGoapAction<string, object>
+    public class GoToPlayerAction : GenericGoToAction
     {
-        private AgentGoToState agentGoTo = null;
-
         protected override void Awake()
         {
             base.Awake();
-
-            agentGoTo = GetComponent<AgentGoToState>();
         }
 
         public override void Run(IReGoapAction<string, object> previous, IReGoapAction<string, object> next, ReGoapState<string, object> settings, ReGoapState<string, object> goalState, Action<IReGoapAction<string, object>> done, Action<IReGoapAction<string, object>> fail)
         {
-            base.Run(previous, next, settings, goalState, done, fail);
-
             Debug.LogFormat("[{0}] Run()", Name);
-            if (settings.TryGetValue("objectivePosition", out var v))
-                agentGoTo.GoTo((Vector3)v, OnDoneMovement, OnFailureMovement);
-            else
-                failCallback(this);
+            base.Run(previous, next, settings, goalState, done, fail);
         }
 
         public override bool CheckProceduralCondition(GoapActionStackData<string, object> stackData)
         {
-            return base.CheckProceduralCondition(stackData) && stackData.settings.HasKey("objectivePosition");
+            return base.CheckProceduralCondition(stackData) && stackData.settings.HasKey("playerLocated");
         }
 
         public override ReGoapState<string, object> GetEffects(GoapActionStackData<string, object> stackData)
         {
-            //Debug.LogFormat("[{0}] GetEffects() - stackData.settings:{1}", Name, stackData.settings);
-            if (stackData.settings.TryGetValue("objectivePosition", out var objectivePosition))
+            if (stackData.settings.HasKey("objectivePosition"))
             {
                 effects.Set("atPlayer", true);
-                effects.Set("isAtPosition", objectivePosition);
-                if (stackData.settings.HasKey("reconcilePosition"))
-                    effects.Set("reconcilePosition", true);
-            }
-            else
-            {
-                effects.Clear();
             }
             return base.GetEffects(stackData);
         }
 
         public override List<ReGoapState<string, object>> GetSettings(GoapActionStackData<string, object> stackData)
         {
-            if (stackData.currentState.TryGetValue("objective", out var objective))
+            if (stackData.currentState.TryGetValue("playerLocated", out var playerLocated))
             {
-                settings.Set("objective", objective);
-            }
-            if (stackData.currentState.TryGetValue("objectivePosition", out var objectivePosition))
-            {
-                settings.Set("objectivePosition", objectivePosition);
+                settings.Set("playerLocated", playerLocated);
             }
             return base.GetSettings(stackData);
-            //return new List<ReGoapState<string, object>>();
-        }
-
-        public override float GetCost(GoapActionStackData<string, object> stackData)
-        {
-            var distance = 0.0f;
-            if (stackData.settings.TryGetValue("objectivePosition", out object objectivePosition)
-                && stackData.currentState.TryGetValue("isAtPosition", out object isAtPosition))
-            {
-                if (objectivePosition is Vector3 p && isAtPosition is Vector3 r)
-                    distance = (p - r).magnitude;
-            }
-            return base.GetCost(stackData) + Cost + distance;
-        }
-
-        protected virtual void OnFailureMovement()
-        {
-            failCallback(this);
-        }
-
-        protected virtual void OnDoneMovement()
-        {
-            doneCallback(this);
         }
     }
 }

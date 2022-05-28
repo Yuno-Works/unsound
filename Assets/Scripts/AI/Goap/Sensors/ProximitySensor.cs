@@ -25,6 +25,7 @@ namespace SilverDogGames.AI.Goap.Sensors
                 Transform target = GetClosestTarget();
                 if (target != null)
                 {
+                    worldState.Set("playerLocated", true);
                     worldState.Set("objective", target);
                     worldState.Set("objectivePosition", target.position);
                 }
