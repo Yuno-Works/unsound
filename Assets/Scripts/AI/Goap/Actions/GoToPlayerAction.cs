@@ -4,7 +4,6 @@ using UnityEngine;
 namespace SilverDogGames.AI.Goap.Actions
 {
     using ReGoap.Core;
-    using ReGoap.Unity;
     using SilverDogGames.AI.Goap.States;
     using System;
 
@@ -18,13 +17,13 @@ namespace SilverDogGames.AI.Goap.Actions
 
         public override void Run(IReGoapAction<string, object> previous, IReGoapAction<string, object> next, ReGoapState<string, object> settings, ReGoapState<string, object> goalState, Action<IReGoapAction<string, object>> done, Action<IReGoapAction<string, object>> fail)
         {
-            Debug.LogFormat("[{0}] Run()", Name);
+            //Debug.LogFormat("[{0}] Run()", Name);
             base.Run(previous, next, settings, goalState, done, fail);
         }
 
         public override bool CheckProceduralCondition(GoapActionStackData<string, object> stackData)
         {
-            return base.CheckProceduralCondition(stackData) && stackData.settings.HasKey("playerLocated");
+            return base.CheckProceduralCondition(stackData) && stackData.settings.TryGetValue("playerLocated", out var playerLocated) && (bool)playerLocated == true;
         }
 
         public override ReGoapState<string, object> GetEffects(GoapActionStackData<string, object> stackData)

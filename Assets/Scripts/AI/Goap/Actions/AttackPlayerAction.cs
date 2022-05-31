@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -24,7 +25,6 @@ namespace SilverDogGames.AI.Goap.Actions
 
             Debug.LogFormat("[{0}] Run()", Name);
             doneCallback(this);
-            //failCallback(this);
         }
 
         public override void Exit(IReGoapAction<string, object> next)
@@ -33,6 +33,10 @@ namespace SilverDogGames.AI.Goap.Actions
 
             var worldState = agent.GetMemory().GetWorldState();
             worldState.Set("attackedPlayer", false);
+            worldState.Set("atPlayer", false);
+            worldState.Remove("objective");
+            worldState.Remove("objectivePosition");
+            Debug.LogFormat("worldState={0}", worldState);
         }
 
         public override bool CheckProceduralCondition(GoapActionStackData<string, object> stackData)

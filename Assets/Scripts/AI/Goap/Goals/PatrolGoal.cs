@@ -1,5 +1,6 @@
 namespace SilverDogGames.AI.Goap.Goals
 {
+    using ReGoap.Core;
     using ReGoap.Unity;
 
     public class PatrolGoal : ReGoapGoal<string, object>
@@ -7,7 +8,12 @@ namespace SilverDogGames.AI.Goap.Goals
         protected override void Awake()
         {
             base.Awake();
+        }
+
+        public override ReGoapState<string, object> GetGoalState()
+        {
             goal.Set("patrol", true);
+            return base.GetGoalState();
         }
 
         public override string ToString()
