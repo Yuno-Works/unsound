@@ -32,8 +32,6 @@ namespace SilverDogGames.AI.Goap.Actions
             base.Exit(next);
 
             var worldState = agent.GetMemory().GetWorldState();
-            worldState.Set("attackedPlayer", false);
-            worldState.Set("atPlayer", false);
             worldState.Remove("objective");
             worldState.Remove("objectivePosition");
             Debug.LogFormat("worldState={0}", worldState);

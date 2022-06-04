@@ -1,24 +1,26 @@
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace SilverDogGames.AI.Goap.Actions
 {
     using ReGoap.Core;
-    using SilverDogGames.AI.Goap.States;
     using System;
 
-    [RequireComponent(typeof(AgentGoToState))]
     public class GoToPlayerAction : GenericGoToAction
     {
-        protected override void Awake()
-        {
-            base.Awake();
-        }
+        [SerializeField] private float maxPositionDelta = 1f;
+        [SerializeField, ReadOnly] private Vector3 lastPlayerPosition;
 
         public override void Run(IReGoapAction<string, object> previous, IReGoapAction<string, object> next, ReGoapState<string, object> settings, ReGoapState<string, object> goalState, Action<IReGoapAction<string, object>> done, Action<IReGoapAction<string, object>> fail)
         {
-            //Debug.LogFormat("[{0}] Run()", Name);
             base.Run(previous, next, settings, goalState, done, fail);
+            if (settings.TryGetValue("objectivePosition", out var v))
+            {
+                lastPlayerPosition = (Vector3)v;
+            }
+            else
+                failCallback(this);
         }
 
         public override bool CheckProceduralCondition(GoapActionStackData<string, object> stackData)
@@ -42,6 +44,25 @@ namespace SilverDogGames.AI.Goap.Actions
                 settings.Set("playerLocated", playerLocated);
             }
             return base.GetSettings(stackData);
+        }
+
+        private void FixedUpdate()
+        {
+            UpdateGoToLoop();
+        }
+
+        private void UpdateGoToLoop()
+        {
+            var worldState = agent.GetMemory().GetWorldState();
+            if (worldState.TryGetValue("objectivePosition", out var objPos) && objPos is Vector3 objectivePosition)
+            {
+                float delta = (lastPlayerPosition - objectivePosition).magnitude;
+                if (delta > maxPositionDelta)
+                {
+                    OnFailureMovement();
+                    return;
+                }
+            }
         }
     }
 }
