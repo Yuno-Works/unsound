@@ -85,7 +85,7 @@ MonoBehaviour:
   sceneId: 0
   serverOnly: 0
   visible: 0
-  m_AssetId: 
+  m_AssetId: d56a2011d0ee8ef48a72ee2e2a327550
   hasSpawned: 0
 --- !u!114 &7485501625792386431
 MonoBehaviour:
@@ -194,7 +194,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae8bb6a1f2d962c48aba417ba80c51c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targets: []
 --- !u!114 &7485501625792386420
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -309,7 +308,6 @@ MonoBehaviour:
   Name: PatrolAction
   Cost: 1
   maxWaypointDistance: 20
-  goToActionComponent: {fileID: 0}
 --- !u!114 &7485501625792386421
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -324,6 +322,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: GoToPlayerAction
   Cost: 1
+  maxPositionDelta: 1
+  lastPlayerPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &7485501625792386418
 MonoBehaviour:
   m_ObjectHideFlags: 0
