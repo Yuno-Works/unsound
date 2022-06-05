@@ -3586,7 +3586,7 @@ MonoBehaviour:
   gamePlayers: []
   m_minPlayers: 1
   m_menuScene: Assets/Scenes/Menus/main.unity
-  m_gameScene: Assets/Scenes/TestMaps/ai-test/ai-test.unity
+  m_gameScene: Assets/Scenes/TestMaps/ai-test/ai-audio-test.unity
   m_roomPlayerPrefab: {fileID: 7546141829718515214, guid: 13674c12835a966419a7412acf5947c0, type: 3}
   m_gamePlayerPrefab: {fileID: 4564943667198198450, guid: 589f7044deabfd84ea9e48ac6d05de70, type: 3}
   m_playerSpawnSystemPrefab: {fileID: 7120322595345495822, guid: d004f2fe8042ed440af24e2ea7fbbde2, type: 3}
