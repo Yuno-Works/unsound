@@ -19,7 +19,7 @@ namespace SilverDogGames.Audio
 
         protected bool m_isBeat;
 
-        public virtual void OnBeat(Vector3? sourcePosition)
+        public virtual void OnBeat(AudioSourceData? sourceData)
         {
             timer = 0;
             m_isBeat = true;
@@ -28,7 +28,7 @@ namespace SilverDogGames.Audio
         {
             // Update audio value "loudness"
             prevLoudness = loudness;
-            var sourceData = audioManager.GetSourceData().FirstOrDefault();
+            AudioSourceData sourceData = audioManager.GetSourceData().FirstOrDefault();
             loudness = sourceData.Loudness;
 
             // If loudness value went below the bias during this frame
@@ -37,7 +37,7 @@ namespace SilverDogGames.Audio
             {
                 // If minimum beat interval is reached
                 if (timer > timeStep)
-                    OnBeat(sourceData.Position);
+                    OnBeat(sourceData);
             }
 
             // If loudness value went above the bias during this frame
@@ -46,7 +46,7 @@ namespace SilverDogGames.Audio
             {
                 // If minimum beat interval is reached
                 if (timer > timeStep)
-                    OnBeat(sourceData.Position);
+                    OnBeat(sourceData);
             }
 
             timer += Time.deltaTime;

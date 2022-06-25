@@ -1,49 +1,39 @@
-using System.Collections;
-using UnityEngine;
-
 namespace SilverDogGames.AI.Goap.Sensors
 {
+    using System.Linq;
+    using ReGoap.Core;
     using SilverDogGames.Audio;
+    using System.Collections.Generic;
+    using UnityEngine;
 
-    public class AudioSensor : BaseAudioSyncer
+    public class AudioSensor : AudioSensorBase<string, object>
     {
-        public Vector3 BeatScale;
-        public Vector3 RestScale;
+        [SerializeField] private List<AudioSourceData> sourceDataCache = new List<AudioSourceData>();
 
         public override void OnUpdate()
         {
             base.OnUpdate();
-
-            if (m_isBeat) return;
-
-            transform.localScale = Vector3.Lerp(transform.localScale, RestScale, restSmoothTime * Time.deltaTime);
         }
 
-        public override void OnBeat(Vector3? sourcePosition)
+        public override void OnBeat(AudioSourceData? sourceData)
         {
-            base.OnBeat(sourcePosition);
+            base.OnBeat(sourceData);
 
-            StopAllCoroutines();
-            StartCoroutine(MoveToScale(BeatScale));
-        }
-
-        private IEnumerator MoveToScale(Vector3 target)
-        {
-            Vector3 currentScale = transform.localScale;
-            Vector3 initialScale = currentScale;
-            float timer = 0;
-
-            while (currentScale != target)
+            if (sourceData.HasValue)
             {
-                currentScale = Vector3.Lerp(initialScale, target, timer / timeToBeat);
-                timer += Time.deltaTime;
-
-                transform.localScale = currentScale;
-
-                yield return null;
+                sourceDataCache.Add(sourceData.Value);
             }
+        }
+        public override void Init(IReGoapMemory<string, object> memory)
+        {
+            base.Init(memory);
+        }
 
-            m_isBeat = false;
+        public override void UpdateSensor()
+        {
+            var worldState = memory.GetWorldState();
+            worldState.Set("visibleTargets", sourceDataCache.Select(s => s.Position).ToArray());
+            sourceDataCache?.Clear();
         }
     }
 }

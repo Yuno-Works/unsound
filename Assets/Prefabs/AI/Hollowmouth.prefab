@@ -1,5 +1,68 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &449390428159240783
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4957025046659930442}
+  - component: {fileID: 6507258763609166410}
+  m_Layer: 16
+  m_Name: AudioSourceListener
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4957025046659930442
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 449390428159240783}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7485501625792386428}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6507258763609166410
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 449390428159240783}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d8d106b55b5acc4c9339721670929a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  sourceDetectionRadius: 50
+  audioSourceMask:
+    serializedVersion: 2
+    m_Bits: 131072
+  allAudioSources: []
+  sampleUpdateStep: 0.1
+  sampleLength: 1024
+  sensitivity: 10
+  offset: 24
+  sourceData: []
+  updateTime: 0
 --- !u!1 &7485501625792386401
 GameObject:
   m_ObjectHideFlags: 0
@@ -15,7 +78,7 @@ GameObject:
   - component: {fileID: 7485501625792386400}
   - component: {fileID: 7485501625792386427}
   - component: {fileID: 7485501625792386426}
-  - component: {fileID: 7485501625792386425}
+  - component: {fileID: 4902224979441908841}
   - component: {fileID: 7485501625792386419}
   - component: {fileID: 7485501625792386420}
   - component: {fileID: 7485501625792386423}
@@ -45,6 +108,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6947753970376562712}
+  - {fileID: 4957025046659930442}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -160,7 +224,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SensorsUpdateDelay: 0.3
---- !u!114 &7485501625792386425
+--- !u!114 &4902224979441908841
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -169,19 +233,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 7485501625792386401}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 16fd39aa7828639438b789abf969b0c8, type: 3}
+  m_Script: {fileID: 11500000, guid: cc8e9d9d66be8f548bf4214e255d5c87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  viewRadius: 16
-  viewAngle: 270
-  targetMask:
-    serializedVersion: 2
-    m_Bits: 2048
-  visibilityCheckMask:
-    serializedVersion: 2
-    m_Bits: 33825
-  sightObject: {fileID: 4908569694447757004}
-  targets: []
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  bias: 0.5
+  timeStep: 0.1
+  timeToBeat: 0.05
+  restSmoothTime: 2
+  audioManager: {fileID: 6507258763609166410}
+  loudness: 0
+  prevLoudness: 0
+  timer: 0
+  sourceDataCache: []
 --- !u!114 &7485501625792386419
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -449,10 +521,5 @@ GameObject:
 --- !u!4 &6947753970376562712 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 78d82de299862f64c916317bfe083439, type: 3}
-  m_PrefabInstance: {fileID: 7485501625904644083}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &4908569694447757004 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -6629467766876677825, guid: 78d82de299862f64c916317bfe083439, type: 3}
   m_PrefabInstance: {fileID: 7485501625904644083}
   m_PrefabAsset: {fileID: 0}

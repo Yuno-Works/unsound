@@ -300,7 +300,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 131072
   allAudioSources: []
-  sampleUpdateStep: 0.05
+  sampleUpdateStep: 0.1
   sampleLength: 1024
   loudnessSensitivity: 16
   offset: 10
@@ -320,7 +320,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
-    SerializedBytes: 
+    SerializedBytes: []
     ReferencedUnityObjects: []
     SerializedBytesString: 
     Prefab: {fileID: 0}
@@ -335,6 +335,7 @@ MonoBehaviour:
   loudness: 0.36805582
   prevLoudness: 0.36805582
   timer: 4.7667017
+  m_isBeat: 0
   BeatScale: {x: 1, y: 1, z: 1}
   RestScale: {x: 0.8, y: 0.8, z: 0.8}
 --- !u!1 &149267415
@@ -355,7 +356,7 @@ GameObject:
   m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &149267416
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -431,7 +432,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 24300002, guid: ae32cf73fde6f7348aeb05009b01c3cf, type: 2}
-  m_audioClip: {fileID: 8300000, guid: 3fae7defe1bae4e4cbd06c5b399ebb96, type: 3}
+  m_audioClip: {fileID: 8300000, guid: eb28e37b1cf26ee4ea73d9a60a9ccef0, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -525,7 +526,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 149267415}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.85, y: 1, z: 8}
+  m_LocalPosition: {x: -10, y: 1, z: -3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1818522233}
@@ -1180,7 +1181,7 @@ GameObject:
   m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &897232456
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1350,7 +1351,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 897232455}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 11.6, y: 1, z: 9.52}
+  m_LocalPosition: {x: 10, y: 1, z: -3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1839991479}
@@ -2859,6 +2860,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 640347075, guid: d56a2011d0ee8ef48a72ee2e2a327550, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 640347075, guid: d56a2011d0ee8ef48a72ee2e2a327550, type: 3}
+    - target: {fileID: 4902224979441908841, guid: d56a2011d0ee8ef48a72ee2e2a327550, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 4902224979441908841, guid: d56a2011d0ee8ef48a72ee2e2a327550, type: 3}
+    - target: {fileID: 6507258763609166410, guid: d56a2011d0ee8ef48a72ee2e2a327550, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 6507258763609166410, guid: d56a2011d0ee8ef48a72ee2e2a327550, type: 3}
     - target: {fileID: 7485501625792386401, guid: d56a2011d0ee8ef48a72ee2e2a327550, type: 3}
       propertyPath: m_Name
       value: Hollowmouth

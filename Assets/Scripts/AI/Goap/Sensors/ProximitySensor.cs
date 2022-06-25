@@ -14,14 +14,30 @@ namespace SilverDogGames.AI.Goap.Sensors
         public override void UpdateSensor()
         {
             var worldState = memory.GetWorldState();
-            if (worldState.TryGetValue("visibleTargets", out var targets) && targets is Transform[] targetArray)
+            if (worldState.TryGetValue("visibleTargets", out var targets))
             {
-                Transform target = GetClosestTarget(targetArray);
-                worldState.Set("playerLocated", target != null);
-                worldState.Set("objective", target);
-                if (target != null)
+                switch (targets)
                 {
-                    worldState.Set("objectivePosition", target.position);
+                    case Transform[] targetArray:
+                        Transform target = GetClosestTarget(targetArray);
+                        worldState.Set("playerLocated", target != null);
+                        worldState.Set("objective", target);
+                        if (target != null)
+                        {
+                            worldState.Set("objectivePosition", target.position);
+                        }
+                        break;
+                    case Vector3[] positionArray:
+                        Vector3? targetPosition = GetClosestTarget(positionArray);
+                        if (targetPosition.HasValue)
+                        {
+                            worldState.Set("objectivePosition", targetPosition.Value);
+                            worldState.Set("playerLocated", true);
+                        }
+                        //worldState.Set("objective", target);
+                        break;
+                    default:
+                        break;
                 }
             }
         }
@@ -33,6 +49,22 @@ namespace SilverDogGames.AI.Goap.Sensors
             foreach (Transform target in targets)
             {
                 float dist = Vector3.Distance(target.position, transform.position);
+                if (dist < bestDist)
+                {
+                    closest = target;
+                    bestDist = dist;
+                }
+            }
+            return closest;
+        }
+        private Vector3? GetClosestTarget(Vector3[] targets)
+        {
+            if (targets == null || targets.Length == 0) return null;
+            Vector3 closest = targets[0];
+            float bestDist = Vector3.Distance(closest, transform.position);
+            foreach (Vector3 target in targets)
+            {
+                float dist = Vector3.Distance(target, transform.position);
                 if (dist < bestDist)
                 {
                     closest = target;
