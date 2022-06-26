@@ -29,7 +29,6 @@ namespace SilverDogGames.Audio
         [SerializeField] private float sampleUpdateStep = 0.1f;
         [SerializeField] private int sampleLength = 1024;
         [SerializeField] private float sensitivity = 10f;
-        [SerializeField] private float gain = 1f;
         [SerializeField, ReadOnly] private List<AudioSourceData> sourceData = new List<AudioSourceData>();
         [SerializeField, ReadOnly] private float updateTime = 0f;
         private float[] audioSpectrum = null;
@@ -81,24 +80,28 @@ namespace SilverDogGames.Audio
             {
                 foreach (AudioSource source in allAudioSources)
                 {
-                    source.clip.GetData(audioSpectrum, source.timeSamples);
-                    float loudness = 0f;
-                    float distance = Mathf.Max(1f, Vector3.Distance(transform.position, source.transform.position));
-                    // Calculate clip loudness
-                    foreach (var sample in audioSpectrum)
+                    //if (source.clip?.loadState == AudioDataLoadState.Loaded)
+                    if (source.clip != null)
                     {
-                        loudness += Mathf.Abs(sample);
-                    }
-                    loudness /= sampleLength;
-                    loudness *= (-Mathf.Pow(distance - 1, 2) / (sensitivity * sensitivity)) + 1;
-                    loudness = Mathf.Clamp01(loudness);
-                    loudness *= source.volume * gain;
-                    sourceData.Add(new AudioSourceData(source.name, loudness, source.transform.position));
+                        source.clip.GetData(audioSpectrum, source.timeSamples);
+                        float loudness = 0f;
+                        float distance = Mathf.Max(1f, Vector3.Distance(transform.position, source.transform.position));
+                        // Calculate clip loudness
+                        foreach (var sample in audioSpectrum)
+                        {
+                            loudness += Mathf.Abs(sample);
+                        }
+                        loudness /= sampleLength;
+                        loudness *= (-Mathf.Pow(distance - 1, 2) / (sensitivity * sensitivity)) + 1;
+                        loudness *= source.volume;
+                        loudness = Mathf.Clamp01(loudness * sensitivity);
+                        sourceData.Add(new AudioSourceData(source.name, loudness, source.transform.position));
 
 #if UNITY_EDITOR
-                    Vector3 dir = (source.transform.position - transform.position);
-                    Debug.DrawRay(transform.position, dir * loudness, Color.white, sampleUpdateStep, true);
+                        Vector3 dir = (source.transform.position - transform.position);
+                        Debug.DrawRay(transform.position, dir * loudness, Color.white, sampleUpdateStep, true);
 #endif
+                    }
                 }
                 sourceData.OrderByDescending(sourceData => sourceData.Loudness);
             }

@@ -55,12 +55,11 @@ MonoBehaviour:
   sourceDetectionRadius: 50
   audioSourceMask:
     serializedVersion: 2
-    m_Bits: 131072
+    m_Bits: 147456
   allAudioSources: []
   sampleUpdateStep: 0.1
   sampleLength: 1024
   sensitivity: 10
-  offset: 24
   sourceData: []
   updateTime: 0
 --- !u!1 &7485501625792386401

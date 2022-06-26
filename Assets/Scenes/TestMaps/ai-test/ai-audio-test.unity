@@ -302,8 +302,8 @@ MonoBehaviour:
   allAudioSources: []
   sampleUpdateStep: 0.1
   sampleLength: 1024
-  loudnessSensitivity: 16
-  offset: 10
+  sensitivity: 10
+  gain: 1
   sourceData: []
   updateTime: 0
 --- !u!114 &118919512
@@ -2860,10 +2860,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 640347075, guid: d56a2011d0ee8ef48a72ee2e2a327550, type: 3}
-      propertyPath: serializationData.Prefab
-      value: 
-      objectReference: {fileID: 640347075, guid: d56a2011d0ee8ef48a72ee2e2a327550, type: 3}
     - target: {fileID: 4902224979441908841, guid: d56a2011d0ee8ef48a72ee2e2a327550, type: 3}
       propertyPath: serializationData.Prefab
       value: 
