@@ -303,7 +303,6 @@ MonoBehaviour:
   sampleUpdateStep: 0.1
   sampleLength: 1024
   sensitivity: 10
-  gain: 1
   sourceData: []
   updateTime: 0
 --- !u!114 &118919512
@@ -911,7 +910,7 @@ MonoBehaviour:
     MaxIterations: 1000
     MaxNodesToExpand: 10000
     UsingDynamicActions: 1
-    DebugPlan: 1
+    DebugPlan: 0
   LogLevel: 3
   NodeWarmupCount: 1000
   StatesWarmupCount: 10000

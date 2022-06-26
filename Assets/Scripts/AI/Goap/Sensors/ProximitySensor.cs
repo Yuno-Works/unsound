@@ -32,9 +32,7 @@ namespace SilverDogGames.AI.Goap.Sensors
                         if (targetPosition.HasValue)
                         {
                             worldState.Set("objectivePosition", targetPosition.Value);
-                            worldState.Set("playerLocated", true);
                         }
-                        //worldState.Set("objective", target);
                         break;
                     default:
                         break;

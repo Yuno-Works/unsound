@@ -59,7 +59,7 @@ MonoBehaviour:
   allAudioSources: []
   sampleUpdateStep: 0.1
   sampleLength: 1024
-  sensitivity: 10
+  sensitivity: 100
   sourceData: []
   updateTime: 0
 --- !u!1 &7485501625792386401
