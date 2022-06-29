@@ -28,6 +28,7 @@ namespace SilverDogGames.Audio
         [SerializeField] private List<AudioSource> allAudioSources = new List<AudioSource>();
         [SerializeField] private float sampleUpdateStep = 0.1f;
         [SerializeField] private int sampleLength = 1024;
+        [SerializeField] private float offset = 0f;
         [SerializeField] private float sensitivity = 10f;
         [SerializeField, ReadOnly] private List<AudioSourceData> sourceData = new List<AudioSourceData>();
         [SerializeField, ReadOnly] private float updateTime = 0f;
@@ -80,8 +81,7 @@ namespace SilverDogGames.Audio
             {
                 foreach (AudioSource source in allAudioSources)
                 {
-                    //if (source.clip?.loadState == AudioDataLoadState.Loaded)
-                    if (source.clip != null)
+                    if (source.clip?.loadState == AudioDataLoadState.Loaded)
                     {
                         source.clip.GetData(audioSpectrum, source.timeSamples);
                         float loudness = 0f;
@@ -89,7 +89,7 @@ namespace SilverDogGames.Audio
                         // Calculate clip loudness
                         foreach (var sample in audioSpectrum)
                         {
-                            loudness += Mathf.Abs(sample);
+                            loudness += Mathf.Abs(sample) + offset;
                         }
                         loudness /= sampleLength;
                         loudness *= (-Mathf.Pow(distance - 1, 2) / (sensitivity * sensitivity)) + 1;
