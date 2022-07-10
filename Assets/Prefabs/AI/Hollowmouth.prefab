@@ -52,17 +52,17 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  sourceDetectionRadius: 50
-  audioSourceMask:
+  DetectionRadius: 50
+  SourceMask:
     serializedVersion: 2
     m_Bits: 147456
+  SampleUpdateStep: 0.1
+  SourceData: []
+  updateTime: 0
   allAudioSources: []
-  sampleUpdateStep: 0.1
   sampleLength: 1024
   offset: 0
   sensitivity: 100
-  sourceData: []
-  updateTime: 0
 --- !u!1 &7485501625792386401
 GameObject:
   m_ObjectHideFlags: 0
