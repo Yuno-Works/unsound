@@ -5431,8 +5431,6 @@ MonoBehaviour:
   ColliderList:
   - Collider: {fileID: 2817758717751318597}
     Scale: 1
-  - Collider: {fileID: 2817758717751318597}
-    Scale: 1
   AddChildColliders: 0
   ColliderScale: 1
 --- !u!1 &894994610626062311
@@ -19642,6 +19640,7 @@ GameObject:
   - component: {fileID: 8606651521835514124}
   - component: {fileID: 6408190698264928799}
   - component: {fileID: 4203241684307544878}
+  - component: {fileID: 4513436259204354532}
   m_Layer: 11
   m_Name: Player
   m_TagString: Player
@@ -20333,6 +20332,23 @@ MonoBehaviour:
   _useTrigger: 0
   _roomName: 
   _priority: 2
+--- !u!114 &4513436259204354532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2148197228353032826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1309568d81048c498d7a65290cd3dd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  inputActionName: ToggleTestPlayerAudio
+  targets:
+  - {fileID: 8407525170888688010}
 --- !u!1 &2148198236364230414
 GameObject:
   m_ObjectHideFlags: 0
