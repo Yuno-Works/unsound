@@ -7,12 +7,12 @@ namespace SilverDogGames.Audio
 
     public class BaseAudioSyncer : SerializedMonoBehaviour
     {
-        [SerializeField] private float bias = 0.1f;
+        [SerializeField] private float threshold = 0.25f;
         [SerializeField] private float timeStep = 0.1f;
         [SerializeField] protected float timeToBeat = 0.05f;
         [SerializeField] protected float restSmoothTime = 2f;
 
-        [SerializeField, Tooltip("AudioSourceManager instance required.")] private AudioSourceListener audioManager = null;
+        [SerializeField] private BaseSourceListener[] sourceListeners = null;
         [SerializeField, ReadOnly] private float loudness = 0f;
         [SerializeField, ReadOnly] private float prevLoudness = 0f;
         [SerializeField, ReadOnly] private float timer = 0f;
@@ -26,38 +26,58 @@ namespace SilverDogGames.Audio
         }
         public virtual void OnUpdate()
         {
-            // Update audio value "loudness"
-            prevLoudness = loudness;
-            AudioSourceData sourceData = audioManager.GetSourceData().FirstOrDefault();
-            loudness = sourceData.Loudness;
-
-            // If loudness value went below the bias during this frame
-            if (prevLoudness > bias &&
-                loudness <= bias)
+            foreach (var listener in sourceListeners)
             {
-                // If minimum beat interval is reached
-                if (timer > timeStep)
-                    OnBeat(sourceData);
+                ProcessSource(listener.GetSourceData());
             }
-
-            // If loudness value went above the bias during this frame
-            if (prevLoudness <= bias &&
-                loudness > bias)
-            {
-                // If minimum beat interval is reached
-                if (timer > timeStep)
-                    OnBeat(sourceData);
-            }
-
             timer += Time.deltaTime;
+        }
+
+        private void ProcessSource(params AudioSourceData[] sources)
+        {
+            // Update audio value "loudness"
+            foreach (var sourceData in sources)
+            {
+                loudness = sourceData.Loudness;
+
+                if (loudness > threshold)
+                {
+                    // If minimum beat interval is reached
+                    if (timer > timeStep)
+                    {
+                        OnBeat(sourceData);
+                    }
+                }
+
+                //// If loudness value went below the threshold during this frame
+                //if (prevLoudness > threshold &&
+                //    loudness <= threshold)
+                //{
+                //    // If minimum beat interval is reached
+                //    if (timer > timeStep)
+                //    {
+                //        OnBeat(sourceData);
+                //        prevLoudness = loudness;
+                //    }
+                //}
+
+                //// If loudness value went above the threshold during this frame
+                //if (prevLoudness <= threshold &&
+                //    loudness > threshold)
+                //{
+                //    // If minimum beat interval is reached
+                //    if (timer > timeStep)
+                //    {
+                //        OnBeat(sourceData);
+                //        prevLoudness = loudness;
+                //    }
+                //}
+            }
         }
 
         private void Update()
         {
-            if (audioManager != null)
-            {
-                OnUpdate();
-            }
+            OnUpdate();
         }
     }
 }

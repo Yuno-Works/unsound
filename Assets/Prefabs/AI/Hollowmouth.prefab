@@ -29,7 +29,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7485501625792386428}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6507258763609166410
 MonoBehaviour:
@@ -63,6 +63,80 @@ MonoBehaviour:
   sampleLength: 1024
   offset: 0
   sensitivity: 100
+--- !u!1 &7338663852234764980
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4469880114406685745}
+  - component: {fileID: 3704617684249788588}
+  m_Layer: 16
+  m_Name: PlayerVoiceListener
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4469880114406685745
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7338663852234764980}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7485501625792386428}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3704617684249788588
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7338663852234764980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 579aa0ffc19d44a49b6718d66d87abbc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: allDissonancePlayers
+      Entry: 7
+      Data: 0|System.Collections.Generic.List`1[[Dissonance.IDissonancePlayer, DissonanceVoip]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+  DetectionRadius: 50
+  SourceMask:
+    serializedVersion: 2
+    m_Bits: 2048
+  SampleUpdateStep: 0.1
+  SourceData: []
+  updateTime: 0
+  sensitivity: 50
+  comms: {fileID: 0}
 --- !u!1 &7485501625792386401
 GameObject:
   m_ObjectHideFlags: 0
@@ -108,6 +182,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6947753970376562712}
+  - {fileID: 4469880114406685745}
   - {fileID: 4957025046659930442}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -245,11 +320,15 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  bias: 0.5
+  bias: 0.25
   timeStep: 0.1
   timeToBeat: 0.05
   restSmoothTime: 2
-  audioManager: {fileID: 6507258763609166410}
+  sourceListeners:
+  - {fileID: 3704617684249788588}
+  - {fileID: 6507258763609166410}
+  playerVoiceListener: {fileID: 3704617684249788588}
+  audioSourceListener: {fileID: 6507258763609166410}
   loudness: 0
   prevLoudness: 0
   timer: 0
