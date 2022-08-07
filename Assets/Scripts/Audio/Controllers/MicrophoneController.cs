@@ -15,7 +15,7 @@ namespace SilverDogGames.Audio
         [SerializeField] private DissonanceComms dissonanceComms = null;
         [SerializeField] private MicrophoneData currentDevice;
         [SerializeField] private List<MicrophoneData> microphones = null;
-        [SerializeField] private float maxAmplitudeScale = 0.1f;
+        [SerializeField] private float amplitudeSensitivity = 0.5f;
         [SerializeField] private bool showDebugWindow = true;
         [SerializeField] private Vector2 debugWindowDimensions;
         private Vector2 scrollPosition = Vector2.zero;
@@ -52,7 +52,7 @@ namespace SilverDogGames.Audio
             {
                 GUILayout.Box("Mic Config");
                 GUILayout.Label(string.Format("Current device: {0}", CurrentDevice()));
-                DrawAmplitudeGui();
+                DrawMicrophoneInfoGui();
 
                 scrollPosition = GUILayout.BeginScrollView(scrollPosition, false, false);
                 if (microphones != null && microphones.Count > 0)
@@ -97,18 +97,26 @@ namespace SilverDogGames.Audio
                 microphones.Add(new MicrophoneData() { DeviceName = device });
             }
         }
-        private void DrawAmplitudeGui()
+        private void DrawMicrophoneInfoGui()
         {
             if (Application.isPlaying && dissonanceComms != null)
             {
-                var player = dissonanceComms.FindPlayer(dissonanceComms.LocalPlayerName);
-                if (player != null)
+                var playerState = dissonanceComms.FindPlayer(dissonanceComms.LocalPlayerName);
+                if (playerState != null && playerState.IsConnected)
                 {
-                    float scaledAmplitude = Mathf.Min(player.Amplitude / maxAmplitudeScale, maxAmplitudeScale);
+                    float sliderWidth = debugWindowDimensions.x / 4;
 
+                    // Amplitude
                     GUILayout.BeginHorizontal();
-                    GUILayout.Label("Amplitude:");
-                    GUILayout.HorizontalSlider(scaledAmplitude, 0f, maxAmplitudeScale);
+                    GUILayout.Label(string.Format("Amp ({0:n2})", playerState.Amplitude));
+                    GUILayout.HorizontalSlider(playerState.Amplitude, 0f, 1f, GUILayout.Width(sliderWidth));
+                    GUILayout.EndHorizontal();
+
+                    // Loudness
+                    float loudness = Mathf.Sqrt(playerState.Amplitude * amplitudeSensitivity);
+                    GUILayout.BeginHorizontal();
+                    GUILayout.Label(string.Format("V-Loudness ({0:n2})", loudness));
+                    GUILayout.HorizontalSlider(loudness, 0f, 1f, GUILayout.Width(sliderWidth));
                     GUILayout.EndHorizontal();
                 }
             }

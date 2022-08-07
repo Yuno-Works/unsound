@@ -135,7 +135,7 @@ MonoBehaviour:
   SampleUpdateStep: 0.1
   SourceData: []
   updateTime: 0
-  sensitivity: 50
+  sensitivity: 0.5
   comms: {fileID: 0}
 --- !u!1 &7485501625792386401
 GameObject:
@@ -320,15 +320,13 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  bias: 0.25
+  threshold: 0.25
   timeStep: 0.1
   timeToBeat: 0.05
   restSmoothTime: 2
   sourceListeners:
   - {fileID: 3704617684249788588}
   - {fileID: 6507258763609166410}
-  playerVoiceListener: {fileID: 3704617684249788588}
-  audioSourceListener: {fileID: 6507258763609166410}
   loudness: 0
   prevLoudness: 0
   timer: 0

@@ -3663,9 +3663,9 @@ MonoBehaviour:
   currentDevice:
     DeviceName: 
   microphones: []
-  maxAmplitudeScale: 0.1
+  amplitudeSensitivity: 0.5
   showDebugWindow: 1
-  debugWindowDimensions: {x: 325, y: 200}
+  debugWindowDimensions: {x: 325, y: 250}
 --- !u!1 &2088768738
 GameObject:
   m_ObjectHideFlags: 0

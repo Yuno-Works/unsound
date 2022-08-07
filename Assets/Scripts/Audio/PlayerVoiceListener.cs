@@ -10,7 +10,7 @@ namespace SilverDogGames.Audio
 
     public class PlayerVoiceListener : BaseSourceListener
     {
-        [SerializeField] private float sensitivity = 10f;
+        [SerializeField] private float sensitivity = 1f;
         [SerializeField, ReadOnly] private List<IDissonancePlayer> allDissonancePlayers = new List<IDissonancePlayer>();
         [SerializeField, ReadOnly] private DissonanceComms comms = null;
 
@@ -44,13 +44,12 @@ namespace SilverDogGames.Audio
 
                     // Get player voice state
                     VoicePlayerState playerState = comms.FindPlayer(player.PlayerId);
-                    if (playerState != null && playerState.IsSpeaking)
+                    if (playerState != null && playerState.IsConnected)
                     {
                         float distance = Mathf.Max(1f, Vector3.Distance(transform.position, player.Position));
-                        float loudness = playerState.Amplitude;
-                        loudness *= (-Mathf.Pow(distance - 1, 2) / (sensitivity * sensitivity)) + 1;
-                        loudness = Mathf.Clamp01(loudness * sensitivity);
-                        SourceData.Add(new AudioSourceData(playerState.Name, loudness, player.Position));
+                        float loudness = Mathf.Sqrt(playerState.Amplitude * sensitivity);
+                        loudness /= distance / Mathf.Max(1, DetectionRadius);
+                        SourceData.Add(new AudioSourceData(playerState.Name, Mathf.Clamp01(loudness), player.Position));
 
 #if UNITY_EDITOR
                         Vector3 dir = (player.Position - transform.position);
