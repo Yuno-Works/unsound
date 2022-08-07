@@ -15,6 +15,8 @@ namespace SilverDogGames.AI.Goap.Actions
         public override void Run(IReGoapAction<string, object> previous, IReGoapAction<string, object> next, ReGoapState<string, object> settings, ReGoapState<string, object> goalState, Action<IReGoapAction<string, object>> done, Action<IReGoapAction<string, object>> fail)
         {
             base.Run(previous, next, settings, goalState, done, fail);
+
+            Debug.LogErrorFormat("[{0}] Run()", Name);
             if (settings.TryGetValue("objectivePosition", out var v))
             {
                 lastPlayerPosition = (Vector3)v;
@@ -60,7 +62,6 @@ namespace SilverDogGames.AI.Goap.Actions
                 if (delta > maxPositionDelta)
                 {
                     OnFailureMovement();
-                    return;
                 }
             }
         }

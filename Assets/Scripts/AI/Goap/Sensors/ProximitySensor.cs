@@ -29,6 +29,7 @@ namespace SilverDogGames.AI.Goap.Sensors
                         break;
                     case Vector3[] positionArray:
                         Vector3? targetPosition = GetClosestTarget(positionArray);
+                        worldState.Set("playerLocated", targetPosition.HasValue);
                         if (targetPosition.HasValue)
                         {
                             worldState.Set("objectivePosition", targetPosition.Value);

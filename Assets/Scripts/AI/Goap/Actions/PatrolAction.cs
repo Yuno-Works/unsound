@@ -21,7 +21,6 @@ namespace SilverDogGames.AI.Goap.Actions
         {
             base.Run(previous, next, settings, goalState, done, fail);
 
-            Debug.LogFormat("[{0}] Run()", Name);
             doneCallback(this);
         }
 

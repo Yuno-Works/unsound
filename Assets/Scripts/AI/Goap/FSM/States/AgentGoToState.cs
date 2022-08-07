@@ -89,6 +89,7 @@ namespace SilverDogGames.AI.Goap.States
             if (delta.sqrMagnitude <= MinPowDistanceToObjective)
             {
                 currentState = GoToState.Success;
+                Exit();
             }
             if (CheckForStuck && CheckIfStuck())
             {

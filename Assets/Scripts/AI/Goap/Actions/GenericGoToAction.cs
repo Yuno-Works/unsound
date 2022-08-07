@@ -82,9 +82,6 @@ namespace SilverDogGames.AI.Goap.Actions
 
         protected virtual void OnDoneMovement()
         {
-            var worldState = agent.GetMemory().GetWorldState();
-            worldState.Remove("objective");
-            worldState.Remove("objectivePosition");
             doneCallback(this);
         }
     }
