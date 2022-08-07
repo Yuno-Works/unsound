@@ -1,21 +1,23 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 namespace SilverDogGames.AI.Goap.Actions
 {
     using ReGoap.Core;
     using ReGoap.Unity;
     using SilverDogGames.AI.Goap.States;
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using UnityEngine;
 
     public class AttackPlayerAction : ReGoapAction<string, object>
     {
+        [SerializeField] private float attackRadius = 2f;
+        [SerializeField] private LayerMask attackMask;
+        private AgentActionState agentActionState = null;
 
         protected override void Awake()
         {
             base.Awake();
-
+            agentActionState = GetComponent<AgentActionState>();
             effects.Set("attackedPlayer", true);
         }
 
@@ -24,7 +26,17 @@ namespace SilverDogGames.AI.Goap.Actions
             base.Run(previous, next, settings, goalState, done, fail);
 
             Debug.LogErrorFormat("[{0}] Run()", Name);
-            doneCallback(this);
+            Transform playerT = null;
+            Collider[] cols = Physics.OverlapSphere(transform.position, attackRadius, attackMask);
+
+            // Find player transform
+            if (cols != null && cols.Length > 0)
+                playerT = cols.FirstOrDefault().transform;
+
+            if (playerT)
+                agentActionState.Attack(playerT, OnActionDone, OnActionFailure);
+            else
+                failCallback(this);
         }
 
         public override void Exit(IReGoapAction<string, object> next)
@@ -34,7 +46,6 @@ namespace SilverDogGames.AI.Goap.Actions
             var worldState = agent.GetMemory().GetWorldState();
             worldState.Remove("objective");
             worldState.Remove("objectivePosition");
-            Debug.LogFormat("worldState={0}", worldState);
         }
 
         public override bool CheckProceduralCondition(GoapActionStackData<string, object> stackData)
@@ -72,12 +83,12 @@ namespace SilverDogGames.AI.Goap.Actions
             return base.GetCost(stackData) + Cost + distance;
         }
 
-        protected virtual void OnFailureMovement()
+        protected virtual void OnActionFailure()
         {
             failCallback(this);
         }
 
-        protected virtual void OnDoneMovement()
+        protected virtual void OnActionDone()
         {
             doneCallback(this);
         }
