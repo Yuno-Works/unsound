@@ -23,16 +23,10 @@ namespace SilverDogGames.AI.Goap.Actions
 
         public override void Run(IReGoapAction<string, object> previous, IReGoapAction<string, object> next, ReGoapState<string, object> settings, ReGoapState<string, object> goalState, Action<IReGoapAction<string, object>> done, Action<IReGoapAction<string, object>> fail)
         {
+            Debug.LogFormat("[{0}] Run()", Name);
             base.Run(previous, next, settings, goalState, done, fail);
 
-            Debug.LogErrorFormat("[{0}] Run()", Name);
-            Transform playerT = null;
-            Collider[] cols = Physics.OverlapSphere(transform.position, attackRadius, attackMask);
-
-            // Find player transform
-            if (cols != null && cols.Length > 0)
-                playerT = cols.FirstOrDefault().transform;
-
+            Transform playerT = GetClosestPlayer();
             if (playerT)
                 agentActionState.Attack(playerT, OnActionDone, OnActionFailure);
             else
@@ -91,6 +85,16 @@ namespace SilverDogGames.AI.Goap.Actions
         protected virtual void OnActionDone()
         {
             doneCallback(this);
+        }
+
+        /// <summary>
+        /// Returns closest player transform within the attack radius, or null.
+        /// </summary>
+        /// <returns>Transform of closest player, or null.</returns>
+        private Transform GetClosestPlayer()
+        {
+            Collider[] cols = Physics.OverlapSphere(transform.position, attackRadius, attackMask);
+            return cols.Select(c => c.transform).GetClosest(transform);
         }
     }
 }

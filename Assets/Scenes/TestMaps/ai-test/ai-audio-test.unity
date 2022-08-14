@@ -295,16 +295,17 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  sourceDetectionRadius: 50
-  audioSourceMask:
+  DetectionRadius: 50
+  SourceMask:
     serializedVersion: 2
-    m_Bits: 131072
-  allAudioSources: []
-  sampleUpdateStep: 0.1
-  sampleLength: 1024
-  sensitivity: 10
-  sourceData: []
+    m_Bits: 0
+  SampleUpdateStep: 0.1
+  SourceData: []
   updateTime: 0
+  allAudioSources: []
+  sampleLength: 1024
+  offset: 0
+  sensitivity: 10
 --- !u!114 &118919512
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -911,7 +912,7 @@ MonoBehaviour:
     MaxNodesToExpand: 10000
     UsingDynamicActions: 1
     DebugPlan: 0
-  LogLevel: 3
+  LogLevel: 1
   NodeWarmupCount: 1000
   StatesWarmupCount: 10000
 --- !u!4 &253060811

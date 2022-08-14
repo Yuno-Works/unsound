@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using Mirror;
 
 namespace SilverDogGames.AI.Goap.States
 {
@@ -7,7 +8,7 @@ namespace SilverDogGames.AI.Goap.States
     using ReGoap.Utilities;
     using Sirenix.OdinInspector;
 
-    public class AgentActionState : SmState
+    public class AgentActionState : NetworkedSmState
     {
         #region Models
 
@@ -31,15 +32,14 @@ namespace SilverDogGames.AI.Goap.States
         [SerializeField, ReadOnly] private ActionType currentAction = ActionType.None;
 
         #region Action Handlers
-        public void Attack(Transform playerT, Action doneCallback, Action failureCallback)
+        public void Attack(Transform player, Action doneCallback, Action failureCallback)
         {
-            Debug.LogFormat("[{0}] Attack()", GetType());
             currentAction = ActionType.Attack;
             onDoneCallback = doneCallback;
             onFailureCallback = failureCallback;
 
             // Debug
-            playerT.position = new Vector3(0, 3, -3);
+            RpcMovePlayer(player, new Vector3(0, 3, -3));
             currentState = ActionState.Success;
             Exit();
         }
@@ -72,18 +72,24 @@ namespace SilverDogGames.AI.Goap.States
         public override void Enter()
         {
             currentState = ActionState.Active;
-            base.Enter();
         }
 
         public override void Exit()
         {
-            Debug.LogFormat("[{0}] Exit()", GetType());
-            base.Exit();
             currentAction = ActionType.None;
             if (currentState == ActionState.Success)
                 onDoneCallback?.Invoke();
             else
                 onFailureCallback?.Invoke();
+            currentState = ActionState.Disabled;
+        }
+        #endregion
+
+        #region Net Actions
+        [ClientRpc] // (includeOwner = true)
+        private void RpcMovePlayer(Transform player, Vector3 position)
+        {
+            player.transform.position = position;
         }
         #endregion
     }
