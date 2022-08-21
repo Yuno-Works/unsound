@@ -26,7 +26,7 @@ namespace SilverDogGames.Networking.FSM
             movementInput = playerController.GetMovementValue();
             if (movementInput.sqrMagnitude <= Mathf.Epsilon)
             {
-                stateMachine.ChangeState<IdleState>();
+                StateMachine.ChangeState<IdleState>();
             }
         }
         public override void Exit()
