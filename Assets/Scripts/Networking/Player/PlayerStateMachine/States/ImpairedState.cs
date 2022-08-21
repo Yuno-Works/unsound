@@ -10,9 +10,10 @@ namespace SilverDogGames.Networking.FSM
     {
         [SerializeField] private PlayerController playerController = null;
 
-        public void Init(PlayerStateMachine stateMachine)
+        public override void Init(StateMachine stateMachine)
         {
-            Init("Impaired", stateMachine);
+            Name = "Impaired";
+            base.Init(stateMachine);
         }
         public override void Enter()
         {

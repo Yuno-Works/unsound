@@ -19707,11 +19707,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  isDebug: 1
-  networkType: 0
   _currentState: {fileID: 0}
   currentStateName: 
+  isDebug: 1
   stateNameText: {fileID: 8804856807748674445}
+  initialState: {fileID: 2671052729285141330}
 --- !u!114 &2671052729285141330
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19726,7 +19726,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0
-  isActive: 0
   playerController: {fileID: 2148197228353032827}
   movementInput: {x: 0, y: 0}
 --- !u!114 &-2094407911774895453
@@ -19743,7 +19742,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0
-  isActive: 0
   playerController: {fileID: 2148197228353032827}
   movementInput: {x: 0, y: 0}
 --- !u!114 &4514407278862316821
@@ -19760,7 +19758,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  isActive: 0
   playerController: {fileID: 2148197228353032827}
 --- !u!143 &2033338803588786846
 CharacterController:

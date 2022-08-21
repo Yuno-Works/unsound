@@ -11,11 +11,11 @@ namespace SilverDogGames.Networking.FSM
         [SerializeField] private PlayerController playerController = null;
         [SerializeField, ReadOnly] private Vector2 movementInput;
 
-        public void Init(PlayerStateMachine stateMachine)
+        public override void Init(StateMachine stateMachine)
         {
-            base.Init("Idle", stateMachine);
+            Name = "Idle";
+            base.Init(stateMachine);
         }
-
         public override void Enter()
         {
             base.Enter();

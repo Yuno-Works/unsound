@@ -6,7 +6,7 @@ namespace SilverDogGames.Networking.FSM
         public bool IsActive { get; }
         public StateMachine StateMachine { get; }
 
-        public void Init(string name, StateMachine stateMachine);
+        public void Init(StateMachine stateMachine);
         public void Enter();
         public void UpdateLogic();
         public void UpdatePhysics();

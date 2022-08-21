@@ -11,10 +11,10 @@ namespace SilverDogGames.Networking.FSM
     {
         public BaseState CurrentState { get => _currentState; private set => _currentState = value; }
 
-        [SerializeField] private bool isDebug = false;
         [SerializeField, ReadOnly] private BaseState _currentState = null;
         [SerializeField, SyncVar(hook = nameof(OnNameChanged))] private string currentStateName = null;
         [Header("Debug")]
+        [SerializeField] private bool isDebug = false;
         [SerializeField] private UnityEngine.UI.Text stateNameText = null;
 
         public void ChangeState<T>() where T : BaseState
@@ -36,6 +36,18 @@ namespace SilverDogGames.Networking.FSM
             {
                 Debug.LogErrorFormat("[{0}] does not contain state: [{1}]", GetType(), state);
             }
+        }
+        public T GetState<T>() where T : BaseState
+        {
+            if (TryGetComponent(out T state))
+            {
+                return state;
+            }
+            return null;
+        }
+        public bool HasState<T>() where T : BaseState
+        {
+            return TryGetComponent<T>(out _);
         }
 
         protected virtual BaseState GetInitialState()
@@ -62,6 +74,11 @@ namespace SilverDogGames.Networking.FSM
         private void Start()
         {
             if (!isLocalPlayer) { return; }
+            var states = GetComponents<IState>();
+            foreach (var state in states)
+            {
+                state.Init(this);
+            }
             CurrentState = GetInitialState();
         }
         private void Update()
