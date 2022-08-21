@@ -1,21 +1,45 @@
 namespace SilverDogGames.Networking.FSM
 {
-    using Sirenix.OdinInspector;
+    using UnityEngine;
+    using UnityEngine.InputSystem;
 
     internal class PlayerStateMachine : StateMachine
     {
-        [ReadOnly] public IdleState idleState;
-        [ReadOnly] public MovingState movingState;
+        public IdleState IdleState => idleState;
+        public MovingState MovingState => movingState;
+
+        private IdleState idleState = null;
+        private MovingState movingState = null;
+        private ImpairedState impairedState = null;
 
         private void Awake()
         {
-            idleState = new IdleState(this);
-            movingState = new MovingState(this);
+            idleState = GetComponent<IdleState>();
+            movingState = GetComponent<MovingState>();
+            impairedState = GetComponent<ImpairedState>();
+            idleState.Init(this);
+            movingState.Init(this);
+            impairedState.Init(this);
         }
 
         protected override BaseState GetInitialState()
         {
             return idleState;
+        }
+        protected override void OnUpdate()
+        {
+            if (!isLocalPlayer) return;
+            if (Keyboard.current[Key.I].wasPressedThisFrame)
+            {
+                if (impairedState.IsActive)
+                {
+                    ChangeState<IdleState>();
+                }
+                else
+                {
+                    ChangeState<ImpairedState>();
+                }
+            }
         }
     }
 }

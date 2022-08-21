@@ -6,32 +6,29 @@ namespace SilverDogGames.Networking.FSM
     using System.Collections.Generic;
     using UnityEngine;
 
-    internal class IdleState : BaseState
+    internal class ImpairedState : BaseState
     {
         [SerializeField] private PlayerController playerController = null;
-        [SerializeField, ReadOnly] private Vector2 movementInput;
 
         public void Init(PlayerStateMachine stateMachine)
         {
-            base.Init("Idle", stateMachine);
+            Init("Impaired", stateMachine);
         }
-
         public override void Enter()
         {
             base.Enter();
+            playerController.isControllable = false;
+            playerController.CharacterControl.enabled = false;
         }
         public override void UpdateLogic()
         {
             base.UpdateLogic();
-            movementInput = playerController.GetMovementValue();
-            if (movementInput.sqrMagnitude > Mathf.Epsilon)
-            {
-                stateMachine.ChangeState<MovingState>();
-            }
         }
         public override void Exit()
         {
             base.Exit();
+            playerController.isControllable = true;
+            playerController.CharacterControl.enabled = true;
         }
     }
 }
