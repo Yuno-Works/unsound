@@ -21,10 +21,10 @@ TagManager:
   - PlayerBody
   - CamFirstPerson
   - CamExamination
-  - 
-  - 
-  - 
-  - 
+  - DearVRReverbZone
+  - IgnoreLight
+  - Agent
+  - AudioSource
   - 
   - 
   - 

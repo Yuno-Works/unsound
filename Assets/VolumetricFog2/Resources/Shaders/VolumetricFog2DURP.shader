@@ -20,7 +20,7 @@ Shader "VolumetricFog2/VolumetricFog2DURP"
 		[HideInInspector] _BoundsCenter("Bounds Center", Vector) = (0,0,0)
 		[HideInInspector] _BoundsExtents("Bounds Size", Vector) = (0,0,0)
 		[HideInInspector] _BoundsBorder("Bounds Border", Vector) = (0,1,0)
-		[HideInInspector] _BoundsVerticalOffset("Bounds Vertical Offset", Float) = 0
+		[HideInInspector] _BoundsData("Bounds Data", Vector) = (0,0,1)
 		[HideInInspector] _DetailData("Detail Data", Vector) = (0.5, 4, -0.5, 0)
 		[HideInInspector] _DetailColor("Detail Color", Color) = (0.5,0.5,0.5,0)
 		[HideInInspector] _DetailOffset("Detail Offset", Float) = -0.5
@@ -61,8 +61,8 @@ Shader "VolumetricFog2/VolumetricFog2DURP"
 				#pragma multi_compile_local_fragment _ VF2_RECEIVE_SHADOWS
 				#pragma multi_compile_local_fragment VF2_SHAPE_BOX VF2_SHAPE_SPHERE
 				#pragma multi_compile_local_fragment _ VF2_DETAIL_NOISE
-				#pragma shader_feature_local_fragment _ VF2_DISTANCE
-				#pragma shader_feature_local_fragment _ VF2_VOIDS
+				#pragma shader_feature_local_fragment VF2_DISTANCE
+				#pragma shader_feature_local_fragment VF2_VOIDS
 				#pragma shader_feature_local_fragment VF2_FOW
 				#pragma shader_feature_local_fragment VF2_SURFACE
 				#pragma shader_feature_local_fragment VF2_DEPTH_GRADIENT
@@ -94,6 +94,8 @@ Shader "VolumetricFog2/VolumetricFog2DURP"
 					UNITY_VERTEX_OUTPUT_STEREO
 				};
 
+				int _ForcedInvisible;
+
 				v2f vert(appdata v)
 				{
 					v2f o;
@@ -111,6 +113,10 @@ Shader "VolumetricFog2/VolumetricFog2DURP"
 					#else
 						o.pos.z = o.pos.w - 1.0e-6f;
 					#endif
+
+					if (_ForcedInvisible == 1) {
+						o.pos.xy = -10000;
+                    }
 
 					return o;
 				}

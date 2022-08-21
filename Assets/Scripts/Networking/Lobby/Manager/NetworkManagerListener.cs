@@ -12,21 +12,17 @@ namespace SilverDogGames.Mirror.Lobby
 
         private void OnEnable ()
         {
-            NetworkManagerLobby.OnClientReady += OnClientReadyCallback;
-            NetworkManagerLobby.OnGameReady += OnGameReadyCallback;
+            NetworkManagerLobby.OnClientSceneReady += NetworkManagerLobby_OnClientSceneReady;
+            NetworkManagerLobby.OnGameReady += NetworkManagerLobby_OnGameReady;
         }
 
         private void OnDisable ()
         {
-            NetworkManagerLobby.OnClientReady -= OnClientReadyCallback;
-            NetworkManagerLobby.OnGameReady -= OnGameReadyCallback;
+            NetworkManagerLobby.OnClientSceneReady -= NetworkManagerLobby_OnClientSceneReady;
+            NetworkManagerLobby.OnGameReady -= NetworkManagerLobby_OnGameReady;
         }
 
-        private void OnClientReadyCallback ( NetworkConnection conn )
-        {
-            Debug.Log ( $"OnClientReadyCallback()" );
-            OnClientReady?.Invoke ( conn );
-        }
-        private void OnGameReadyCallback () => OnGameReady?.Invoke ();
+        private void NetworkManagerLobby_OnClientSceneReady ( NetworkConnection conn ) => OnClientReady?.Invoke ( conn );
+        private void NetworkManagerLobby_OnGameReady () => OnGameReady?.Invoke ();
     }
 }

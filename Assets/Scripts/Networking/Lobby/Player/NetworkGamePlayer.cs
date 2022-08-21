@@ -1,8 +1,11 @@
 using UnityEngine;
 using Mirror;
 
-namespace SilverDogGames.Mirror.Lobby
+namespace SilverDogGames
 {
+    using SilverDogGames.Mirror.Lobby;
+    using Dissonance;
+
     public class NetworkGamePlayer : NetworkBehaviour
     {
         [SyncVar]
@@ -19,6 +22,15 @@ namespace SilverDogGames.Mirror.Lobby
             }
         }
         private NetworkManagerLobby m_room;
+
+        #region Initialization
+
+        public void Initialize ( string displayName )
+        {
+            SetDisplayName ( displayName );
+        }
+
+        #endregion
 
         #region Callbacks
 
@@ -37,9 +49,6 @@ namespace SilverDogGames.Mirror.Lobby
         #endregion
 
         [Server]
-        public void SetDisplayName ( string displayName )
-        {
-            m_displayName = displayName;
-        }
+        private void SetDisplayName ( string displayName ) => m_displayName = displayName;
     }
 }

@@ -148,6 +148,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "ToggleTestPlayerAudio",
+                    "type": "Button",
+                    "id": "c716c051-8448-45ad-946a-8f8b351b1d78",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -786,6 +794,17 @@
                     "processors": "",
                     "groups": "Xbox",
                     "action": "ToggleFlashlight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "28b14844-b865-407a-b00e-0e25b14e861f",
+                    "path": "<Keyboard>/l",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PC",
+                    "action": "ToggleTestPlayerAudio",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

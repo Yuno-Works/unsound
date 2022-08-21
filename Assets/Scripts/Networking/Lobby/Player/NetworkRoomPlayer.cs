@@ -1,6 +1,7 @@
 using System.Linq;
 using UnityEngine;
 using Mirror;
+using Steamworks;
 
 namespace SilverDogGames.Mirror.Lobby
 {
@@ -26,7 +27,6 @@ namespace SilverDogGames.Mirror.Lobby
         }
         private bool m_isLeader;
 
-        private NetworkManagerLobby m_room;
         private NetworkManagerLobby Room
         {
             get
@@ -35,14 +35,29 @@ namespace SilverDogGames.Mirror.Lobby
                 return m_room = NetworkManager.singleton as NetworkManagerLobby;
             }
         }
+        private NetworkManagerLobby m_room;
+
+        private void Awake ()
+        {
+            // Hide view
+            m_view.DisplayPanel ( false );
+        }
 
         #region Callbacks
 
         public override void OnStartAuthority ()
         {
-            CmdSetDisplayName ( PlayerNameInput.DisplayName );
+            if ( SteamManager.Initialized )
+            {
+                // Set room player display name
+                SetDisplayName ( SteamFriends.GetPersonaName () );
 
-            m_view.DisplayPanel ( true );
+                m_view.DisplayPanel ( true );
+            }
+            else
+            {
+                Debug.LogError ( $"{this} SteamManager not initialized." );
+            }
         }
 
         public override void OnStartClient ()
@@ -59,21 +74,11 @@ namespace SilverDogGames.Mirror.Lobby
             UpdateView ();
         }
 
-        public override void OnStopAuthority ()
-        {
-            m_view.DisplayPanel ( false );
-        }
+        public override void OnStopAuthority () => m_view.DisplayPanel ( false );
 
         public void HandleDisplayNameChanged ( string oldValue, string newValue ) => UpdateView ();
         public void HandleReadyStatusChanged ( bool oldValue, bool newValue ) => UpdateView ();
         public void HandleGameStart ( bool oldValue, bool newValue ) => UpdateView ();
-
-        #endregion
-
-        public void HandleReadyToStart ()
-        {
-            CmdStartGame ();
-        }
 
         private void UpdateView ()
         {
@@ -92,35 +97,51 @@ namespace SilverDogGames.Mirror.Lobby
             m_view.UpdateView ( Room.RoomPlayers, IsReady, IsGameStarted );
         }
 
+        #endregion
+
+        #region Listeners
+
+        public void SetDisplayName ( string displayName ) => CmdSetDisplayName ( displayName );
+
+        /// <summary>
+        /// Activates Steam friends invite overlay.
+        /// </summary>
+        public void OpenSteamOverlayInviteDialog () => SteamFriends.ActivateGameOverlayInviteDialog ( SteamLobby.LobbyId );
+
+        public void OnClientReady () => CmdOnClientReady ();
+
+        #endregion
+
         #region Commands
 
         [Command]
         private void CmdSetDisplayName ( string displayName ) => DisplayName = displayName;
 
         [Command]
-        public void CmdReadyUp () => IsReady = !IsReady;
-
-        [Command]
-        public void CmdStartGame ()
+        private void CmdOnClientReady ()
         {
+            // Client ready up
+            // Invokes ready up handler
+            IsReady = !IsReady;
+
             // Check ready status all
-            if ( Room.IsReadyToStart () == false ) { return; }
-
-            // Start game
-            Room.StartGame ();
-            RpcStartGameClient ();
-
-            // Notify each connection game start event
-            foreach ( NetworkRoomPlayer player in Room.RoomPlayers )
+            if ( Room.IsReadyToStart () )
             {
-                player.IsGameStarted = true;
+                // Start game
+                Room.StartGame ();
+                RpcStartGameClient ();
+
+                // Notify each connection game start event
+                foreach ( NetworkRoomPlayer player in Room.RoomPlayers )
+                {
+                    player.IsGameStarted = true;
+                }
             }
         }
 
         #endregion
 
         #region RPCs
-
 
         [ClientRpc]
         private void RpcStartGameClient () => Room.OnStartGameClient ();

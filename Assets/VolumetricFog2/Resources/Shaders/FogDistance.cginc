@@ -24,7 +24,7 @@ inline half4 ApplyDepthGradient(float3 rayStart, float3 wpos) {
 
 
 inline half4 ApplyHeightGradient(float3 wpos) {
-    float heightGradientCoord = abs( (wpos.y - _BoundsCenter.y) / _BoundsExtents.y );
+    float heightGradientCoord = saturate( (wpos.y - BOUNDS_BOTTOM) / BOUNDS_SIZE_Y );
     half4 heightColor = SAMPLE_TEXTURE2D_LOD(_HeightGradientTex, _heightGradient_linear_clamp_sampler, float2(heightGradientCoord, 0), 0);
     return heightColor;
 }
