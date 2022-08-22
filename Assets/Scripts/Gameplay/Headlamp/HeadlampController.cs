@@ -8,6 +8,7 @@ using Mirror;
 public class HeadlampController : NetworkBehaviour
 {
     private const string TOGGLE_ACTION_NAME = "ToggleFlashlight";
+    private const string INPUT_ACTION_BINDING = "<Mouse>/delta";
 
     [Header("References")]
     [SerializeField] private Transform m_lightObject = null;
@@ -35,8 +36,7 @@ public class HeadlampController : NetworkBehaviour
         m_remoteLight.SetActive(m_lightState);
         if (isLocalPlayer)
         {
-            Debug.Log("m_inputAction = new InputAction");
-            m_inputAction = new InputAction(type: InputActionType.Value, binding: "<Mouse>/delta");
+            m_inputAction = new InputAction(type: InputActionType.Value, binding: INPUT_ACTION_BINDING);
             m_inputAction.Enable();
         }
     }
