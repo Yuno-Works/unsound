@@ -26449,7 +26449,7 @@ Light:
   serializedVersion: 10
   m_Type: 0
   m_Shape: 0
-  m_Color: {r: 1, g: 0.98390245, b: 0.94, a: 1}
+  m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
   m_Intensity: 10
   m_Range: 24
   m_SpotAngle: 60
@@ -26512,9 +26512,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b69c542c9a8f4f44a3123e3fa103d13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colorFromLight: 1
+  colorFromLight: 0
   colorMode: 0
-  color: {r: 1, g: 0.98390245, b: 0.94, a: 1}
+  color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
   colorGradient:
     serializedVersion: 2
     key0: {r: 1, g: 1, b: 1, a: 1}
@@ -26545,14 +26545,14 @@ MonoBehaviour:
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
   intensityFromLight: 0
-  intensityModeAdvanced: 0
+  intensityModeAdvanced: 1
   intensityInside: 0.1
-  intensityOutside: 0.1
+  intensityOutside: 0.15
   intensityMultiplier: 1
   hdrpExposureWeight: 0
   blendingMode: 1
   spotAngleFromLight: 0
-  spotAngle: 60
+  spotAngle: 70
   spotAngleMultiplier: 1
   coneRadiusStart: 0
   shaderAccuracy: 0
@@ -26563,7 +26563,7 @@ MonoBehaviour:
   clippingPlaneTransform: {fileID: 0}
   geomCap: 0
   attenuationEquation: 2
-  attenuationCustomBlending: 0.778
+  attenuationCustomBlending: 0.8
   fallOffStart: 0
   fallOffEnd: 20
   fallOffEndFromLight: 0
@@ -26572,7 +26572,7 @@ MonoBehaviour:
   cameraClippingDistance: 0.5
   glareFrontal: 1
   glareBehind: 0
-  fresnelPow: 8
+  fresnelPow: 10
   noiseMode: 1
   noiseIntensity: 0.5
   noiseScaleUseGlobal: 1
@@ -43173,7 +43173,7 @@ Light:
   m_Shape: 0
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
   m_Intensity: 2
-  m_Range: 50
+  m_Range: 70
   m_SpotAngle: 60
   m_InnerSpotAngle: 40
   m_CookieSize: 10
@@ -43234,7 +43234,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b69c542c9a8f4f44a3123e3fa103d13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colorFromLight: 1
+  colorFromLight: 0
   colorMode: 0
   color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
   colorGradient:
