@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using ThunderWire.Input;
 using Mirror;
 
@@ -17,16 +18,27 @@ public class HeadlampController : NetworkBehaviour
     [SerializeField] private Material m_dullMaterial = null;
     [Space]
     [SerializeField] private Transform m_lookTarget = null;
-    [SerializeField, Range(0.01f, 20f)] private float m_rotateSpeed = 5f;
+    [SerializeField, Range(0.01f, 20f)] private float m_remoteRotateSpeed = 5f;
+    [SerializeField, Range(0.001f, 10f)] private float m_localRotateSpeed = 1f;
+    [SerializeField] private float m_drag = 1f;
+    [SerializeField] private float m_dragThreshold = 10f;
 
     [SyncVar] private bool m_lightState = false;
     private bool m_followCamera = false;
+    private InputAction m_inputAction = null;
+    private Quaternion localRotation;
 
     // Start is called before the first frame update
     private void Start()
     {
         m_followCamera = isLocalPlayer;
         m_remoteLight.SetActive(m_lightState);
+        if (isLocalPlayer)
+        {
+            Debug.Log("m_inputAction = new InputAction");
+            m_inputAction = new InputAction(type: InputActionType.Value, binding: "<Mouse>/delta");
+            m_inputAction.Enable();
+        }
     }
 
     // Update is called once per frame
@@ -49,21 +61,44 @@ public class HeadlampController : NetworkBehaviour
 
     private void LateUpdate()
     {
-        // Follow look target
         if (m_followCamera)
         {
+            // Follow look target
             float diff = Vector3.Angle(m_lightObject.eulerAngles, m_lookTarget.eulerAngles);
             m_lightObject.localRotation = Quaternion.RotateTowards(
                 m_lightObject.localRotation,
                 m_lookTarget.localRotation,
-                Time.deltaTime / diff * m_rotateSpeed);
+                Time.deltaTime / diff * m_remoteRotateSpeed);
 
-            //float localDiff = Vector3.Angle(m_localLight.transform.eulerAngles, m_lookTarget.eulerAngles);
-            //m_localLight.transform.localRotation = Quaternion.RotateTowards(
-            //    m_localLight.transform.localRotation,
-            //    m_lookTarget.localRotation,
-            //    Time.deltaTime / localDiff * m_rotateSpeed);
+            UpdateFlashlight();
         }
+    }
+    private void UpdateFlashlight()
+    {
+        Vector2 delta = m_inputAction.ReadValue<Vector2>();
+        float y = -(delta.x) * m_drag;
+        float x = (delta.y) * m_drag;
+        if (m_drag >= 0) // light lags behind camera
+        {
+            y = (y > m_dragThreshold) ? m_dragThreshold : y;
+            y = (y < -m_dragThreshold) ? -m_dragThreshold : y;
+            x = (x > m_dragThreshold) ? m_dragThreshold : x;
+            x = (x < -m_dragThreshold) ? -m_dragThreshold : x;
+        }
+        else // camera lags behind light
+        {
+            y = (y < m_dragThreshold) ? m_dragThreshold : y;
+            y = (y > -m_dragThreshold) ? -m_dragThreshold : y;
+
+            x = (x < m_dragThreshold) ? m_dragThreshold : x;
+            x = (x > -m_dragThreshold) ? -m_dragThreshold : x;
+        }
+        float fDiff = Vector3.Angle(localRotation.eulerAngles, m_localLight.transform.localEulerAngles);
+        Quaternion newRotation = Quaternion.Euler(localRotation.x + x, localRotation.y + y, localRotation.z);
+        m_localLight.transform.localRotation = Quaternion.Lerp(
+            m_localLight.transform.localRotation,
+            newRotation,
+            Time.deltaTime * m_localRotateSpeed);
     }
 
     [Command]
@@ -96,17 +131,11 @@ public class HeadlampController : NetworkBehaviour
         {
             // Material emission on
             m_remoteLightRenderer.material = m_emissiveMaterial;
-            //m_emissiveMaterial.EnableKeyword ( "_EMISSION" );
-            //m_emissiveMaterial.globalIlluminationFlags = MaterialGlobalIlluminationFlags.AnyEmissive;
-            //m_emissiveMaterial.SetColor ( "_EmissionColor", m_lightColor );
         }
         else
         {
             // Material emission off
             m_remoteLightRenderer.material = m_dullMaterial;
-            //m_emissiveMaterial.DisableKeyword ( "_EMISSION" );
-            //m_emissiveMaterial.globalIlluminationFlags = MaterialGlobalIlluminationFlags.EmissiveIsBlack;
-            //m_emissiveMaterial.SetColor ( "_EmissionColor", Color.black );
         }
     }
 }

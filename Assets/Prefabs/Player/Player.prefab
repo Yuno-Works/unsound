@@ -20322,7 +20322,10 @@ MonoBehaviour:
   m_emissiveMaterial: {fileID: 2100000, guid: 794887bfda40304499f4fbfa8fe59348, type: 2}
   m_dullMaterial: {fileID: 2100000, guid: 0ff25fb0d8f30d047b9ab2a7042f2d5a, type: 2}
   m_lookTarget: {fileID: 2145278265007418396}
-  m_rotateSpeed: 5
+  m_remoteRotateSpeed: 5
+  m_localRotateSpeed: 6
+  m_drag: 1
+  m_dragThreshold: 10
 --- !u!114 &8606651521835514124
 MonoBehaviour:
   m_ObjectHideFlags: 0
