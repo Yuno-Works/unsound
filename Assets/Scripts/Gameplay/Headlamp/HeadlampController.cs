@@ -1,119 +1,141 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using ThunderWire.Input;
 using Mirror;
 
 public class HeadlampController : NetworkBehaviour
 {
     private const string TOGGLE_ACTION_NAME = "ToggleFlashlight";
+    private const string INPUT_ACTION_BINDING = "<Mouse>/delta";
 
-    [Header ( "References" )]
-    [SerializeField]
-    private NetworkIdentity m_networkIdentity = null;
-    [SerializeField]
-    private Transform m_lightObject = null;
-    [SerializeField]
-    private Light m_localLight = null;
-    [SerializeField]
-    private Light m_remoteLight = null;
-    [SerializeField]
-    private Material m_emissiveMaterial = null;
-    [SerializeField]
-    private Color m_lightColor = Color.white;
+    [Header("References")]
+    [SerializeField] private Transform m_lightObject = null;
+    [SerializeField] private GameObject m_localLight = null;
+    [SerializeField] private GameObject m_remoteLight = null;
+    [SerializeField] private Renderer m_remoteLightRenderer = null;
+    [SerializeField] private Material m_emissiveMaterial = null;
+    [SerializeField] private Material m_dullMaterial = null;
     [Space]
-    [SerializeField]
-    private Transform m_lookTarget = null;
-    [SerializeField]
-    private float m_targetLerpCoeffient = 5f;
+    [SerializeField] private Transform m_lookTarget = null;
+    [SerializeField, Range(0.01f, 20f)] private float m_remoteRotateSpeed = 5f;
+    [SerializeField, Range(0.001f, 10f)] private float m_localRotateSpeed = 1f;
+    [SerializeField] private float m_drag = 1f;
+    [SerializeField] private float m_dragThreshold = 10f;
 
-    [SyncVar]
-    private bool m_lightState = false;
-
+    [SyncVar] private bool m_lightState = false;
     private bool m_followCamera = false;
-
-    private void Awake ()
-    {
-        Debug.Assert ( m_networkIdentity != null, "" );
-        Debug.Assert ( m_lightObject != null, "m_lightObject is null." );
-        Debug.Assert ( m_localLight != null, "m_headlampLight is null." );
-    }
+    private InputAction m_inputAction = null;
+    private Quaternion localRotation;
 
     // Start is called before the first frame update
     private void Start()
     {
-        m_followCamera = m_networkIdentity.isLocalPlayer;
+        m_followCamera = isLocalPlayer;
+        m_remoteLight.SetActive(m_lightState);
+        if (isLocalPlayer)
+        {
+            m_inputAction = new InputAction(type: InputActionType.Value, binding: INPUT_ACTION_BINDING);
+            m_inputAction.Enable();
+        }
     }
 
     // Update is called once per frame
     private void Update()
     {
         // Input handling
-        bool input = InputHandler.ReadButtonOnce ( this, TOGGLE_ACTION_NAME );
-        if ( input && isLocalPlayer )
+        bool input = InputHandler.ReadButtonOnce(this, TOGGLE_ACTION_NAME);
+        if (input && isLocalPlayer)
         {
-            if ( isServer )
+            if (isServer)
             {
-                RpcToggleLight ( m_lightState = !m_lightState );
+                RpcToggleLight(m_lightState = !m_lightState);
             }
             else
             {
-                CmdToggleLight ( m_lightState );
+                CmdToggleLight(m_lightState);
             }
         }
     }
 
-    private void LateUpdate ()
+    private void LateUpdate()
     {
-        // Follow look target
-        if ( m_followCamera )
+        if (m_followCamera)
         {
-            m_lightObject.localRotation = Quaternion.Slerp ( m_lightObject.localRotation, m_lookTarget.localRotation, Time.deltaTime * m_targetLerpCoeffient );
+            // Follow look target
+            float diff = Vector3.Angle(m_lightObject.eulerAngles, m_lookTarget.eulerAngles);
+            m_lightObject.localRotation = Quaternion.RotateTowards(
+                m_lightObject.localRotation,
+                m_lookTarget.localRotation,
+                Time.deltaTime / diff * m_remoteRotateSpeed);
+
+            UpdateFlashlight();
         }
+    }
+    private void UpdateFlashlight()
+    {
+        Vector2 delta = m_inputAction.ReadValue<Vector2>();
+        float y = -(delta.x) * m_drag;
+        float x = (delta.y) * m_drag;
+        if (m_drag >= 0) // light lags behind camera
+        {
+            y = (y > m_dragThreshold) ? m_dragThreshold : y;
+            y = (y < -m_dragThreshold) ? -m_dragThreshold : y;
+            x = (x > m_dragThreshold) ? m_dragThreshold : x;
+            x = (x < -m_dragThreshold) ? -m_dragThreshold : x;
+        }
+        else // camera lags behind light
+        {
+            y = (y < m_dragThreshold) ? m_dragThreshold : y;
+            y = (y > -m_dragThreshold) ? -m_dragThreshold : y;
+
+            x = (x < m_dragThreshold) ? m_dragThreshold : x;
+            x = (x > -m_dragThreshold) ? -m_dragThreshold : x;
+        }
+        float fDiff = Vector3.Angle(localRotation.eulerAngles, m_localLight.transform.localEulerAngles);
+        Quaternion newRotation = Quaternion.Euler(localRotation.x + x, localRotation.y + y, localRotation.z);
+        m_localLight.transform.localRotation = Quaternion.Lerp(
+            m_localLight.transform.localRotation,
+            newRotation,
+            Time.deltaTime * m_localRotateSpeed);
     }
 
     [Command]
-    public void CmdToggleLight ( bool lightState )
+    public void CmdToggleLight(bool lightState)
     {
         // Toggle state flag
         m_lightState = !lightState;
 
-        RpcToggleLight ( m_lightState );
+        RpcToggleLight(m_lightState);
     }
 
     [ClientRpc]
-    public void RpcToggleLight ( bool lightState )
+    public void RpcToggleLight(bool lightState)
     {
         // Toggle state flag
         m_lightState = lightState;
 
-        // Set Light component state
-        if ( isLocalPlayer )
+        // Set light object state
+        if (isLocalPlayer)
         {
-            m_localLight.enabled = m_lightState;
+            m_localLight.SetActive(m_lightState);
         }
         else
         {
-            m_remoteLight.enabled = m_lightState;
+            m_remoteLight.SetActive(m_lightState);
         }
 
         // Toggle emissive property of material
-        if ( m_emissiveMaterial != null )
+        if (m_lightState)
         {
-            if ( m_lightState )
-            {
-                // Material emission on
-                m_emissiveMaterial.EnableKeyword ( "_EMISSION" );
-                m_emissiveMaterial.globalIlluminationFlags = MaterialGlobalIlluminationFlags.AnyEmissive;
-                m_emissiveMaterial.SetColor ( "_EmissionColor", m_lightColor );
-            }
-            else
-            {
-                // Material emission off
-                m_emissiveMaterial.DisableKeyword ( "_EMISSION" );
-                m_emissiveMaterial.globalIlluminationFlags = MaterialGlobalIlluminationFlags.EmissiveIsBlack;
-                m_emissiveMaterial.SetColor ( "_EmissionColor", Color.black );
-            }
+            // Material emission on
+            m_remoteLightRenderer.material = m_emissiveMaterial;
+        }
+        else
+        {
+            // Material emission off
+            m_remoteLightRenderer.material = m_dullMaterial;
         }
     }
 }
