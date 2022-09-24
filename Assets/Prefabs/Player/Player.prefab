@@ -20392,7 +20392,7 @@ MonoBehaviour:
   _tokensExpanded: 1
   _ampExpanded: 1
   _activationFaderSettings:
-    _volume: 1
+    _volume: 1.4125376
     _fadeInTicks: 0
     _fadeOutTicks: 30000000
   _triggerFaderSettings:
