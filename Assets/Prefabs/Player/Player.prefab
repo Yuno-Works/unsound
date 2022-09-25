@@ -20392,7 +20392,7 @@ MonoBehaviour:
   _tokensExpanded: 1
   _ampExpanded: 1
   _activationFaderSettings:
-    _volume: 1
+    _volume: 1.4125376
     _fadeInTicks: 0
     _fadeOutTicks: 30000000
   _triggerFaderSettings:
@@ -56006,7 +56006,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: -3596382404990524142, guid: ae32cf73fde6f7348aeb05009b01c3cf, type: 2}
   m_audioClip: {fileID: 8300000, guid: 1b14d1a52984a7447a03f428584c4ab9, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.12
+  m_Volume: 0.25
   m_Pitch: 1
   Loop: 1
   Mute: 0
