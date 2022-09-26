@@ -93,7 +93,6 @@ public class HeadlampController : NetworkBehaviour
             x = (x < m_dragThreshold) ? m_dragThreshold : x;
             x = (x > -m_dragThreshold) ? -m_dragThreshold : x;
         }
-        float fDiff = Vector3.Angle(localRotation.eulerAngles, m_localLight.transform.localEulerAngles);
         Quaternion newRotation = Quaternion.Euler(localRotation.x + x, localRotation.y + y, localRotation.z);
         m_localLight.transform.localRotation = Quaternion.Lerp(
             m_localLight.transform.localRotation,

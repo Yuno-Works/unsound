@@ -15905,7 +15905,7 @@ MonoBehaviour:
   scriptManager: {fileID: 2044030335574967360}
   CullLayers:
     serializedVersion: 2
-    m_Bits: 295425
+    m_Bits: 33281
   InteractLayer: 9
   ExamineLayer: 15
   SecondExamineLayer: 18
@@ -15917,7 +15917,7 @@ MonoBehaviour:
     m_Bits: 32768
   SecMainCameraMask:
     serializedVersion: 2
-    m_Bits: 519991
+    m_Bits: 257847
   SecArmsCameraMask:
     serializedVersion: 2
     m_Bits: 32768
@@ -19640,10 +19640,10 @@ GameObject:
   - component: {fileID: 2043571047837966744}
   - component: {fileID: 7616252305099852388}
   - component: {fileID: 7480165388575185064}
+  - component: {fileID: 8606651521835514124}
   - component: {fileID: 5187322849451244015}
   - component: {fileID: 8069172031545111466}
   - component: {fileID: 8838321541742723312}
-  - component: {fileID: 8606651521835514124}
   - component: {fileID: 6408190698264928799}
   - component: {fileID: 4203241684307544878}
   - component: {fileID: 4513436259204354532}
@@ -20240,6 +20240,36 @@ MonoBehaviour:
   showOverlay: 0
   overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
   target: {fileID: 2145278265007418396}
+--- !u!114 &8606651521835514124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2148197228353032826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 734b48bea0b204338958ee3d885e11f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  clientAuthority: 1
+  sendInterval: 0.05
+  syncPosition: 0
+  syncRotation: 1
+  syncScale: 0
+  interpolatePosition: 0
+  interpolateRotation: 1
+  interpolateScale: 0
+  bufferTimeMultiplier: 1
+  bufferSizeLimit: 64
+  catchupThreshold: 4
+  catchupMultiplier: 0.1
+  showGizmos: 0
+  showOverlay: 0
+  overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
+  target: {fileID: 7639112944827635380}
 --- !u!114 &5187322849451244015
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20254,7 +20284,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  clientAuthority: 0
+  clientAuthority: 1
   animator: {fileID: 1209188422492489209}
 --- !u!114 &8069172031545111466
 MonoBehaviour:
@@ -20326,36 +20356,6 @@ MonoBehaviour:
   m_localRotateSpeed: 6
   m_drag: 1
   m_dragThreshold: 10
---- !u!114 &8606651521835514124
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2148197228353032826}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 734b48bea0b204338958ee3d885e11f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  clientAuthority: 1
-  sendInterval: 0.05
-  syncPosition: 0
-  syncRotation: 1
-  syncScale: 0
-  interpolatePosition: 0
-  interpolateRotation: 1
-  interpolateScale: 0
-  bufferTimeMultiplier: 1
-  bufferSizeLimit: 64
-  catchupThreshold: 4
-  catchupMultiplier: 0.1
-  showGizmos: 0
-  showOverlay: 0
-  overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
-  target: {fileID: 7639112944827635380}
 --- !u!114 &6408190698264928799
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -43175,8 +43175,8 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
-  m_Intensity: 2
-  m_Range: 70
+  m_Intensity: 2.5
+  m_Range: 100
   m_SpotAngle: 60
   m_InnerSpotAngle: 40
   m_CookieSize: 10
