@@ -9,10 +9,13 @@ namespace SilverDogGames.Networking.FSM
     internal class ImpairedState : BaseState
     {
         [SerializeField] private PlayerController playerController = null;
+        [SerializeField] private AudioClip debugAudioClip = null;
+        [SerializeField] private AudioSource debugAudioSource = null;
 
         public override void Init(StateMachine stateMachine)
         {
             Name = "Impaired";
+            debugAudioSource = GetComponent<AudioSource>();
             base.Init(stateMachine);
         }
         public override void Enter()
@@ -20,6 +23,9 @@ namespace SilverDogGames.Networking.FSM
             base.Enter();
             playerController.isControllable = false;
             playerController.CharacterControl.enabled = false;
+
+            // FX
+            debugAudioSource.PlayOneShot(debugAudioClip);
         }
         public override void UpdateLogic()
         {

@@ -19759,6 +19759,8 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   playerController: {fileID: 2148197228353032827}
+  debugAudioClip: {fileID: 8300000, guid: f6460acb2dfc9e54692f20e787b21803, type: 3}
+  debugAudioSource: {fileID: 2084214231902761780}
 --- !u!143 &2033338803588786846
 CharacterController:
   m_ObjectHideFlags: 0
@@ -19871,7 +19873,7 @@ AudioSource:
   m_GameObject: {fileID: 2148197228353032826}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 24364226, guid: 5fb22b80676344753a2f46e2d6494800, type: 2}
+  OutputAudioMixerGroup: {fileID: -3596382404990524142, guid: ae32cf73fde6f7348aeb05009b01c3cf, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 0.6
@@ -19882,8 +19884,8 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 100
+  MinDistance: 0.5
+  MaxDistance: 20
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0

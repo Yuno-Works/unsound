@@ -8,10 +8,16 @@ namespace SilverDogGames.Networking.FSM
         public BaseState InitialState => initialState;
         [SerializeField] private BaseState initialState = null;
 
+        public void ServerChangeState<T>() where T : BaseState
+        {
+            ChangeState<T>();
+        }
+
         protected override BaseState GetInitialState()
         {
             return InitialState;
         }
+#if UNITY_EDITOR
         protected override void OnUpdate()
         {
             if (!isLocalPlayer) return;
@@ -27,5 +33,6 @@ namespace SilverDogGames.Networking.FSM
                 }
             }
         }
+#endif
     }
 }
