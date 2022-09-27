@@ -22,6 +22,7 @@ namespace SilverDogGames.Networking.FSM
         }
         public override void UpdateLogic()
         {
+            if (!isLocalPlayer) { return; }
             base.UpdateLogic();
             movementInput = playerController.GetMovementValue();
             if (movementInput.sqrMagnitude <= Mathf.Epsilon)

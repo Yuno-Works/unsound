@@ -19,7 +19,7 @@ namespace SilverDogGames.Networking.FSM
 
         public void ChangeState<T>() where T : BaseState
         {
-            if (!isLocalPlayer) { return; }
+            if (!isServer && !hasAuthority) return;
             if (TryGetComponent(out T state))
             {
                 if (state == CurrentState) return;
