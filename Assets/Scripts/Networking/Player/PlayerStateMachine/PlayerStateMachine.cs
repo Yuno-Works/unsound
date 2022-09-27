@@ -19,7 +19,7 @@ namespace SilverDogGames.Networking.FSM
         {
             return InitialState;
         }
-#if UNITY_EDITOR
+
         protected override void OnUpdate()
         {
             if (!isLocalPlayer) return;
@@ -35,6 +35,5 @@ namespace SilverDogGames.Networking.FSM
                 }
             }
         }
-#endif
     }
 }
