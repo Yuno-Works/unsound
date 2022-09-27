@@ -1,5 +1,6 @@
 namespace SilverDogGames.Networking.FSM
 {
+    using global::Mirror;
     using UnityEngine;
     using UnityEngine.InputSystem;
 
@@ -8,10 +9,11 @@ namespace SilverDogGames.Networking.FSM
         public BaseState InitialState => initialState;
         [SerializeField] private BaseState initialState = null;
 
-        public void ServerChangeState<T>() where T : BaseState
-        {
-            ChangeState<T>();
-        }
+        #region State overrides
+        [ClientRpc] public void RPC_Idle() => ChangeState<ImpairedState>();
+        [ClientRpc] public void RPC_Moving() => ChangeState<MovingState>();
+        [ClientRpc] public void RPC_Impaired() => ChangeState<ImpairedState>();
+        #endregion
 
         protected override BaseState GetInitialState()
         {

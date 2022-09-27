@@ -16,7 +16,6 @@ namespace SilverDogGames.AI.Goap.Actions
         {
             base.Run(previous, next, settings, goalState, done, fail);
 
-            Debug.LogErrorFormat("[{0}] Run()", Name);
             if (settings.TryGetValue("objectivePosition", out var v))
             {
                 lastPlayerPosition = (Vector3)v;

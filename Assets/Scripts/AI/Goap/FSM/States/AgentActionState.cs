@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using Mirror;
 
 namespace SilverDogGames.AI.Goap.States
 {
@@ -42,7 +41,7 @@ namespace SilverDogGames.AI.Goap.States
             // Impair player
             if (player.TryGetComponent(out PlayerStateMachine psm))
             {
-                psm.ServerChangeState<ImpairedState>();
+                psm.RPC_Impaired();
             }
             currentState = ActionState.Success;
             Exit();
