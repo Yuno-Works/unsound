@@ -17,13 +17,17 @@ namespace SilverDogGames.Networking.FSM
         [SerializeField] private bool isDebug = false;
         [SerializeField] private UnityEngine.UI.Text stateNameText = null;
 
+        /// <summary>
+        /// Allows the server or authoritative instance to transition to any <see cref="BaseState"/> state.
+        /// </summary>
+        /// <typeparam name="T">Any <see cref="BaseState"/> to transition to.</typeparam>
         public void ChangeState<T>() where T : BaseState
         {
-            if (!isLocalPlayer) { return; }
+            if (!isServer && !hasAuthority) return;
             if (TryGetComponent(out T state))
             {
                 if (state == CurrentState) return;
-                CurrentState.Exit();
+                CurrentState?.Exit();
                 CurrentState = state;
                 CurrentState.Enter();
 

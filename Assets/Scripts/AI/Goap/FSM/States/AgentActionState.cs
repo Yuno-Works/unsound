@@ -1,11 +1,11 @@
 using System;
 using UnityEngine;
-using Mirror;
 
 namespace SilverDogGames.AI.Goap.States
 {
     using ReGoap.Unity.FSM;
-    using ReGoap.Utilities;
+    using ReGoapFSM = ReGoap.Unity.FSM;
+    using SilverDogGames.Networking.FSM;
     using Sirenix.OdinInspector;
 
     public class AgentActionState : NetworkedSmState
@@ -38,15 +38,18 @@ namespace SilverDogGames.AI.Goap.States
             onDoneCallback = doneCallback;
             onFailureCallback = failureCallback;
 
-            // Debug
-            RpcMovePlayer(player, new Vector3(0, 3, -3));
+            // Impair player
+            if (player.TryGetComponent(out PlayerStateMachine psm))
+            {
+                psm.RPC_Impaired();
+            }
             currentState = ActionState.Success;
             Exit();
         }
         #endregion
 
         #region StateHandler
-        public override void Init(StateMachine stateMachine)
+        public override void Init(ReGoapFSM.StateMachine stateMachine)
         {
             base.Init(stateMachine);
             var transition = new SmTransition(GetPriority(), Transition);
@@ -82,14 +85,6 @@ namespace SilverDogGames.AI.Goap.States
             else
                 onFailureCallback?.Invoke();
             currentState = ActionState.Disabled;
-        }
-        #endregion
-
-        #region Net Actions
-        [ClientRpc] // (includeOwner = true)
-        private void RpcMovePlayer(Transform player, Vector3 position)
-        {
-            player.transform.position = position;
         }
         #endregion
     }
